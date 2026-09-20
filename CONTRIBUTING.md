@@ -267,7 +267,7 @@ Suggested window: Weeks 3-5.
 | Status | ID | Subtask / completion deliverable |
 | :---: | --- | --- |
 | ✅ | P09.01 | Define policy syntax and built-in predicate types |
-| ❌ | P09.02 | Parse facts and rule heads |
+| ✅ | P09.02 | Parse facts and rule heads |
 | ❌ | P09.03 | Parse positive and negated rule bodies |
 | ❌ | P09.04 | Parse string and integer constants |
 | ❌ | P09.05 | Validate predicate arity consistently |
