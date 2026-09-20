@@ -42,3 +42,15 @@ files = ["taintgate"]
 [[tool.mypy.overrides]]
 module = ["llama_cpp.*", "markdown_it.*"]
 ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
+markers = ["model: requires an explicitly configured local model", "integration: component integration"]
+
+[tool.coverage.run]
+source = ["taintgate"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true

@@ -86,7 +86,7 @@ Suggested window: Week 1.
 | ✅ | P01.09 | Create unit, property, fuzz and attack test directories |
 | ✅ | P01.10 | Configure formatting and linting |
 | ✅ | P01.11 | Configure strict mypy checks |
-| ❌ | P01.12 | Configure pytest and coverage reporting |
+| ✅ | P01.12 | Configure pytest and coverage reporting |
 | ❌ | P01.13 | Add a gitignore for models, secrets, caches and run artifacts |
 | ❌ | P01.14 | Add CI for linting, typing and tests |
 | ❌ | P01.15 | Document a reproducible CPU-only development setup |
