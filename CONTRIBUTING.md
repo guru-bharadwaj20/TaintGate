@@ -170,7 +170,7 @@ Suggested window: Weeks 3-5.
 | :---: | --- | --- |
 | ✅ | P05.01 | Publish a supported syntax and operation table |
 | ✅ | P05.02 | Parse plans without using eval or exec |
-| ❌ | P05.03 | Implement an explicit AST node allowlist |
+| ✅ | P05.03 | Implement an explicit AST node allowlist |
 | ❌ | P05.04 | Validate assignments and literal expressions |
 | ❌ | P05.05 | Validate lists and dictionaries |
 | ❌ | P05.06 | Validate if and else statements |
@@ -273,7 +273,7 @@ Suggested window: Weeks 3-5.
 | ✅ | P09.05 | Validate predicate arity consistently |
 | ✅ | P09.06 | Enforce safe variables in heads and negation |
 | ✅ | P09.07 | Reject unsupported function symbols and unbounded terms |
-| ❌ | P09.08 | Define per-call policy facts from labels and provenance |
+| ✅ | P09.08 | Define per-call policy facts from labels and provenance |
 | ❌ | P09.09 | Implement relation storage and fact deduplication |
 | ❌ | P09.10 | Implement variable binding and relational joins |
 | ❌ | P09.11 | Implement a naive bottom-up reference evaluator |
