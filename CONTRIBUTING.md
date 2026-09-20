@@ -272,7 +272,7 @@ Suggested window: Weeks 3-5.
 | ✅ | P09.04 | Parse string and integer constants |
 | ✅ | P09.05 | Validate predicate arity consistently |
 | ✅ | P09.06 | Enforce safe variables in heads and negation |
-| ❌ | P09.07 | Reject unsupported function symbols and unbounded terms |
+| ✅ | P09.07 | Reject unsupported function symbols and unbounded terms |
 | ❌ | P09.08 | Define per-call policy facts from labels and provenance |
 | ❌ | P09.09 | Implement relation storage and fact deduplication |
 | ❌ | P09.10 | Implement variable binding and relational joins |
