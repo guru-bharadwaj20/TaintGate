@@ -146,7 +146,7 @@ Suggested window: Weeks 3-5.
 | Status | ID | Subtask / completion deliverable |
 | :---: | --- | --- |
 | ✅ | P04.01 | Define trusted and untrusted integrity ordering |
-| ❌ | P04.02 | Define principals and explicit public-reader semantics |
+| ✅ | P04.02 | Define principals and explicit public-reader semantics |
 | ❌ | P04.03 | Define confidentiality ordering with reversed set inclusion |
 | ❌ | P04.04 | Specify public ALL as the identity of reader intersection |
 | ❌ | P04.05 | Implement immutable labels |
