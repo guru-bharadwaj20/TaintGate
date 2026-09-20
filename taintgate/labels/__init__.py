@@ -44,3 +44,16 @@ import json
 def provenance_id(operation: str, parents=()) -> str:
     payload = json.dumps([operation, sorted(set(parents))], separators=(',', ':'))
     return hashlib.sha256(payload.encode()).hexdigest()
+
+@dataclass(frozen=True)
+class Provenance:
+    operation: str
+    parents: frozenset[str] = frozenset()
+
+    @property
+    def id(self):
+        return provenance_id(self.operation, self.parents)
+
+    @staticmethod
+    def union(*sources):
+        return frozenset().union(*sources)
