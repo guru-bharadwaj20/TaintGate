@@ -33,3 +33,12 @@ class Validator(ast.NodeVisitor):
         if type(node) not in self.allowed:
             raise PlanError('Unsupported syntax: ' + type(node).__name__)
         super().generic_visit(node)
+
+    def visit_Assign(self, node):
+        if len(node.targets) != 1 or not isinstance(node.targets[0], ast.Name):
+            raise PlanError('Assignment requires one name')
+        self.generic_visit(node)
+
+    def visit_Constant(self, node):
+        if type(node.value) not in (str, bool, int, float, type(None)):
+            raise PlanError('Unsupported literal')

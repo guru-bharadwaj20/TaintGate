@@ -171,7 +171,7 @@ Suggested window: Weeks 3-5.
 | ✅ | P05.01 | Publish a supported syntax and operation table |
 | ✅ | P05.02 | Parse plans without using eval or exec |
 | ✅ | P05.03 | Implement an explicit AST node allowlist |
-| ❌ | P05.04 | Validate assignments and literal expressions |
+| ✅ | P05.04 | Validate assignments and literal expressions |
 | ❌ | P05.05 | Validate lists and dictionaries |
 | ❌ | P05.06 | Validate if and else statements |
 | ❌ | P05.07 | Validate bounded for loops over supported containers |
