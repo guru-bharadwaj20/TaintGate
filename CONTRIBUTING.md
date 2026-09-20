@@ -158,7 +158,7 @@ Suggested window: Weeks 3-5.
 | ✅ | P04.11 | Test join associativity |
 | ✅ | P04.12 | Test join idempotence and upper-bound laws |
 | ✅ | P04.13 | Test public, empty-reader and mixed-principal cases |
-| ❌ | P04.14 | Specify endorsement authorization |
+| ✅ | P04.14 | Specify endorsement authorization |
 | ❌ | P04.15 | Specify declassification authorization |
 | ❌ | P04.16 | Require scoped approvals and audit events for label relaxation |
 
