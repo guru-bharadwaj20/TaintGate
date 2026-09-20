@@ -81,7 +81,7 @@ Suggested window: Week 1.
 | ✅ | P01.04 | Add the MIT license |
 | ✅ | P01.05 | Record the required commit identity and small-commit rule |
 | ✅ | P01.06 | Choose the Python 3.12 dependency and packaging workflow |
-| ❌ | P01.07 | Create pyproject.toml with package metadata |
+| ✅ | P01.07 | Create pyproject.toml with package metadata |
 | ❌ | P01.08 | Create the taintgate package and module directories |
 | ❌ | P01.09 | Create unit, property, fuzz and attack test directories |
 | ❌ | P01.10 | Configure formatting and linting |
@@ -267,8 +267,8 @@ Suggested window: Weeks 3-5.
 | Status | ID | Subtask / completion deliverable |
 | :---: | --- | --- |
 | ✅ | P09.01 | Define policy syntax and built-in predicate types |
-| ❌ | P09.02 | Parse facts and rule heads |
-| ❌ | P09.03 | Parse positive and negated rule bodies |
+| ✅ | P09.02 | Parse facts and rule heads |
+| ✅ | P09.03 | Parse positive and negated rule bodies |
 | ❌ | P09.04 | Parse string and integer constants |
 | ❌ | P09.05 | Validate predicate arity consistently |
 | ❌ | P09.06 | Enforce safe variables in heads and negation |
