@@ -266,7 +266,7 @@ Suggested window: Weeks 3-5.
 
 | Status | ID | Subtask / completion deliverable |
 | :---: | --- | --- |
-| ❌ | P09.01 | Define policy syntax and built-in predicate types |
+| ✅ | P09.01 | Define policy syntax and built-in predicate types |
 | ❌ | P09.02 | Parse facts and rule heads |
 | ❌ | P09.03 | Parse positive and negated rule bodies |
 | ❌ | P09.04 | Parse string and integer constants |
@@ -312,7 +312,7 @@ Suggested window: Weeks 3-5; 9-10.
 
 | Status | ID | Subtask / completion deliverable |
 | :---: | --- | --- |
-| ❌ | P11.01 | Pin an MCP SDK version and supported protocol revision |
+| ✅ | P11.01 | Pin an MCP SDK version and supported protocol revision |
 | ❌ | P11.02 | Implement the gateway server interface |
 | ❌ | P11.03 | Implement upstream MCP client connections |
 | ❌ | P11.04 | Implement stdio transport integration |
