@@ -9,3 +9,6 @@ means more restricted information. Public is the identity for intersection.
 
 A label flows to another when its readers contain all target readers. Public
 is below every finite reader set; the empty set is the confidentiality top.
+
+For reader intersection, `ALL ∩ R = R` and `R ∩ ALL = R`; represent ALL
+as None instead of enumerating an incomplete principal universe.

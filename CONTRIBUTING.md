@@ -148,7 +148,7 @@ Suggested window: Weeks 3-5.
 | ✅ | P04.01 | Define trusted and untrusted integrity ordering |
 | ✅ | P04.02 | Define principals and explicit public-reader semantics |
 | ✅ | P04.03 | Define confidentiality ordering with reversed set inclusion |
-| ❌ | P04.04 | Specify public ALL as the identity of reader intersection |
+| ✅ | P04.04 | Specify public ALL as the identity of reader intersection |
 | ❌ | P04.05 | Implement immutable labels |
 | ❌ | P04.06 | Implement the product-lattice join |
 | ❌ | P04.07 | Implement ordering and compatibility checks |
@@ -338,7 +338,7 @@ Suggested window: Weeks 6-8.
 | :---: | --- | --- |
 | ✅ | P12.01 | Define trusted local tool contracts independent of raw descriptions |
 | ✅ | P12.02 | Canonicalize approved names, descriptions and input schemas |
-| ❌ | P12.03 | Verify RFC 8785 canonicalization test vectors |
+| ✅ | P12.03 | Verify RFC 8785 canonicalization test vectors |
 | ❌ | P12.04 | Hash metadata using SHA-256 |
 | ❌ | P12.05 | Persist approval pins by server and tool identity |
 | ❌ | P12.06 | Compare current metadata with approved hashes |
