@@ -2,6 +2,7 @@
 from dataclasses import dataclass
 import re
 import rfc8785
+import hashlib
 
 
 def canonical_metadata(metadata: dict) -> bytes:
@@ -9,6 +10,10 @@ def canonical_metadata(metadata: dict) -> bytes:
     if not isinstance(metadata, dict):
         raise ValueError("Metadata must be an object")
     return rfc8785.dumps(metadata)
+
+
+def metadata_hash(metadata: dict) -> str:
+    return hashlib.sha256(canonical_metadata(metadata)).hexdigest()
 
 
 @dataclass(frozen=True)
