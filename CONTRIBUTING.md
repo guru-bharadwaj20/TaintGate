@@ -84,8 +84,8 @@ Suggested window: Week 1.
 | ✅ | P01.07 | Create pyproject.toml with package metadata |
 | ✅ | P01.08 | Create the taintgate package and module directories |
 | ✅ | P01.09 | Create unit, property, fuzz and attack test directories |
-| ❌ | P01.10 | Configure formatting and linting |
-| ❌ | P01.11 | Configure strict mypy checks |
+| ✅ | P01.10 | Configure formatting and linting |
+| ✅ | P01.11 | Configure strict mypy checks |
 | ❌ | P01.12 | Configure pytest and coverage reporting |
 | ❌ | P01.13 | Add a gitignore for models, secrets, caches and run artifacts |
 | ❌ | P01.14 | Add CI for linting, typing and tests |
@@ -342,7 +342,7 @@ Suggested window: Weeks 6-8.
 | ✅ | P12.04 | Hash metadata using SHA-256 |
 | ✅ | P12.05 | Persist approval pins by server and tool identity |
 | ✅ | P12.06 | Compare current metadata with approved hashes |
-| ❌ | P12.07 | Detect tool list and schema changes |
+| ✅ | P12.07 | Detect tool list and schema changes |
 | ❌ | P12.08 | Quarantine tools that change after approval |
 | ❌ | P12.09 | Display a bounded metadata diff for reapproval |
 | ❌ | P12.10 | Scan model-directed imperatives and concealment requests |

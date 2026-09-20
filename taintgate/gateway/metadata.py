@@ -37,6 +37,12 @@ class PinStore:
         row = self.db.execute("SELECT digest FROM pins WHERE server=? AND tool=?", (server, tool)).fetchone()
         return row is not None and row[0] == metadata_hash(metadata)
 
+    def changed_tools(self, server, current):
+        approved = {row[0] for row in self.db.execute("SELECT tool FROM pins WHERE server=?", (server,))}
+        changed = approved.symmetric_difference(current)
+        changed.update(name for name, metadata in current.items() if not self.matches(server, name, metadata))
+        return frozenset(changed)
+
 
 @dataclass(frozen=True)
 class Contract:
