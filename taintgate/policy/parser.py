@@ -1,5 +1,6 @@
 """Policy parser; accepts no Python expressions or executable functions."""
 import re
+import json
 from . import Atom, Program, Rule, Var, PolicyError
 
 _TOKEN = re.compile(r'\s*(?:(?P<ident>[A-Za-z_][A-Za-z_0-9]*)|(?P<int>-?\d+)|(?P<string>"(?:[^"\\]|\\.)*")|(?P<symbol>:-|[(),.]))')
@@ -38,7 +39,14 @@ class Parser:
         kind, value = self.take()
         if kind == 'ident' and value[0].isupper():
             return Var(value)
-        raise PolicyError('Expected variable')
+        if kind == 'int':
+            return int(value)
+        if kind == 'string':
+            try:
+                return json.loads(value)
+            except ValueError as exc:
+                raise PolicyError('Invalid string escape') from exc
+        raise PolicyError('Expected variable, integer, or quoted string')
 
     def atom(self):
         negated = self.peek() == 'not'
