@@ -1,4 +1,4 @@
-﻿"""Policy parser; accepts no Python expressions or executable functions."""
+"""Policy parser; accepts no Python expressions or executable functions."""
 import re
 from . import Atom, Program, Rule, Var, PolicyError
 
@@ -41,6 +41,9 @@ class Parser:
         raise PolicyError('Expected variable')
 
     def atom(self):
+        negated = self.peek() == 'not'
+        if negated:
+            self.take('not')
         kind, name = self.take()
         if kind != 'ident' or not name[0].islower():
             raise PolicyError('Predicate must begin lowercase')
@@ -52,14 +55,24 @@ class Parser:
                 self.take(',')
                 args.append(self.term())
         self.take(')')
-        return Atom(name, tuple(args))
+        return Atom(name, tuple(args), negated)
 
     def parse(self):
         facts, rules = [], []
         while self.peek() is not None:
             head = self.atom()
+            if head.negated:
+                raise PolicyError('Negated heads are forbidden')
+            if self.peek() == ':-':
+                self.take(':-')
+                body = [self.atom()]
+                while self.peek() == ',':
+                    self.take(',')
+                    body.append(self.atom())
+                rules.append(Rule(head, tuple(body)))
+            else:
+                facts.append(head)
             self.take('.')
-            facts.append(head)
         return Program(tuple(facts), tuple(rules))
 
 def parse(text):
