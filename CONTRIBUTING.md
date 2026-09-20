@@ -336,7 +336,7 @@ Suggested window: Weeks 6-8.
 
 | Status | ID | Subtask / completion deliverable |
 | :---: | --- | --- |
-| ❌ | P12.01 | Define trusted local tool contracts independent of raw descriptions |
+| ✅ | P12.01 | Define trusted local tool contracts independent of raw descriptions |
 | ❌ | P12.02 | Canonicalize approved names, descriptions and input schemas |
 | ❌ | P12.03 | Verify RFC 8785 canonicalization test vectors |
 | ❌ | P12.04 | Hash metadata using SHA-256 |
