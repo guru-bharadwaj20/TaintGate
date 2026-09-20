@@ -13,3 +13,11 @@ def test_commutative():
 def test_associative():
     for a, b, c in product(LABELS, repeat=3):
         assert a.join(b).join(c) == a.join(b.join(c))
+
+
+def test_lattice_bounds():
+    for a in LABELS:
+        assert a.join(a) == a
+    for a, b in product(LABELS, repeat=2):
+        assert a.flows_to(a.join(b))
+        assert b.flows_to(a.join(b))

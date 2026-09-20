@@ -156,7 +156,7 @@ Suggested window: Weeks 3-5.
 | ✅ | P04.09 | Implement provenance edges and source union |
 | ✅ | P04.10 | Test join commutativity |
 | ✅ | P04.11 | Test join associativity |
-| ❌ | P04.12 | Test join idempotence and upper-bound laws |
+| ✅ | P04.12 | Test join idempotence and upper-bound laws |
 | ❌ | P04.13 | Test public, empty-reader and mixed-principal cases |
 | ❌ | P04.14 | Specify endorsement authorization |
 | ❌ | P04.15 | Specify declassification authorization |
@@ -270,7 +270,7 @@ Suggested window: Weeks 3-5.
 | ✅ | P09.02 | Parse facts and rule heads |
 | ✅ | P09.03 | Parse positive and negated rule bodies |
 | ✅ | P09.04 | Parse string and integer constants |
-| ❌ | P09.05 | Validate predicate arity consistently |
+| ✅ | P09.05 | Validate predicate arity consistently |
 | ❌ | P09.06 | Enforce safe variables in heads and negation |
 | ❌ | P09.07 | Reject unsupported function symbols and unbounded terms |
 | ❌ | P09.08 | Define per-call policy facts from labels and provenance |
