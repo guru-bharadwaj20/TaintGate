@@ -42,3 +42,11 @@ class Validator(ast.NodeVisitor):
     def visit_Constant(self, node):
         if type(node.value) not in (str, bool, int, float, type(None)):
             raise PlanError('Unsupported literal')
+
+    def visit_Dict(self, node):
+        if any(key is None for key in node.keys):
+            raise PlanError('Dictionary unpacking is forbidden')
+        self.generic_visit(node)
+
+    def visit_List(self, node):
+        self.generic_visit(node)
