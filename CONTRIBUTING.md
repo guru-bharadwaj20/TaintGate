@@ -86,7 +86,7 @@ Suggested window: Week 1.
 | ✅ | P01.09 | Create unit, property, fuzz and attack test directories |
 | ✅ | P01.10 | Configure formatting and linting |
 | ✅ | P01.11 | Configure strict mypy checks |
-| ❌ | P01.12 | Configure pytest and coverage reporting |
+| ✅ | P01.12 | Configure pytest and coverage reporting |
 | ❌ | P01.13 | Add a gitignore for models, secrets, caches and run artifacts |
 | ❌ | P01.14 | Add CI for linting, typing and tests |
 | ❌ | P01.15 | Document a reproducible CPU-only development setup |
@@ -168,8 +168,8 @@ Suggested window: Weeks 3-5.
 
 | Status | ID | Subtask / completion deliverable |
 | :---: | --- | --- |
-| ❌ | P05.01 | Publish a supported syntax and operation table |
-| ❌ | P05.02 | Parse plans without using eval or exec |
+| ✅ | P05.01 | Publish a supported syntax and operation table |
+| ✅ | P05.02 | Parse plans without using eval or exec |
 | ❌ | P05.03 | Implement an explicit AST node allowlist |
 | ❌ | P05.04 | Validate assignments and literal expressions |
 | ❌ | P05.05 | Validate lists and dictionaries |
