@@ -83,7 +83,7 @@ Suggested window: Week 1.
 | ✅ | P01.06 | Choose the Python 3.12 dependency and packaging workflow |
 | ✅ | P01.07 | Create pyproject.toml with package metadata |
 | ✅ | P01.08 | Create the taintgate package and module directories |
-| ❌ | P01.09 | Create unit, property, fuzz and attack test directories |
+| ✅ | P01.09 | Create unit, property, fuzz and attack test directories |
 | ❌ | P01.10 | Configure formatting and linting |
 | ❌ | P01.11 | Configure strict mypy checks |
 | ❌ | P01.12 | Configure pytest and coverage reporting |
