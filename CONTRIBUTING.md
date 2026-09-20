@@ -152,7 +152,7 @@ Suggested window: Weeks 3-5.
 | ✅ | P04.05 | Implement immutable labels |
 | ✅ | P04.06 | Implement the product-lattice join |
 | ✅ | P04.07 | Implement ordering and compatibility checks |
-| ❌ | P04.08 | Implement stable provenance node identifiers |
+| ✅ | P04.08 | Implement stable provenance node identifiers |
 | ❌ | P04.09 | Implement provenance edges and source union |
 | ❌ | P04.10 | Test join commutativity |
 | ❌ | P04.11 | Test join associativity |

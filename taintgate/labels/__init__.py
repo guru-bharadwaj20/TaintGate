@@ -36,3 +36,11 @@ class Label:
 
     def may_read(self, principal: str) -> bool:
         return self.readers is None or principal in self.readers
+
+import hashlib
+import json
+
+
+def provenance_id(operation: str, parents=()) -> str:
+    payload = json.dumps([operation, sorted(set(parents))], separators=(',', ':'))
+    return hashlib.sha256(payload.encode()).hexdigest()
