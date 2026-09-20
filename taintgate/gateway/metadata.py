@@ -1,6 +1,14 @@
 """Trusted contracts never inherit remote prose."""
 from dataclasses import dataclass
 import re
+import rfc8785
+
+
+def canonical_metadata(metadata: dict) -> bytes:
+    """Bind all metadata, including annotations and output schemas."""
+    if not isinstance(metadata, dict):
+        raise ValueError("Metadata must be an object")
+    return rfc8785.dumps(metadata)
 
 
 @dataclass(frozen=True)
