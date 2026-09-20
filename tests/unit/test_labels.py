@@ -21,3 +21,10 @@ def test_lattice_bounds():
     for a, b in product(LABELS, repeat=2):
         assert a.flows_to(a.join(b))
         assert b.flows_to(a.join(b))
+
+
+def test_reader_edges():
+    assert Label().may_read('anyone')
+    assert not Label(readers=frozenset()).may_read('anyone')
+    assert Label(readers={'a'}).join(Label(readers={'b'})).readers == frozenset()
+    assert Label().join(Label(readers={'a'})).readers == frozenset({'a'})
