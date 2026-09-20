@@ -33,6 +33,10 @@ class PinStore:
     def close(self):
         self.db.close()
 
+    def matches(self, server, tool, metadata):
+        row = self.db.execute("SELECT digest FROM pins WHERE server=? AND tool=?", (server, tool)).fetchone()
+        return row is not None and row[0] == metadata_hash(metadata)
+
 
 @dataclass(frozen=True)
 class Contract:
