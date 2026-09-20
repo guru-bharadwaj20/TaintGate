@@ -84,4 +84,5 @@ class Parser:
         return Program(tuple(facts), tuple(rules))
 
 def parse(text):
-    return Parser(text).parse()
+    from .validation import validate
+    return validate(Parser(text).parse())
