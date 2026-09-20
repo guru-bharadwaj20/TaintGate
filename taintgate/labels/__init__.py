@@ -28,3 +28,11 @@ class Label:
                    self.readers if other.readers is None else
                    self.readers & other.readers)
         return Label(max(self.integrity, other.integrity), readers)
+
+    def flows_to(self, other: 'Label') -> bool:
+        readers_ok = (self.readers is None or
+                      (other.readers is not None and self.readers >= other.readers))
+        return self.integrity <= other.integrity and readers_ok
+
+    def may_read(self, principal: str) -> bool:
+        return self.readers is None or principal in self.readers
