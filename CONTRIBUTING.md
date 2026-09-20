@@ -340,7 +340,7 @@ Suggested window: Weeks 6-8.
 | ✅ | P12.02 | Canonicalize approved names, descriptions and input schemas |
 | ✅ | P12.03 | Verify RFC 8785 canonicalization test vectors |
 | ✅ | P12.04 | Hash metadata using SHA-256 |
-| ❌ | P12.05 | Persist approval pins by server and tool identity |
+| ✅ | P12.05 | Persist approval pins by server and tool identity |
 | ❌ | P12.06 | Compare current metadata with approved hashes |
 | ❌ | P12.07 | Detect tool list and schema changes |
 | ❌ | P12.08 | Quarantine tools that change after approval |
