@@ -3,6 +3,8 @@ from dataclasses import dataclass
 import re
 import rfc8785
 import hashlib
+import sqlite3
+import json
 
 
 def canonical_metadata(metadata: dict) -> bytes:
@@ -14,6 +16,26 @@ def canonical_metadata(metadata: dict) -> bytes:
 
 def metadata_hash(metadata: dict) -> str:
     return hashlib.sha256(canonical_metadata(metadata)).hexdigest()
+
+
+class PinStore:
+    """Only the trusted host should invoke approve; never expose it as a tool."""
+    def __init__(self, path):
+        self.db = sqlite3.connect(path)
+        self.db.execute("CREATE TABLE IF NOT EXISTS pins (server TEXT, tool TEXT, digest TEXT, metadata TEXT, PRIMARY KEY(server,tool))")
+        self.db.commit()
+
+    def approve(self, server, tool, metadata):
+        self.db.execute("INSERT OR REPLACE INTO pins VALUES (?,?,?,?)",
+                        (server, tool, metadata_hash(metadata), canonical_metadata(metadata).decode()))
+        self.db.commit()
+
+    def close(self):
+        self.db.close()
+
+    def matches(self, server, tool, metadata):
+        row = self.db.execute("SELECT digest FROM pins WHERE server=? AND tool=?", (server, tool)).fetchone()
+        return row is not None and row[0] == metadata_hash(metadata)
 
 
 @dataclass(frozen=True)

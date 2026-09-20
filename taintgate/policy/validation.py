@@ -6,6 +6,8 @@ def validate(program):
     for rule in program.rules:
         atoms.extend((rule.head, *rule.body))
     for atom in atoms:
+        if any(type(t) not in (str, int, Var) for t in atom.args):
+            raise PolicyError('Function symbols and structured terms are forbidden')
         arity = arities.setdefault(atom.predicate, len(atom.args))
         if arity != len(atom.args):
             raise PolicyError(f'Inconsistent arity for {atom.predicate}')

@@ -272,7 +272,7 @@ Suggested window: Weeks 3-5.
 | ✅ | P09.04 | Parse string and integer constants |
 | ✅ | P09.05 | Validate predicate arity consistently |
 | ✅ | P09.06 | Enforce safe variables in heads and negation |
-| ❌ | P09.07 | Reject unsupported function symbols and unbounded terms |
+| ✅ | P09.07 | Reject unsupported function symbols and unbounded terms |
 | ❌ | P09.08 | Define per-call policy facts from labels and provenance |
 | ❌ | P09.09 | Implement relation storage and fact deduplication |
 | ❌ | P09.10 | Implement variable binding and relational joins |
@@ -340,8 +340,8 @@ Suggested window: Weeks 6-8.
 | ✅ | P12.02 | Canonicalize approved names, descriptions and input schemas |
 | ✅ | P12.03 | Verify RFC 8785 canonicalization test vectors |
 | ✅ | P12.04 | Hash metadata using SHA-256 |
-| ❌ | P12.05 | Persist approval pins by server and tool identity |
-| ❌ | P12.06 | Compare current metadata with approved hashes |
+| ✅ | P12.05 | Persist approval pins by server and tool identity |
+| ✅ | P12.06 | Compare current metadata with approved hashes |
 | ❌ | P12.07 | Detect tool list and schema changes |
 | ❌ | P12.08 | Quarantine tools that change after approval |
 | ❌ | P12.09 | Display a bounded metadata diff for reapproval |
