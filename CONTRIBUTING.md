@@ -146,7 +146,7 @@ Suggested window: Weeks 3-5.
 | Status | ID | Subtask / completion deliverable |
 | :---: | --- | --- |
 | ✅ | P04.01 | Define trusted and untrusted integrity ordering |
-| ❌ | P04.02 | Define principals and explicit public-reader semantics |
+| ✅ | P04.02 | Define principals and explicit public-reader semantics |
 | ❌ | P04.03 | Define confidentiality ordering with reversed set inclusion |
 | ❌ | P04.04 | Specify public ALL as the identity of reader intersection |
 | ❌ | P04.05 | Implement immutable labels |
@@ -266,7 +266,7 @@ Suggested window: Weeks 3-5.
 
 | Status | ID | Subtask / completion deliverable |
 | :---: | --- | --- |
-| ❌ | P09.01 | Define policy syntax and built-in predicate types |
+| ✅ | P09.01 | Define policy syntax and built-in predicate types |
 | ❌ | P09.02 | Parse facts and rule heads |
 | ❌ | P09.03 | Parse positive and negated rule bodies |
 | ❌ | P09.04 | Parse string and integer constants |
@@ -312,7 +312,7 @@ Suggested window: Weeks 3-5; 9-10.
 
 | Status | ID | Subtask / completion deliverable |
 | :---: | --- | --- |
-| ❌ | P11.01 | Pin an MCP SDK version and supported protocol revision |
+| ✅ | P11.01 | Pin an MCP SDK version and supported protocol revision |
 | ❌ | P11.02 | Implement the gateway server interface |
 | ❌ | P11.03 | Implement upstream MCP client connections |
 | ❌ | P11.04 | Implement stdio transport integration |
@@ -336,7 +336,7 @@ Suggested window: Weeks 6-8.
 
 | Status | ID | Subtask / completion deliverable |
 | :---: | --- | --- |
-| ❌ | P12.01 | Define trusted local tool contracts independent of raw descriptions |
+| ✅ | P12.01 | Define trusted local tool contracts independent of raw descriptions |
 | ❌ | P12.02 | Canonicalize approved names, descriptions and input schemas |
 | ❌ | P12.03 | Verify RFC 8785 canonicalization test vectors |
 | ❌ | P12.04 | Hash metadata using SHA-256 |
