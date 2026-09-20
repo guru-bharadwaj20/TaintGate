@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "taintgate"
+version = "0.1.0"
+description = "Deterministic information-flow enforcement for LLM agent plans"
+readme = "README.md"
+requires-python = ">=3.12"
+license = "MIT"
+authors = [{name = "guru-bharadwaj20", email = "gururb20@gmail.com"}]
+dependencies = ["pydantic>=2.10,<3", "jsonschema>=4.23,<5"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<9", "pytest-cov>=6,<7", "hypothesis>=6.130,<7", "ruff>=0.11,<1", "mypy>=1.15,<2", "build>=1.2,<2", "types-jsonschema", "httpx>=0.28,<1"]
+mcp = ["mcp==1.28.0", "rfc8785>=0.1.4,<1", "markdown-it-py>=3,<5"]
+ui = ["fastapi>=0.115,<1", "uvicorn>=0.34,<1"]
+models = ["llama-cpp-python==0.3.16"]
+
+[project.scripts]
+taintgate = "taintgate.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["taintgate*"]
+
+[tool.setuptools.package-data]
+taintgate = ["py.typed", "ui/*.html"]
