@@ -18,3 +18,8 @@ bound to the current plan and policy. A model cannot endorse its own output.
 
 Declassification requires the data owner’s authorization for the specific
 recipient, operation and data provenance. Public release must be explicit.
+
+A relaxation implementation must verify a scoped approval before changing
+labels and append the previous label, new label, approval identity and source
+identifiers to the audit log. This package deliberately exposes no automatic
+label-relaxation operation.
