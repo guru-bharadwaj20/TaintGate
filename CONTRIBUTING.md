@@ -169,7 +169,7 @@ Suggested window: Weeks 3-5.
 | Status | ID | Subtask / completion deliverable |
 | :---: | --- | --- |
 | ✅ | P05.01 | Publish a supported syntax and operation table |
-| ❌ | P05.02 | Parse plans without using eval or exec |
+| ✅ | P05.02 | Parse plans without using eval or exec |
 | ❌ | P05.03 | Implement an explicit AST node allowlist |
 | ❌ | P05.04 | Validate assignments and literal expressions |
 | ❌ | P05.05 | Validate lists and dictionaries |
