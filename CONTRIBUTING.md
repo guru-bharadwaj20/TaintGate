@@ -82,7 +82,7 @@ Suggested window: Week 1.
 | ✅ | P01.05 | Record the required commit identity and small-commit rule |
 | ✅ | P01.06 | Choose the Python 3.12 dependency and packaging workflow |
 | ✅ | P01.07 | Create pyproject.toml with package metadata |
-| ❌ | P01.08 | Create the taintgate package and module directories |
+| ✅ | P01.08 | Create the taintgate package and module directories |
 | ❌ | P01.09 | Create unit, property, fuzz and attack test directories |
 | ❌ | P01.10 | Configure formatting and linting |
 | ❌ | P01.11 | Configure strict mypy checks |
@@ -149,8 +149,8 @@ Suggested window: Weeks 3-5.
 | ✅ | P04.02 | Define principals and explicit public-reader semantics |
 | ✅ | P04.03 | Define confidentiality ordering with reversed set inclusion |
 | ✅ | P04.04 | Specify public ALL as the identity of reader intersection |
-| ❌ | P04.05 | Implement immutable labels |
-| ❌ | P04.06 | Implement the product-lattice join |
+| ✅ | P04.05 | Implement immutable labels |
+| ✅ | P04.06 | Implement the product-lattice join |
 | ❌ | P04.07 | Implement ordering and compatibility checks |
 | ❌ | P04.08 | Implement stable provenance node identifiers |
 | ❌ | P04.09 | Implement provenance edges and source union |
