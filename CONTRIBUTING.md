@@ -147,7 +147,7 @@ Suggested window: Weeks 3-5.
 | :---: | --- | --- |
 | ✅ | P04.01 | Define trusted and untrusted integrity ordering |
 | ✅ | P04.02 | Define principals and explicit public-reader semantics |
-| ❌ | P04.03 | Define confidentiality ordering with reversed set inclusion |
+| ✅ | P04.03 | Define confidentiality ordering with reversed set inclusion |
 | ❌ | P04.04 | Specify public ALL as the identity of reader intersection |
 | ❌ | P04.05 | Implement immutable labels |
 | ❌ | P04.06 | Implement the product-lattice join |
@@ -269,7 +269,7 @@ Suggested window: Weeks 3-5.
 | ✅ | P09.01 | Define policy syntax and built-in predicate types |
 | ✅ | P09.02 | Parse facts and rule heads |
 | ✅ | P09.03 | Parse positive and negated rule bodies |
-| ❌ | P09.04 | Parse string and integer constants |
+| ✅ | P09.04 | Parse string and integer constants |
 | ❌ | P09.05 | Validate predicate arity consistently |
 | ❌ | P09.06 | Enforce safe variables in heads and negation |
 | ❌ | P09.07 | Reject unsupported function symbols and unbounded terms |
@@ -337,7 +337,7 @@ Suggested window: Weeks 6-8.
 | Status | ID | Subtask / completion deliverable |
 | :---: | --- | --- |
 | ✅ | P12.01 | Define trusted local tool contracts independent of raw descriptions |
-| ❌ | P12.02 | Canonicalize approved names, descriptions and input schemas |
+| ✅ | P12.02 | Canonicalize approved names, descriptions and input schemas |
 | ❌ | P12.03 | Verify RFC 8785 canonicalization test vectors |
 | ❌ | P12.04 | Hash metadata using SHA-256 |
 | ❌ | P12.05 | Persist approval pins by server and tool identity |
