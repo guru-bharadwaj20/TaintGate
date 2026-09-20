@@ -6,3 +6,6 @@ may read; an empty reader set means nobody may read. These are distinct values.
 
 Confidentiality is ordered by reversed set inclusion: fewer permitted readers
 means more restricted information. Public is the identity for intersection.
+
+A label flows to another when its readers contain all target readers. Public
+is below every finite reader set; the empty set is the confidentiality top.
