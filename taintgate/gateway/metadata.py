@@ -5,6 +5,7 @@ import rfc8785
 import hashlib
 import sqlite3
 import json
+import difflib
 
 
 def canonical_metadata(metadata: dict) -> bytes:
@@ -42,6 +43,15 @@ class PinStore:
         changed = approved.symmetric_difference(current)
         changed.update(name for name, metadata in current.items() if not self.matches(server, name, metadata))
         return frozenset(changed)
+
+    def diff(self, server, tool, metadata, limit=2000):
+        if not 1 <= limit <= 10000:
+            raise ValueError("Diff limit outside safe range")
+        row = self.db.execute("SELECT metadata FROM pins WHERE server=? AND tool=?", (server, tool)).fetchone()
+        before = json.dumps(json.loads(row[0]) if row else {}, sort_keys=True, indent=2)
+        after = json.dumps(metadata, sort_keys=True, indent=2)
+        diff = "\n".join(difflib.unified_diff(before.splitlines(), after.splitlines(), fromfile="approved", tofile="current"))
+        return diff[:limit]
 
 
 class MetadataGuard:

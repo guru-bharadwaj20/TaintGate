@@ -88,7 +88,7 @@ Suggested window: Week 1.
 | ✅ | P01.11 | Configure strict mypy checks |
 | ✅ | P01.12 | Configure pytest and coverage reporting |
 | ✅ | P01.13 | Add a gitignore for models, secrets, caches and run artifacts |
-| ❌ | P01.14 | Add CI for linting, typing and tests |
+| ✅ | P01.14 | Add CI for linting, typing and tests |
 | ❌ | P01.15 | Document a reproducible CPU-only development setup |
 
 ## P02 - Threat model and architecture
@@ -344,8 +344,8 @@ Suggested window: Weeks 6-8.
 | ✅ | P12.06 | Compare current metadata with approved hashes |
 | ✅ | P12.07 | Detect tool list and schema changes |
 | ✅ | P12.08 | Quarantine tools that change after approval |
-| ❌ | P12.09 | Display a bounded metadata diff for reapproval |
-| ❌ | P12.10 | Scan model-directed imperatives and concealment requests |
+| ✅ | P12.09 | Display a bounded metadata diff for reapproval |
+| ✅ | P12.10 | Scan model-directed imperatives and concealment requests |
 | ❌ | P12.11 | Scan references to unrelated tools and servers |
 | ❌ | P12.12 | Scan invisible Unicode and excessive description length |
 | ❌ | P12.13 | Keep unapproved raw metadata outside planner context |
