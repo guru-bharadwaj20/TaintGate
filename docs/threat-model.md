@@ -60,3 +60,7 @@ flowchart LR
 ## Planner input contract
 
 A prompt contains the user request, locally approved tool signatures, language instructions and trusted error codes only. It excludes tool results, extraction outputs, raw server metadata, confidential runtime values and copied exception messages.
+
+## Strict and permissive modes
+
+Strict mode joins the program-counter label with protected action arguments. Permissive mode tracks explicit data flows only and permits attacker control over conditional constant-argument actions. Permissive mode is a comparison configuration, not equivalent protection.
