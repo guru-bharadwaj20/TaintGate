@@ -149,3 +149,12 @@ class Interpreter:
         if isinstance(node, ast.List):
             return Labeled(tuple(self.expression(n) for n in node.elts), self.pc)
         return self._complex_string(node)
+
+    _complex_list = complex_expression
+
+    def complex_expression(self, node):
+        if isinstance(node, ast.Dict):
+            keys = [self.expression(n) for n in node.keys]
+            values = [self.expression(n) for n in node.values]
+            return self.combine({k.value: v for k, v in zip(keys, values)}, *keys)
+        return self._complex_list(node)
