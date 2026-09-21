@@ -344,7 +344,7 @@ Suggested window: Weeks 6-8.
 | ✅ | P12.06 | Compare current metadata with approved hashes |
 | ✅ | P12.07 | Detect tool list and schema changes |
 | ✅ | P12.08 | Quarantine tools that change after approval |
-| ❌ | P12.09 | Display a bounded metadata diff for reapproval |
+| ✅ | P12.09 | Display a bounded metadata diff for reapproval |
 | ❌ | P12.10 | Scan model-directed imperatives and concealment requests |
 | ❌ | P12.11 | Scan references to unrelated tools and servers |
 | ❌ | P12.12 | Scan invisible Unicode and excessive description length |
