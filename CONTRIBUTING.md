@@ -219,7 +219,7 @@ Suggested window: Weeks 6-8.
 | ✅ | P07.01 | Implement the program-counter label |
 | ✅ | P07.02 | Raise the counter label on branch conditions |
 | ✅ | P07.03 | Restore counter context after branch execution |
-| ❌ | P07.04 | Track control dependencies on assignments |
+| ✅ | P07.04 | Track control dependencies on assignments |
 | ❌ | P07.05 | Raise the counter label on loop selection and iteration |
 | ❌ | P07.06 | Include counter labels in every protected tool-call decision |
 | ❌ | P07.07 | Implement strict mode as the default security mode |
@@ -319,7 +319,7 @@ Suggested window: Weeks 3-5; 9-10.
 | ✅ | P11.05 | Implement Streamable HTTP transport integration |
 | ✅ | P11.06 | Remap request identifiers across multiple servers |
 | ✅ | P11.07 | Namespace tools by approved server identity |
-| ❌ | P11.08 | Reject namespace collisions and cross-server shadowing |
+| ✅ | P11.08 | Reject namespace collisions and cross-server shadowing |
 | ❌ | P11.09 | Validate JSON-RPC messages and tool arguments |
 | ❌ | P11.10 | Implement cancellation propagation |
 | ❌ | P11.11 | Implement upstream timeouts and disconnect handling |
