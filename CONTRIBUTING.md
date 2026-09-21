@@ -113,8 +113,8 @@ Suggested window: Weeks 1-2.
 | ✅ | P02.14 | Define observable actions and approved exceptions for noninterference |
 | ✅ | P02.15 | Distinguish allowed data-dependent reads from protected side effects |
 | ✅ | P02.16 | Specify fail-closed behaviour and the trusted computing base |
-| ❌ | P02.17 | Document extensions over CaMeL and FIDES without novelty claims |
-| ❌ | P02.18 | Assign module interfaces and ownership for a team of four |
+| ✅ | P02.17 | Document extensions over CaMeL and FIDES without novelty claims |
+| ✅ | P02.18 | Assign module interfaces and ownership for a team of four |
 
 ## P03 - CPU model setup and trusted planner
 
@@ -202,7 +202,7 @@ Suggested window: Weeks 3-5.
 | ✅ | P06.09 | Implement dictionary entry and shape labels |
 | ✅ | P06.10 | Propagate container, element and index labels on lookup |
 | ✅ | P06.11 | Propagate only shape labels through length operations |
-| ❌ | P06.12 | Implement approved field lookup without arbitrary host access |
+| ✅ | P06.12 | Implement approved field lookup without arbitrary host access |
 | ❌ | P06.13 | Prevent alias mutation from bypassing label tracking |
 | ❌ | P06.14 | Implement a registered-tool interface |
 | ❌ | P06.15 | Label tool results before exposing them to plans |
