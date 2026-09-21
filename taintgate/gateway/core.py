@@ -1,6 +1,10 @@
 """All transport adapters converge on this fail-closed call boundary."""
 from dataclasses import dataclass
 from typing import Any
+import json
+import asyncio
+from jsonschema import Draft202012Validator
+from mcp.types import JSONRPCMessage
 
 
 @dataclass(frozen=True)
@@ -16,6 +20,24 @@ class Gateway:
         self.authorize = authorize
         self.contracts = {}
         self.servers = {}
+        self.pending = {}
+
+    async def call_with_id(self, request_id, name, arguments, *, context):
+        if request_id in self.pending:
+            return GatewayResponse("deny", reason="Duplicate active request")
+        task = asyncio.create_task(self.call(name, arguments, context=context))
+        self.pending[request_id] = task
+        try:
+            return await task
+        finally:
+            self.pending.pop(request_id, None)
+
+    def cancel(self, request_id):
+        task = self.pending.get(request_id)
+        if task is not None:
+            task.cancel()
+            return True
+        return False
 
     def register(self, contract, upstream):
         if contract.name != f"{contract.server}__{contract.tool}":
@@ -32,4 +54,15 @@ class Gateway:
         return [contract.planner_metadata() for contract in self.contracts.values()]
 
     async def call(self, name, arguments, *, context):
+        if name not in self.contracts or not isinstance(arguments, dict):
+            return GatewayResponse("deny", reason="Unknown tool or invalid arguments")
+        try:
+            json.dumps(arguments, allow_nan=False)
+            Draft202012Validator(self.contracts[name].input_schema).validate(arguments)
+        except (ValueError, TypeError, Exception) as error:
+            return GatewayResponse("deny", reason="Arguments fail trusted schema")
         return GatewayResponse("deny", reason="Call boundary not configured")
+
+
+def validate_rpc(payload):
+    return JSONRPCMessage.model_validate(payload)
