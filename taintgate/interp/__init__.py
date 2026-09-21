@@ -192,3 +192,39 @@ class Interpreter:
             value = value if isinstance(value, Labeled) else Labeled(value, container.label)
             return self.combine(value.value, container, value)
         return self._complex_len(node)
+
+    _complex_field = complex_expression
+
+    def complex_expression(self, node):
+        if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id in self.tools:
+            name = node.func.id
+            args = {str(i): self.expression(n) for i, n in enumerate(node.args)}
+            args.update({k.arg: self.expression(k.value) for k in node.keywords})
+            if self.authorize(name, args, self.effective_pc()) is not True:
+                raise RuntimeFault(self.effective_pc(), 'tool_denied')
+            positional = [self.raw(args[str(i)]) for i in range(len(node.args))]
+            keyword = {k.arg: self.raw(args[k.arg]) for k in node.keywords}
+            return self.tool_result(self.tools[name], positional, keyword, args)
+        return self._complex_field(node)
+
+    def effective_pc(self):
+        return self.pc.join(self.control) if self.strict else self.pc
+
+    def tool_result(self, tool, positional, keyword, args):
+        result = tool.function(*positional, **keyword)
+        label = tool.result_label.join(self.effective_pc())
+        for arg in args.values():
+            label = label.join(arg.label)
+        if isinstance(result, Labeled):
+            label = label.join(result.label)
+            sources, result = result.sources, result.value
+        else:
+            sources = frozenset()
+        return Labeled(result, label, sources | {provenance_id('tool', [str(tool.identity)])})
+
+
+@dataclass(frozen=True)
+class Tool:
+    function: object
+    result_label: Label = Label(Integrity.UNTRUSTED)
+    identity: str = 'registered'
