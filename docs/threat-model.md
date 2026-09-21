@@ -14,3 +14,7 @@ A poisoned email asks an agent to delete a file or transfer money. The runtime c
 ## A2: argument hijacking
 
 A document substitutes an attacker email address for a user-selected recipient. Recipients derived from untrusted inputs require endorsement or a narrowly scoped approval; strings extracted under a schema remain untrusted.
+
+## A3: exfiltration
+
+A private invoice is sent through an email body, URL query, markdown image or final response. Reader constraints apply at sinks, and outbound rendering must not fetch attacker-controlled resources.
