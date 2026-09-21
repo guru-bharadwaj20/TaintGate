@@ -258,3 +258,17 @@ def _combine_provenance(self, value, *operands):
 
 
 Interpreter.combine = _combine_provenance
+
+_before_pc_assignment = Interpreter.statement
+
+
+def _pc_statement(self, node):
+    result = _before_pc_assignment(self, node)
+    if isinstance(node, ast.Assign):
+        name = node.targets[0].id
+        value = self.env[name]
+        self.env[name] = Labeled(value.value, value.label.join(self.effective_pc()), value.sources)
+    return result
+
+
+Interpreter.statement = _pc_statement
