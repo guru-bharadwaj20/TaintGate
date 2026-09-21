@@ -200,7 +200,7 @@ Suggested window: Weeks 3-5.
 | ✅ | P06.07 | Implement labelled string methods and f-strings |
 | ✅ | P06.08 | Implement list elements and container shape labels |
 | ✅ | P06.09 | Implement dictionary entry and shape labels |
-| ❌ | P06.10 | Propagate container, element and index labels on lookup |
+| ✅ | P06.10 | Propagate container, element and index labels on lookup |
 | ❌ | P06.11 | Propagate only shape labels through length operations |
 | ❌ | P06.12 | Implement approved field lookup without arbitrary host access |
 | ❌ | P06.13 | Prevent alias mutation from bypassing label tracking |
