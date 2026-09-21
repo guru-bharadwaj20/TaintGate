@@ -275,7 +275,7 @@ Suggested window: Weeks 3-5.
 | ✅ | P09.07 | Reject unsupported function symbols and unbounded terms |
 | ✅ | P09.08 | Define per-call policy facts from labels and provenance |
 | ✅ | P09.09 | Implement relation storage and fact deduplication |
-| ❌ | P09.10 | Implement variable binding and relational joins |
+| ✅ | P09.10 | Implement variable binding and relational joins |
 | ❌ | P09.11 | Implement a naive bottom-up reference evaluator |
 | ❌ | P09.12 | Define default-deny and explicit allow rules |
 | ❌ | P09.13 | Define deny-over-ask-over-allow precedence |
