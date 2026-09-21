@@ -2,6 +2,7 @@
 from dataclasses import dataclass
 from typing import Any
 import json
+import asyncio
 from jsonschema import Draft202012Validator
 from mcp.types import JSONRPCMessage
 
@@ -19,6 +20,24 @@ class Gateway:
         self.authorize = authorize
         self.contracts = {}
         self.servers = {}
+        self.pending = {}
+
+    async def call_with_id(self, request_id, name, arguments, *, context):
+        if request_id in self.pending:
+            return GatewayResponse("deny", reason="Duplicate active request")
+        task = asyncio.create_task(self.call(name, arguments, context=context))
+        self.pending[request_id] = task
+        try:
+            return await task
+        finally:
+            self.pending.pop(request_id, None)
+
+    def cancel(self, request_id):
+        task = self.pending.get(request_id)
+        if task is not None:
+            task.cancel()
+            return True
+        return False
 
     def register(self, contract, upstream):
         if contract.name != f"{contract.server}__{contract.tool}":
