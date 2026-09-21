@@ -77,3 +77,10 @@ class AuditLog:
                 return False
             previous = digest
         return True
+
+
+def leaf_hash(payload: bytes) -> bytes:
+    return hashlib.sha256(b"\x00" + payload).digest()
+
+def parent_hash(left: bytes, right: bytes) -> bytes:
+    return hashlib.sha256(b"\x01" + left + right).digest()
