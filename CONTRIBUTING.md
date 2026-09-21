@@ -322,7 +322,7 @@ Suggested window: Weeks 3-5; 9-10.
 | ✅ | P11.08 | Reject namespace collisions and cross-server shadowing |
 | ✅ | P11.09 | Validate JSON-RPC messages and tool arguments |
 | ✅ | P11.10 | Implement cancellation propagation |
-| ❌ | P11.11 | Implement upstream timeouts and disconnect handling |
+| ✅ | P11.11 | Implement upstream timeouts and disconnect handling |
 | ❌ | P11.12 | Implement bounded queues and back-pressure |
 | ❌ | P11.13 | Load per-server trust and reader configuration |
 | ❌ | P11.14 | Label every tool result including errors and structured content |
