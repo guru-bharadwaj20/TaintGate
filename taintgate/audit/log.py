@@ -33,3 +33,8 @@ def decision_event(run_id: str, tool: str, action: str, reasons: list[str], labe
     if action not in {"allow", "deny", "ask"}:
         raise ValueError("Invalid audit decision")
     return Event("policy", run_id, {"tool": tool, "action": action, "reasons": reasons, "label": label})
+
+def approval_event(run_id: str, scope: str, reason: str, kind: str = "approval") -> Event:
+    if not scope or not reason or kind not in {"approval", "endorsement", "declassification"}:
+        raise ValueError("Approval requires scope and reason")
+    return Event(kind, run_id, {"scope": scope, "reason": reason})

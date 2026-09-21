@@ -407,7 +407,7 @@ Suggested window: Weeks 9-10.
 | ✅ | P15.01 | Define canonical audit event schemas |
 | ✅ | P15.02 | Record plan identifiers and execution boundaries |
 | ✅ | P15.03 | Record labelled tool-call decisions and explanations |
-| ❌ | P15.04 | Record approval, endorsement and declassification events |
+| ✅ | P15.04 | Record approval, endorsement and declassification events |
 | ❌ | P15.05 | Redact sensitive payloads while preserving verification |
 | ❌ | P15.06 | Implement SQLite append-only event writes |
 | ❌ | P15.07 | Link entries with previous-entry SHA-256 hashes |
