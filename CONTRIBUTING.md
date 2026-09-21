@@ -346,7 +346,7 @@ Suggested window: Weeks 6-8.
 | ✅ | P12.08 | Quarantine tools that change after approval |
 | ✅ | P12.09 | Display a bounded metadata diff for reapproval |
 | ✅ | P12.10 | Scan model-directed imperatives and concealment requests |
-| ❌ | P12.11 | Scan references to unrelated tools and servers |
+| ✅ | P12.11 | Scan references to unrelated tools and servers |
 | ❌ | P12.12 | Scan invisible Unicode and excessive description length |
 | ❌ | P12.13 | Keep unapproved raw metadata outside planner context |
 | ❌ | P12.14 | Treat description scanning as an extra layer rather than a guarantee |
