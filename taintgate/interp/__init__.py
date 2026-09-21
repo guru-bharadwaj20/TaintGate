@@ -258,3 +258,46 @@ def _combine_provenance(self, value, *operands):
 
 
 Interpreter.combine = _combine_provenance
+
+_before_pc_assignment = Interpreter.statement
+
+
+def _pc_statement(self, node):
+    result = _before_pc_assignment(self, node)
+    if isinstance(node, ast.Assign):
+        name = node.targets[0].id
+        value = self.env[name]
+        self.env[name] = Labeled(value.value, value.label.join(self.effective_pc()), value.sources)
+    return result
+
+
+Interpreter.statement = _pc_statement
+
+_before_branch = Interpreter.statement
+
+
+def _branch_statement(self, node):
+    if isinstance(node, ast.If):
+        condition = self.expression(node.test)
+        self.pc = self.pc.join(condition.label)
+        self.block(node.body if condition.value else node.orelse)
+        return
+    return _before_branch(self, node)
+
+
+Interpreter.statement = _branch_statement
+
+_before_branch_restore = Interpreter.statement
+
+
+def _restore_branch(self, node):
+    old_pc = self.pc
+    try:
+        return _before_branch_restore(self, node)
+    finally:
+        if isinstance(node, ast.If):
+            self.control = self.control.join(self.pc)
+            self.pc = old_pc
+
+
+Interpreter.statement = _restore_branch
