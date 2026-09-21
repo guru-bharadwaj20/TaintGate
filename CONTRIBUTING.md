@@ -298,7 +298,7 @@ Suggested window: Weeks 6-8.
 | ✅ | P10.08 | Add relation argument indexes |
 | ✅ | P10.09 | Track the rule and supporting facts for each derivation |
 | ✅ | P10.10 | Generate bounded explanation trees with cycle handling |
-| ❌ | P10.11 | Implement recipient-integrity rules |
+| ✅ | P10.11 | Implement recipient-integrity rules |
 | ❌ | P10.12 | Implement confidentiality reader checks |
 | ❌ | P10.13 | Implement amount and destructive-action approval rules |
 | ❌ | P10.14 | Test overlapping allow, ask and deny derivations |
