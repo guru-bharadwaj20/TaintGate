@@ -25,3 +25,9 @@ def test_python_oracle(expression):
     result = subprocess.run([sys.executable, '-I', '-c', 'import json; print(json.dumps(' + expression + '))'], capture_output=True, text=True, check=True, timeout=5)
     actual = Interpreter().run('x = ' + expression)['x'].value
     assert actual == json.loads(result.stdout)
+
+
+def test_untaken_branch_assignment():
+    flag = Labeled(False, Label(Integrity.UNTRUSTED))
+    env = Interpreter().run('x = 0\nif flag:\n x = 1\ny = x', {'flag': flag})
+    assert env['y'].label.integrity == Integrity.UNTRUSTED
