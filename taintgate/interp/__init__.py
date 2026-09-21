@@ -272,3 +272,17 @@ def _pc_statement(self, node):
 
 
 Interpreter.statement = _pc_statement
+
+_before_branch = Interpreter.statement
+
+
+def _branch_statement(self, node):
+    if isinstance(node, ast.If):
+        condition = self.expression(node.test)
+        self.pc = self.pc.join(condition.label)
+        self.block(node.body if condition.value else node.orelse)
+        return
+    return _before_branch(self, node)
+
+
+Interpreter.statement = _branch_statement

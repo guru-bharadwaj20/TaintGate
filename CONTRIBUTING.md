@@ -217,7 +217,7 @@ Suggested window: Weeks 6-8.
 | Status | ID | Subtask / completion deliverable |
 | :---: | --- | --- |
 | ✅ | P07.01 | Implement the program-counter label |
-| ❌ | P07.02 | Raise the counter label on branch conditions |
+| ✅ | P07.02 | Raise the counter label on branch conditions |
 | ❌ | P07.03 | Restore counter context after branch execution |
 | ❌ | P07.04 | Track control dependencies on assignments |
 | ❌ | P07.05 | Raise the counter label on loop selection and iteration |
