@@ -56,3 +56,7 @@ flowchart LR
  D --> L
  G --> L
 ```
+
+## Planner input contract
+
+A prompt contains the user request, locally approved tool signatures, language instructions and trusted error codes only. It excludes tool results, extraction outputs, raw server metadata, confidential runtime values and copied exception messages.

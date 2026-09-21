@@ -108,7 +108,7 @@ Suggested window: Weeks 1-2.
 | ✅ | P02.09 | Describe A7 secret leakage attacks |
 | ✅ | P02.10 | Record excluded host, weights and timing attacks |
 | ✅ | P02.11 | Draw the planner, checker, interpreter and gateway boundaries |
-| ❌ | P02.12 | Specify what planner inputs may contain |
+| ✅ | P02.12 | Specify what planner inputs may contain |
 | ❌ | P02.13 | Define strict and permissive modes and their different guarantees |
 | ❌ | P02.14 | Define observable actions and approved exceptions for noninterference |
 | ❌ | P02.15 | Distinguish allowed data-dependent reads from protected side effects |
@@ -197,7 +197,7 @@ Suggested window: Weeks 3-5.
 | ✅ | P06.04 | Implement arithmetic with joined operand labels |
 | ✅ | P06.05 | Implement comparisons with joined operand labels |
 | ✅ | P06.06 | Implement boolean short-circuit evaluation |
-| ❌ | P06.07 | Implement labelled string methods and f-strings |
+| ✅ | P06.07 | Implement labelled string methods and f-strings |
 | ❌ | P06.08 | Implement list elements and container shape labels |
 | ❌ | P06.09 | Implement dictionary entry and shape labels |
 | ❌ | P06.10 | Propagate container, element and index labels on lookup |
