@@ -31,3 +31,11 @@ def test_untaken_branch_assignment():
     flag = Labeled(False, Label(Integrity.UNTRUSTED))
     env = Interpreter().run('x = 0\nif flag:\n x = 1\ny = x', {'flag': flag})
     assert env['y'].label.integrity == Integrity.UNTRUSTED
+
+
+def test_tool_pc():
+    from taintgate.interp import Tool
+    seen = []
+    vm = Interpreter({'send': Tool(lambda x: None)}, lambda name, args, pc: seen.append(pc) or True)
+    vm.run('if flag:\n send("constant")', {'flag': Labeled(True, Label(Integrity.UNTRUSTED))})
+    assert seen[0].integrity == Integrity.UNTRUSTED

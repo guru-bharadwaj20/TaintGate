@@ -9,6 +9,31 @@ class Evaluation:
     facts: frozenset
     derivations: dict = field(default_factory=dict)
 
+    def explain(self, fact, max_depth=12, max_nodes=100):
+        budget = [max_nodes]
+        def visit(current, path, depth):
+            if budget[0] <= 0:
+                return {'fact': repr(current), 'truncated': True}
+            budget[0] -= 1
+            node = {'fact': repr(current)}
+            if current in path:
+                return {**node, 'cycle': True}
+            if depth >= max_depth:
+                return {**node, 'truncated': True}
+            entry = self.derivations.get(current)
+            if entry is None:
+                return {**node, 'missing': True}
+            rule, support = entry
+            node['rule'] = repr(rule) if rule else 'input fact'
+            node['supports'] = []
+            for item in support:
+                if budget[0] <= 0:
+                    node['truncated'] = True
+                    break
+                node['supports'].append(visit(item, path | {current}, depth + 1))
+            return node
+        return visit(fact, set(), 0)
+
 class NaiveEngine:
     def __init__(self, program, max_facts=10000, max_rounds=1000, max_work=1000000):
         self.max_facts = max_facts
