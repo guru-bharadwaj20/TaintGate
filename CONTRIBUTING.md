@@ -203,10 +203,10 @@ Suggested window: Weeks 3-5.
 | ✅ | P06.10 | Propagate container, element and index labels on lookup |
 | ✅ | P06.11 | Propagate only shape labels through length operations |
 | ✅ | P06.12 | Implement approved field lookup without arbitrary host access |
-| ❌ | P06.13 | Prevent alias mutation from bypassing label tracking |
-| ❌ | P06.14 | Implement a registered-tool interface |
-| ❌ | P06.15 | Label tool results before exposing them to plans |
-| ❌ | P06.16 | Implement quarantined extraction as a runtime primitive |
+| ✅ | P06.13 | Prevent alias mutation from bypassing label tracking |
+| ✅ | P06.14 | Implement a registered-tool interface |
+| ✅ | P06.15 | Label tool results before exposing them to plans |
+| ✅ | P06.16 | Implement quarantined extraction as a runtime primitive |
 | ❌ | P06.17 | Record operation provenance and execution traces |
 | ❌ | P06.18 | Compare pure supported expressions with CPython in an isolated test oracle |
 
