@@ -192,7 +192,7 @@ Suggested window: Weeks 3-5.
 | Status | ID | Subtask / completion deliverable |
 | :---: | --- | --- |
 | ✅ | P06.01 | Implement immutable labelled runtime values |
-| ❌ | P06.02 | Implement the labelled environment and variable lookup |
+| ✅ | P06.02 | Implement the labelled environment and variable lookup |
 | ❌ | P06.03 | Implement assignment with label preservation |
 | ❌ | P06.04 | Implement arithmetic with joined operand labels |
 | ❌ | P06.05 | Implement comparisons with joined operand labels |
