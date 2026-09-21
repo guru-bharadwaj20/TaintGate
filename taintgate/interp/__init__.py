@@ -125,3 +125,20 @@ class Interpreter:
                     break
             return self.combine(result.value, *operands)
         return self._complex_compare(node)
+
+    _complex_boolean = complex_expression
+
+    def complex_expression(self, node):
+        if isinstance(node, ast.JoinedStr):
+            parts = [self.expression(n.value if isinstance(n, ast.FormattedValue) else n) for n in node.values]
+            return self.combine(''.join(str(p.value) for p in parts), *parts)
+        if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute):
+            receiver = self.expression(node.func.value)
+            if not isinstance(receiver.value, str):
+                raise RuntimeFault(receiver.label, 'string_method_receiver')
+            args = [self.expression(n) for n in node.args]
+            if node.keywords:
+                raise RuntimeFault(code='string_method_keywords')
+            result = getattr(str, node.func.attr)(receiver.value, *(a.value for a in args))
+            return self.combine(result, receiver, *args)
+        return self._complex_boolean(node)
