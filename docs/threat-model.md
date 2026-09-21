@@ -76,3 +76,7 @@ A configured read capability may accept untrusted search terms within a restrict
 ## Fail closed and trusted base
 
 Unknown tools, malformed plans, unsupported syntax, policy errors, missing approvals and changed pins deny execution. The trusted base includes the parser, label propagation, policy engine, gateway enforcement, approval storage and configuration. Audit storage provides evidence but does not substitute for enforcement.
+
+## Prior work
+
+The split planner and extraction design follows CaMeL; integrity and confidentiality tracking also follows FIDES. Planned extensions include an explainable custom Datalog engine, conservative static analysis, an MCP gateway, outbound filters and Merkle audit proofs. Claims concern implemented and measured extensions only.
