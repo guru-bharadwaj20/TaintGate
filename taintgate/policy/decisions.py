@@ -26,7 +26,7 @@ class Decision:
 def decide(evaluation, call_id):
     for action in ('deny', 'ask'):
         if Atom(action, (call_id,)) in evaluation.facts:
-            return Decision(action, (f'explicit {action} rule',))
+            return Decision(action, (evaluation.explain(Atom(action, (call_id,))),))
     if Atom('allow', (call_id,)) in evaluation.facts:
-        return Decision('allow', ('explicit allow rule',))
+        return Decision('allow', (evaluation.explain(Atom('allow', (call_id,))),))
     return Decision('deny', ('no explicit allow rule',))
