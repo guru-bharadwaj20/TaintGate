@@ -1,6 +1,9 @@
 """All transport adapters converge on this fail-closed call boundary."""
 from dataclasses import dataclass
 from typing import Any
+import json
+from jsonschema import Draft202012Validator
+from mcp.types import JSONRPCMessage
 
 
 @dataclass(frozen=True)
@@ -32,4 +35,15 @@ class Gateway:
         return [contract.planner_metadata() for contract in self.contracts.values()]
 
     async def call(self, name, arguments, *, context):
+        if name not in self.contracts or not isinstance(arguments, dict):
+            return GatewayResponse("deny", reason="Unknown tool or invalid arguments")
+        try:
+            json.dumps(arguments, allow_nan=False)
+            Draft202012Validator(self.contracts[name].input_schema).validate(arguments)
+        except (ValueError, TypeError, Exception) as error:
+            return GatewayResponse("deny", reason="Arguments fail trusted schema")
         return GatewayResponse("deny", reason="Call boundary not configured")
+
+
+def validate_rpc(payload):
+    return JSONRPCMessage.model_validate(payload)
