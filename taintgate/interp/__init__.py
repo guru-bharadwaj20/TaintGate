@@ -327,3 +327,15 @@ def _loop_statement(self, node):
 
 
 Interpreter.statement = _loop_statement
+
+_before_control_expression = Interpreter.expression
+
+
+def _control_expression(self, node):
+    value = _before_control_expression(self, node)
+    if self.strict:
+        self.control = self.control.join(value.label)
+    return value
+
+
+Interpreter.expression = _control_expression
