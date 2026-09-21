@@ -51,3 +51,18 @@ def reject_negative_cycles(graph):
         for dep, negative in edges:
             if negative and membership[node] == membership[dep]:
                 raise PolicyError(f'Negative dependency cycle: {node} -> {dep}')
+
+def stratify(program):
+    graph = dependency_graph(program)
+    reject_negative_cycles(graph)
+    levels = {node: 0 for node in graph}
+    changed = True
+    while changed:
+        changed = False
+        for node, edges in graph.items():
+            required = max((levels[dep] + int(negative) for dep, negative in edges), default=0)
+            if required > levels[node]:
+                levels[node] = required
+                changed = True
+    return [tuple(r for r in program.rules if levels[r.head.predicate] == i)
+            for i in range(max(levels.values(), default=0) + 1)]

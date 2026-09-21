@@ -196,7 +196,7 @@ Suggested window: Weeks 3-5.
 | ✅ | P06.03 | Implement assignment with label preservation |
 | ✅ | P06.04 | Implement arithmetic with joined operand labels |
 | ✅ | P06.05 | Implement comparisons with joined operand labels |
-| ❌ | P06.06 | Implement boolean short-circuit evaluation |
+| ✅ | P06.06 | Implement boolean short-circuit evaluation |
 | ❌ | P06.07 | Implement labelled string methods and f-strings |
 | ❌ | P06.08 | Implement list elements and container shape labels |
 | ❌ | P06.09 | Implement dictionary entry and shape labels |
@@ -291,7 +291,7 @@ Suggested window: Weeks 6-8.
 | ✅ | P10.01 | Build signed predicate dependency graphs |
 | ✅ | P10.02 | Implement strongly connected components |
 | ✅ | P10.03 | Reject cycles containing negative dependencies |
-| ❌ | P10.04 | Compute and order valid strata |
+| ✅ | P10.04 | Compute and order valid strata |
 | ❌ | P10.05 | Evaluate negation only against completed lower strata |
 | ❌ | P10.06 | Implement delta fact sets for recursive evaluation |
 | ❌ | P10.07 | Implement semi-naive rule variants for recursive joins |
