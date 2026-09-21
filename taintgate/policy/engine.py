@@ -19,6 +19,7 @@ class NaiveEngine:
 
     def evaluate(self, facts=()):
         relations = Relations((*self.program.facts, *facts))
+        derivations = {fact: (None, ()) for fact in relations.facts()}
         from .strata import stratify
         rounds = work = 0
         for rules in stratify(self.program):
@@ -33,8 +34,11 @@ class NaiveEngine:
                         work += 1
                         if work > self.max_work:
                             raise PolicyError("Evaluation work budget exceeded")
-                        changed |= relations.add(instantiate(rule.head, binding))
-        return Evaluation(relations.facts())
+                        fact = instantiate(rule.head, binding)
+                        if relations.add(fact):
+                            derivations[fact] = (rule, support)
+                            changed = True
+        return Evaluation(relations.facts(), derivations)
 
 class Delta:
     """A round's newly inserted facts, partitioned by predicate."""
@@ -57,6 +61,7 @@ class Engine(NaiveEngine):
         facts = tuple(facts)
         validate(Program((*self.program.facts, *facts), self.program.rules))
         relations = Relations((*self.program.facts, *facts))
+        derivations = {fact: (None, ()) for fact in relations.facts()}
         rounds = work = 0
         for rules in stratify(self.program):
             delta = Delta(relations.facts())
@@ -80,8 +85,9 @@ class Engine(NaiveEngine):
                             fact = instantiate(rule.head, binding)
                             if fact.args not in relations.data[fact.predicate]:
                                 pending.add(fact)
+                                derivations.setdefault(fact, (rule, support))
                 for fact in pending:
                     relations.add(fact)
                     new.add(fact)
                 delta, first = new, False
-        return Evaluation(relations.facts())
+        return Evaluation(relations.facts(), derivations)
