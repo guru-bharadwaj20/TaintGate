@@ -87,3 +87,8 @@ class Validator(ast.NodeVisitor):
         if node.attr.startswith('_'):
             raise PlanError('Private fields are forbidden')
         self.generic_visit(node)
+
+    def visit_FormattedValue(self, node):
+        if node.format_spec is not None or node.conversion != -1:
+            raise PlanError('Format specifications and conversions are forbidden')
+        self.generic_visit(node)
