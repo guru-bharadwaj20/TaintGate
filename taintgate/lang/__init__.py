@@ -92,3 +92,7 @@ class Validator(ast.NodeVisitor):
         if node.format_spec is not None or node.conversion != -1:
             raise PlanError('Format specifications and conversions are forbidden')
         self.generic_visit(node)
+
+    def visit_Name(self, node):
+        if node.id.startswith('_') or node.id in {'globals', 'locals', 'getattr', 'setattr', 'eval', 'exec', 'compile', 'open'}:
+            raise PlanError('Private or reflective identifier')
