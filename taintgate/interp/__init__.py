@@ -362,3 +362,23 @@ def _fuel_statement(self, node):
 
 Interpreter.expression = _fuel_expression
 Interpreter.statement = _fuel_statement
+
+_before_bounded_complex = Interpreter.complex_expression
+
+
+def _bounded_complex(self, node):
+    if isinstance(node, ast.BinOp) and isinstance(node.op, ast.Mult):
+        left, right = self.expression(node.left), self.expression(node.right)
+        for container, count in ((left.value, right.value), (right.value, left.value)):
+            if isinstance(container, (str, tuple)) and isinstance(count, int) and len(container) * max(count, 0) > self.max_result:
+                raise RuntimeFault(self.effective_pc(), 'result_size_limit')
+        return self.combine(operator.mul(left.value, right.value), left, right)
+    result = _before_bounded_complex(self, node)
+    if isinstance(result.value, (str, tuple, Mapping)) and len(result.value) > self.max_result:
+        raise RuntimeFault(result.label.join(self.effective_pc()), 'result_size_limit')
+    if isinstance(result.value, int) and result.value.bit_length() > self.max_result:
+        raise RuntimeFault(result.label.join(self.effective_pc()), 'integer_size_limit')
+    return result
+
+
+Interpreter.complex_expression = _bounded_complex
