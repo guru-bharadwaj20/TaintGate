@@ -41,3 +41,15 @@ def approval_event(run_id: str, scope: str, reason: str, kind: str = "approval")
 
 def redact(value: Any) -> dict[str, str]:
     return {"redacted_sha256": hashlib.sha256(canonical(value)).hexdigest()}
+
+class AuditLog:
+    def __init__(self, path: str | Path = ":memory:") -> None:
+        self.connection = sqlite3.connect(str(path))
+        self.connection.execute("CREATE TABLE IF NOT EXISTS events (seq INTEGER PRIMARY KEY, event BLOB NOT NULL, prev TEXT NOT NULL, digest TEXT NOT NULL)")
+        self.connection.commit()
+
+    def close(self) -> None:
+        self.connection.close()
+
+    def rows(self) -> list[tuple[int, bytes, str, str]]:
+        return list(self.connection.execute("SELECT seq,event,prev,digest FROM events ORDER BY seq"))

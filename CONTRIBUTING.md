@@ -409,7 +409,7 @@ Suggested window: Weeks 9-10.
 | ✅ | P15.03 | Record labelled tool-call decisions and explanations |
 | ✅ | P15.04 | Record approval, endorsement and declassification events |
 | ✅ | P15.05 | Redact sensitive payloads while preserving verification |
-| ❌ | P15.06 | Implement SQLite append-only event writes |
+| ✅ | P15.06 | Implement SQLite append-only event writes |
 | ❌ | P15.07 | Link entries with previous-entry SHA-256 hashes |
 | ❌ | P15.08 | Implement Merkle leaf and internal-node domain separation |
 | ❌ | P15.09 | Implement deterministic odd-leaf handling |
