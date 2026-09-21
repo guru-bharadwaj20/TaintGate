@@ -7,3 +7,12 @@ deny(C) :- untrusted_control(C).
 CONFIDENTIALITY_RULES = '''
 deny(C) :- reader_denied(C).
 '''
+
+APPROVAL_RULES = '''
+ask(C) :- approval_required(C).
+'''
+
+def policy_for_tools(tools):
+    import json
+    return RECIPIENT_RULES + CONFIDENTIALITY_RULES + APPROVAL_RULES + '\n'.join(
+        f'allow(C) :- call(C, {json.dumps(tool)}).' for tool in tools)
