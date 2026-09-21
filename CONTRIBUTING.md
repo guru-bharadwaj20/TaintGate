@@ -278,7 +278,7 @@ Suggested window: Weeks 3-5.
 | ✅ | P09.10 | Implement variable binding and relational joins |
 | ✅ | P09.11 | Implement a naive bottom-up reference evaluator |
 | ✅ | P09.12 | Define default-deny and explicit allow rules |
-| ❌ | P09.13 | Define deny-over-ask-over-allow precedence |
+| ✅ | P09.13 | Define deny-over-ask-over-allow precedence |
 | ❌ | P09.14 | Bound policy size and evaluation resources |
 | ❌ | P09.15 | Test parsing, unsafe rules and simple derivations |
 
@@ -346,8 +346,8 @@ Suggested window: Weeks 6-8.
 | ✅ | P12.08 | Quarantine tools that change after approval |
 | ✅ | P12.09 | Display a bounded metadata diff for reapproval |
 | ✅ | P12.10 | Scan model-directed imperatives and concealment requests |
-| ❌ | P12.11 | Scan references to unrelated tools and servers |
-| ❌ | P12.12 | Scan invisible Unicode and excessive description length |
+| ✅ | P12.11 | Scan references to unrelated tools and servers |
+| ✅ | P12.12 | Scan invisible Unicode and excessive description length |
 | ❌ | P12.13 | Keep unapproved raw metadata outside planner context |
 | ❌ | P12.14 | Treat description scanning as an extra layer rather than a guarantee |
 | ❌ | P12.15 | Close approval-to-execution metadata race windows |

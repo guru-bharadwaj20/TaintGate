@@ -1,4 +1,4 @@
-﻿from . import Atom
+from . import Atom
 
 def call_facts(call_id, tool, args, destination=None, pc=None):
     """Lower labelled arguments without granting any authority implicitly."""
@@ -24,6 +24,9 @@ class Decision:
     reasons: tuple
 
 def decide(evaluation, call_id):
+    for action in ('deny', 'ask'):
+        if Atom(action, (call_id,)) in evaluation.facts:
+            return Decision(action, (f'explicit {action} rule',))
     if Atom('allow', (call_id,)) in evaluation.facts:
         return Decision('allow', ('explicit allow rule',))
     return Decision('deny', ('no explicit allow rule',))
