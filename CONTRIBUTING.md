@@ -316,8 +316,8 @@ Suggested window: Weeks 3-5; 9-10.
 | ✅ | P11.02 | Implement the gateway server interface |
 | ✅ | P11.03 | Implement upstream MCP client connections |
 | ✅ | P11.04 | Implement stdio transport integration |
-| ❌ | P11.05 | Implement Streamable HTTP transport integration |
-| ❌ | P11.06 | Remap request identifiers across multiple servers |
+| ✅ | P11.05 | Implement Streamable HTTP transport integration |
+| ✅ | P11.06 | Remap request identifiers across multiple servers |
 | ❌ | P11.07 | Namespace tools by approved server identity |
 | ❌ | P11.08 | Reject namespace collisions and cross-server shadowing |
 | ❌ | P11.09 | Validate JSON-RPC messages and tool arguments |

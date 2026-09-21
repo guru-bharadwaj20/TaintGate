@@ -15,3 +15,7 @@ them. They never grant permission. The planner sees a locally authored Contract,
 never raw remote descriptions. The trusted host approves full canonical metadata
 out of band; SHA-256 pins survive restart in SQLite. A changed pin remains
 quarantined even if the peer later restores its old metadata.
+
+Each upstream owns a separate ClientSession. JSON-RPC IDs are session-scoped;
+downstream calls return through their awaiting handler instead of forwarding raw
+upstream IDs. Two peers can both use request ID 1 without a routing collision.
