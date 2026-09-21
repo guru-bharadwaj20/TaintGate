@@ -289,7 +289,7 @@ Suggested window: Weeks 6-8.
 | Status | ID | Subtask / completion deliverable |
 | :---: | --- | --- |
 | ✅ | P10.01 | Build signed predicate dependency graphs |
-| ❌ | P10.02 | Implement strongly connected components |
+| ✅ | P10.02 | Implement strongly connected components |
 | ❌ | P10.03 | Reject cycles containing negative dependencies |
 | ❌ | P10.04 | Compute and order valid strata |
 | ❌ | P10.05 | Evaluate negation only against completed lower strata |
