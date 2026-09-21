@@ -179,7 +179,7 @@ Suggested window: Weeks 3-5.
 | ✅ | P05.09 | Validate comparisons and boolean operators |
 | ✅ | P05.10 | Validate indexing and approved field access |
 | ✅ | P05.11 | Validate f-strings and approved string methods |
-| ❌ | P05.12 | Reject imports, while, functions, classes and lambdas |
+| ✅ | P05.12 | Reject imports, while, functions, classes and lambdas |
 | ❌ | P05.13 | Reject dunder access and introspection paths |
 | ❌ | P05.14 | Reject try blocks and unsupported exception constructs |
 | ❌ | P05.15 | Bound plan size, nesting and literal size |
