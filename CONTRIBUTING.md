@@ -194,8 +194,8 @@ Suggested window: Weeks 3-5.
 | ✅ | P06.01 | Implement immutable labelled runtime values |
 | ✅ | P06.02 | Implement the labelled environment and variable lookup |
 | ✅ | P06.03 | Implement assignment with label preservation |
-| ❌ | P06.04 | Implement arithmetic with joined operand labels |
-| ❌ | P06.05 | Implement comparisons with joined operand labels |
+| ✅ | P06.04 | Implement arithmetic with joined operand labels |
+| ✅ | P06.05 | Implement comparisons with joined operand labels |
 | ❌ | P06.06 | Implement boolean short-circuit evaluation |
 | ❌ | P06.07 | Implement labelled string methods and f-strings |
 | ❌ | P06.08 | Implement list elements and container shape labels |
@@ -289,7 +289,7 @@ Suggested window: Weeks 6-8.
 | Status | ID | Subtask / completion deliverable |
 | :---: | --- | --- |
 | ✅ | P10.01 | Build signed predicate dependency graphs |
-| ❌ | P10.02 | Implement strongly connected components |
+| ✅ | P10.02 | Implement strongly connected components |
 | ❌ | P10.03 | Reject cycles containing negative dependencies |
 | ❌ | P10.04 | Compute and order valid strata |
 | ❌ | P10.05 | Evaluate negation only against completed lower strata |
