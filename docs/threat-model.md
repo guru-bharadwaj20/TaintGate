@@ -26,3 +26,7 @@ A tool description instructs the model to disclose secrets or use another tool. 
 ## A5: metadata changes
 
 A server changes its schema or description after approval. Canonical metadata hashes bind approval to a version; a mismatch quarantines the tool and requires a new approval.
+
+## A6: shadowing
+
+A server impersonates another server tool or instructs the model how to use it. Namespaces and approved local signatures keep tool identity separate from server-authored prose.
