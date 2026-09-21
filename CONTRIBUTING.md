@@ -322,7 +322,7 @@ Suggested window: Weeks 3-5; 9-10.
 | ✅ | P11.08 | Reject namespace collisions and cross-server shadowing |
 | ✅ | P11.09 | Validate JSON-RPC messages and tool arguments |
 | ✅ | P11.10 | Implement cancellation propagation |
-| ❌ | P11.11 | Implement upstream timeouts and disconnect handling |
+| ✅ | P11.11 | Implement upstream timeouts and disconnect handling |
 | ❌ | P11.12 | Implement bounded queues and back-pressure |
 | ❌ | P11.13 | Load per-server trust and reader configuration |
 | ❌ | P11.14 | Label every tool result including errors and structured content |
@@ -407,8 +407,8 @@ Suggested window: Weeks 9-10.
 | ✅ | P15.01 | Define canonical audit event schemas |
 | ✅ | P15.02 | Record plan identifiers and execution boundaries |
 | ✅ | P15.03 | Record labelled tool-call decisions and explanations |
-| ❌ | P15.04 | Record approval, endorsement and declassification events |
-| ❌ | P15.05 | Redact sensitive payloads while preserving verification |
+| ✅ | P15.04 | Record approval, endorsement and declassification events |
+| ✅ | P15.05 | Redact sensitive payloads while preserving verification |
 | ❌ | P15.06 | Implement SQLite append-only event writes |
 | ❌ | P15.07 | Link entries with previous-entry SHA-256 hashes |
 | ❌ | P15.08 | Implement Merkle leaf and internal-node domain separation |

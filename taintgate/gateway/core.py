@@ -15,12 +15,24 @@ class GatewayResponse:
 
 
 class Gateway:
-    def __init__(self, guard, authorize=None):
+    def __init__(self, guard, authorize=None, timeout=30):
+        if timeout <= 0:
+            raise ValueError("Timeout must be positive")
         self.guard = guard
         self.authorize = authorize
         self.contracts = {}
         self.servers = {}
         self.pending = {}
+        self.timeout = timeout
+
+    async def _execute(self, server, tool, arguments):
+        try:
+            async with asyncio.timeout(self.timeout):
+                return GatewayResponse("allow", await self.servers[server].call_tool(tool, arguments))
+        except TimeoutError:
+            return GatewayResponse("error", reason="Upstream timed out")
+        except Exception:
+            return GatewayResponse("error", reason="Upstream unavailable")
 
     async def call_with_id(self, request_id, name, arguments, *, context):
         if request_id in self.pending:
