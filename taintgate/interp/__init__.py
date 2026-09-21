@@ -82,3 +82,33 @@ class Interpreter:
             a = self.expression(node.operand)
             return self.combine(self.unary[type(node.op)](a.value), a)
         return self._complex_base(node)
+
+    comparisons = {ast.Eq: operator.eq, ast.NotEq: operator.ne, ast.Lt: operator.lt,
+                   ast.LtE: operator.le, ast.Gt: operator.gt, ast.GtE: operator.ge,
+                   ast.In: lambda a,b: a in b, ast.NotIn: lambda a,b: a not in b,
+                   ast.Is: operator.is_, ast.IsNot: operator.is_not}
+    _complex_arithmetic = complex_expression
+
+    def complex_expression(self, node):
+        if isinstance(node, ast.Compare):
+            a = self.expression(node.left)
+            operands = [a]
+            result = True
+            for op, right in zip(node.ops, node.comparators):
+                b = self.expression(right)
+                operands.append(b)
+                result = self.comparisons[type(op)](self.raw(a), self.raw(b))
+                if not result:
+                    break
+                a = b
+            return self.combine(result, *operands)
+        return self._complex_arithmetic(node)
+
+    def raw(self, value):
+        if isinstance(value, Labeled):
+            return self.raw(value.value)
+        if isinstance(value, tuple):
+            return [self.raw(v) for v in value]
+        if isinstance(value, Mapping):
+            return {k: self.raw(v) for k, v in value.items()}
+        return value

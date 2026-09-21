@@ -195,7 +195,7 @@ Suggested window: Weeks 3-5.
 | ✅ | P06.02 | Implement the labelled environment and variable lookup |
 | ✅ | P06.03 | Implement assignment with label preservation |
 | ✅ | P06.04 | Implement arithmetic with joined operand labels |
-| ❌ | P06.05 | Implement comparisons with joined operand labels |
+| ✅ | P06.05 | Implement comparisons with joined operand labels |
 | ❌ | P06.06 | Implement boolean short-circuit evaluation |
 | ❌ | P06.07 | Implement labelled string methods and f-strings |
 | ❌ | P06.08 | Implement list elements and container shape labels |
