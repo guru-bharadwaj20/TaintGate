@@ -382,3 +382,17 @@ def _bounded_complex(self, node):
 
 
 Interpreter.complex_expression = _bounded_complex
+
+_before_safe_run = Interpreter.run
+
+
+def _safe_run(self, source, inputs=None):
+    try:
+        return _before_safe_run(self, source, inputs)
+    except RuntimeFault:
+        raise
+    except Exception:
+        raise RuntimeFault(self.effective_pc()) from None
+
+
+Interpreter.run = _safe_run
