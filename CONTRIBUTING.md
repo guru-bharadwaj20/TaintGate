@@ -174,7 +174,7 @@ Suggested window: Weeks 3-5.
 | ✅ | P05.04 | Validate assignments and literal expressions |
 | ✅ | P05.05 | Validate lists and dictionaries |
 | ✅ | P05.06 | Validate if and else statements |
-| ❌ | P05.07 | Validate bounded for loops over supported containers |
+| ✅ | P05.07 | Validate bounded for loops over supported containers |
 | ❌ | P05.08 | Validate registered calls and quarantined extraction calls |
 | ❌ | P05.09 | Validate comparisons and boolean operators |
 | ❌ | P05.10 | Validate indexing and approved field access |

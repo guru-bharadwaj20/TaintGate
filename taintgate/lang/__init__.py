@@ -53,3 +53,8 @@ class Validator(ast.NodeVisitor):
 
     def visit_If(self, node):
         self.generic_visit(node)
+
+    def visit_For(self, node):
+        if not isinstance(node.target, ast.Name) or node.orelse:
+            raise PlanError('For requires one target and no else')
+        self.generic_visit(node)
