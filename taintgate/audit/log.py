@@ -22,3 +22,9 @@ class Event:
         if self.kind not in EVENT_KINDS or not self.run_id:
             raise ValueError("Invalid audit event")
         canonical(self.payload)
+
+def plan_event(run_id: str, source: str) -> Event:
+    return Event("plan", run_id, {"plan_hash": hashlib.sha256(source.encode()).hexdigest()})
+
+def boundary_event(run_id: str, *, finished: bool = False) -> Event:
+    return Event("run_end" if finished else "run_start", run_id, {})
