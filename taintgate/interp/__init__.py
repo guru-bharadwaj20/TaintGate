@@ -112,3 +112,16 @@ class Interpreter:
         if isinstance(value, Mapping):
             return {k: self.raw(v) for k, v in value.items()}
         return value
+
+    _complex_compare = complex_expression
+
+    def complex_expression(self, node):
+        if isinstance(node, ast.BoolOp):
+            operands = []
+            for item in node.values:
+                result = self.expression(item)
+                operands.append(result)
+                if (isinstance(node.op, ast.And) and not result.value) or (isinstance(node.op, ast.Or) and result.value):
+                    break
+            return self.combine(result.value, *operands)
+        return self._complex_compare(node)
