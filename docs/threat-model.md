@@ -22,3 +22,7 @@ A private invoice is sent through an email body, URL query, markdown image or fi
 ## A4: tool poisoning
 
 A tool description instructs the model to disclose secrets or use another tool. Only trusted local contracts enter planner prompts; remote description scanning is supplemental and cannot prove benign intent.
+
+## A5: metadata changes
+
+A server changes its schema or description after approval. Canonical metadata hashes bind approval to a version; a mismatch quarantines the tool and requires a new approval.
