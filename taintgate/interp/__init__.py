@@ -168,3 +168,15 @@ class Interpreter:
             result = result if isinstance(result, Labeled) else Labeled(result, container.label, container.sources)
             return self.combine(result.value, container, index, result)
         return self._complex_dict(node)
+
+    _complex_index = complex_expression
+
+    def complex_expression(self, node):
+        if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id == 'len':
+            if len(node.args) != 1 or node.keywords:
+                raise RuntimeFault(code='len_arity')
+            value = self.expression(node.args[0])
+            if not isinstance(value.value, (str, tuple, Mapping)):
+                raise RuntimeFault(value.label, 'len_type')
+            return self.combine(len(value.value), value)
+        return self._complex_index(node)
