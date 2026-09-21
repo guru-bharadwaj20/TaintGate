@@ -104,7 +104,7 @@ Suggested window: Weeks 1-2.
 | ✅ | P02.05 | Describe A3 exfiltration attacks |
 | ✅ | P02.06 | Describe A4 tool poisoning attacks |
 | ✅ | P02.07 | Describe A5 post-approval tool changes |
-| ❌ | P02.08 | Describe A6 cross-server tool shadowing |
+| ✅ | P02.08 | Describe A6 cross-server tool shadowing |
 | ❌ | P02.09 | Describe A7 secret leakage attacks |
 | ❌ | P02.10 | Record excluded host, weights and timing attacks |
 | ❌ | P02.11 | Draw the planner, checker, interpreter and gateway boundaries |
@@ -192,8 +192,8 @@ Suggested window: Weeks 3-5.
 | Status | ID | Subtask / completion deliverable |
 | :---: | --- | --- |
 | ✅ | P06.01 | Implement immutable labelled runtime values |
-| ❌ | P06.02 | Implement the labelled environment and variable lookup |
-| ❌ | P06.03 | Implement assignment with label preservation |
+| ✅ | P06.02 | Implement the labelled environment and variable lookup |
+| ✅ | P06.03 | Implement assignment with label preservation |
 | ❌ | P06.04 | Implement arithmetic with joined operand labels |
 | ❌ | P06.05 | Implement comparisons with joined operand labels |
 | ❌ | P06.06 | Implement boolean short-circuit evaluation |
@@ -313,7 +313,7 @@ Suggested window: Weeks 3-5; 9-10.
 | Status | ID | Subtask / completion deliverable |
 | :---: | --- | --- |
 | ✅ | P11.01 | Pin an MCP SDK version and supported protocol revision |
-| ❌ | P11.02 | Implement the gateway server interface |
+| ✅ | P11.02 | Implement the gateway server interface |
 | ❌ | P11.03 | Implement upstream MCP client connections |
 | ❌ | P11.04 | Implement stdio transport integration |
 | ❌ | P11.05 | Implement Streamable HTTP transport integration |
