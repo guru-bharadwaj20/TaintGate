@@ -301,3 +301,29 @@ def _restore_branch(self, node):
 
 
 Interpreter.statement = _restore_branch
+
+_before_loop = Interpreter.statement
+
+
+def _loop_statement(self, node):
+    if isinstance(node, ast.For):
+        collection = self.expression(node.iter)
+        if not isinstance(collection.value, (tuple, Mapping, str)):
+            raise RuntimeFault(collection.label, 'loop_container')
+        old_pc = self.pc
+        self.pc = self.pc.join(collection.label)
+        self.control = self.control.join(self.pc)
+        try:
+            for i, item in enumerate(collection.value):
+                if i >= self.max_iterations:
+                    raise RuntimeFault(self.effective_pc(), 'iteration_limit')
+                value = item if isinstance(item, Labeled) else Labeled(item, collection.label, collection.sources)
+                self.env[node.target.id] = Labeled(value.value, value.label.join(self.effective_pc()), value.sources)
+                self.block(node.body)
+        finally:
+            self.pc = old_pc
+        return
+    return _before_loop(self, node)
+
+
+Interpreter.statement = _loop_statement
