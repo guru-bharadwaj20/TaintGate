@@ -58,3 +58,18 @@ class Validator(ast.NodeVisitor):
         if not isinstance(node.target, ast.Name) or node.orelse:
             raise PlanError('For requires one target and no else')
         self.generic_visit(node)
+
+    methods = {'lower', 'upper', 'strip', 'replace', 'startswith', 'endswith'}
+
+    def visit_Call(self, node):
+        if isinstance(node.func, ast.Name):
+            if node.func.id not in self.calls:
+                raise PlanError('Unregistered call')
+        elif isinstance(node.func, ast.Attribute):
+            if node.func.attr not in self.methods:
+                raise PlanError('Unapproved method')
+        else:
+            raise PlanError('Indirect calls are forbidden')
+        if any(k.arg is None for k in node.keywords):
+            raise PlanError('Keyword unpacking is forbidden')
+        self.generic_visit(node)
