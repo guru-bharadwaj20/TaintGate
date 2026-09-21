@@ -230,7 +230,7 @@ Suggested window: Weeks 6-8.
 | ✅ | P07.12 | Bound iterations, recursion-free operations and result sizes |
 | ✅ | P07.13 | Convert runtime failures into correctly labelled errors |
 | ✅ | P07.14 | Prevent error traces from exposing secrets to the planner |
-| ❌ | P07.15 | Test constant-argument calls under tainted conditions |
+| ✅ | P07.15 | Test constant-argument calls under tainted conditions |
 | ❌ | P07.16 | Test nested branches, loops and early failures |
 
 ## P08 - JSON Schema to GBNF and quarantined extraction

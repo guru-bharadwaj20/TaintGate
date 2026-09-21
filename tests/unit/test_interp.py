@@ -50,3 +50,13 @@ def test_error_redaction():
         vm.run('read()')
     assert 'SECRET' not in str(exc.value)
     assert exc.value.__cause__ is None
+
+
+@pytest.mark.parametrize('flag', [True, False])
+def test_tainted_guard_blocks_later_constant(flag):
+    from taintgate.interp import Tool
+    sent = []
+    vm = Interpreter({'send': Tool(lambda x: sent.append(x))}, lambda name, args, pc: pc.integrity == Integrity.TRUSTED)
+    with pytest.raises(RuntimeFault):
+        vm.run('if flag:\n x = 1\nsend("constant")', {'flag': Labeled(flag, Label(Integrity.UNTRUSTED))})
+    assert not sent
