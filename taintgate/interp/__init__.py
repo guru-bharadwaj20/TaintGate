@@ -180,3 +180,15 @@ class Interpreter:
                 raise RuntimeFault(value.label, 'len_type')
             return self.combine(len(value.value), value)
         return self._complex_index(node)
+
+    _complex_len = complex_expression
+
+    def complex_expression(self, node):
+        if isinstance(node, ast.Attribute):
+            container = self.expression(node.value)
+            if not isinstance(container.value, Mapping):
+                raise RuntimeFault(container.label, 'field_requires_mapping')
+            value = container.value[node.attr]
+            value = value if isinstance(value, Labeled) else Labeled(value, container.label)
+            return self.combine(value.value, container, value)
+        return self._complex_len(node)

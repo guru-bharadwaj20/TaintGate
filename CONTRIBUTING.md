@@ -202,7 +202,7 @@ Suggested window: Weeks 3-5.
 | ✅ | P06.09 | Implement dictionary entry and shape labels |
 | ✅ | P06.10 | Propagate container, element and index labels on lookup |
 | ✅ | P06.11 | Propagate only shape labels through length operations |
-| ❌ | P06.12 | Implement approved field lookup without arbitrary host access |
+| ✅ | P06.12 | Implement approved field lookup without arbitrary host access |
 | ❌ | P06.13 | Prevent alias mutation from bypassing label tracking |
 | ❌ | P06.14 | Implement a registered-tool interface |
 | ❌ | P06.15 | Label tool results before exposing them to plans |
