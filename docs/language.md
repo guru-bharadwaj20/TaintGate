@@ -22,3 +22,9 @@ This conservatively reduces task success. Runtime authorization still applies.
 still apply, but persistent control labels do not. It cannot protect untaken
 assignments or later actions against termination-sensitive influence and must
 not be presented as a security-equivalent alternative.
+
+Loop selection and termination depend on container shape; each iteration and
+body has the shape counter label. Any expression may fail after reading data,
+so strict mode also retains evaluated operand labels. Errors stop execution;
+no later action is attempted. This is conservative action mediation, not a
+proof that timing, termination or host resource usage are unobservable.

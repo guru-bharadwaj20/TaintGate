@@ -225,7 +225,7 @@ Suggested window: Weeks 6-8.
 | ✅ | P07.07 | Implement strict mode as the default security mode |
 | ✅ | P07.08 | Implement and clearly label permissive mode limitations |
 | ✅ | P07.09 | Track tainted short-circuit control dependencies |
-| ❌ | P07.10 | Specify loop termination and exception observables |
+| ✅ | P07.10 | Specify loop termination and exception observables |
 | ❌ | P07.11 | Implement interpreter fuel accounting |
 | ❌ | P07.12 | Bound iterations, recursion-free operations and result sizes |
 | ❌ | P07.13 | Convert runtime failures into correctly labelled errors |
