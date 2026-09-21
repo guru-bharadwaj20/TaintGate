@@ -35,3 +35,17 @@ class NaiveEngine:
                             raise PolicyError("Evaluation work budget exceeded")
                         changed |= relations.add(instantiate(rule.head, binding))
         return Evaluation(relations.facts())
+
+class Delta:
+    """A round's newly inserted facts, partitioned by predicate."""
+    def __init__(self, facts=()):
+        from collections import defaultdict
+        self.data = defaultdict(set)
+        for fact in facts:
+            self.data[fact.predicate].add(fact.args)
+
+    def add(self, fact):
+        self.data[fact.predicate].add(fact.args)
+
+    def __bool__(self):
+        return any(self.data.values())

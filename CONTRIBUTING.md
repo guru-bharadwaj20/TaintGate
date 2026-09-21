@@ -293,7 +293,7 @@ Suggested window: Weeks 6-8.
 | ✅ | P10.03 | Reject cycles containing negative dependencies |
 | ✅ | P10.04 | Compute and order valid strata |
 | ✅ | P10.05 | Evaluate negation only against completed lower strata |
-| ❌ | P10.06 | Implement delta fact sets for recursive evaluation |
+| ✅ | P10.06 | Implement delta fact sets for recursive evaluation |
 | ❌ | P10.07 | Implement semi-naive rule variants for recursive joins |
 | ❌ | P10.08 | Add relation argument indexes |
 | ❌ | P10.09 | Track the rule and supporting facts for each derivation |
