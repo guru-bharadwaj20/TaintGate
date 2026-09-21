@@ -38,3 +38,6 @@ def approval_event(run_id: str, scope: str, reason: str, kind: str = "approval")
     if not scope or not reason or kind not in {"approval", "endorsement", "declassification"}:
         raise ValueError("Approval requires scope and reason")
     return Event(kind, run_id, {"scope": scope, "reason": reason})
+
+def redact(value: Any) -> dict[str, str]:
+    return {"redacted_sha256": hashlib.sha256(canonical(value)).hexdigest()}
