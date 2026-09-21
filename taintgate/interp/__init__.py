@@ -142,3 +142,10 @@ class Interpreter:
             result = getattr(str, node.func.attr)(receiver.value, *(a.value for a in args))
             return self.combine(result, receiver, *args)
         return self._complex_boolean(node)
+
+    _complex_string = complex_expression
+
+    def complex_expression(self, node):
+        if isinstance(node, ast.List):
+            return Labeled(tuple(self.expression(n) for n in node.elts), self.pc)
+        return self._complex_string(node)
