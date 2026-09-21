@@ -41,3 +41,39 @@ def approval_event(run_id: str, scope: str, reason: str, kind: str = "approval")
 
 def redact(value: Any) -> dict[str, str]:
     return {"redacted_sha256": hashlib.sha256(canonical(value)).hexdigest()}
+
+class AuditLog:
+    def __init__(self, path: str | Path = ":memory:") -> None:
+        self.connection = sqlite3.connect(str(path))
+        self.connection.execute("CREATE TABLE IF NOT EXISTS events (seq INTEGER PRIMARY KEY, event BLOB NOT NULL, prev TEXT NOT NULL, digest TEXT NOT NULL)")
+        self.connection.commit()
+
+    def close(self) -> None:
+        self.connection.close()
+
+    def rows(self) -> list[tuple[int, bytes, str, str]]:
+        return list(self.connection.execute("SELECT seq,event,prev,digest FROM events ORDER BY seq"))
+
+    def append(self, event: Event) -> str:
+        payload = canonical({"kind": event.kind, "run_id": event.run_id, "payload": event.payload})
+        self.connection.execute("BEGIN IMMEDIATE")
+        try:
+            last = self.connection.execute("SELECT seq,digest FROM events ORDER BY seq DESC LIMIT 1").fetchone()
+            seq, prev = (last[0]+1, last[1]) if last else (1, "0"*64)
+            digest = hashlib.sha256(bytes.fromhex(prev) + payload).hexdigest()
+            self.connection.execute("INSERT INTO events VALUES (?,?,?,?)", (seq, payload, prev, digest))
+            self.connection.commit()
+            return digest
+        except BaseException:
+            self.connection.rollback()
+            raise
+
+    def verify(self) -> bool:
+        previous = "0"*64
+        for expected, (seq, payload, prev, digest) in enumerate(self.rows(), 1):
+            if seq != expected or prev != previous:
+                return False
+            if hashlib.sha256(bytes.fromhex(previous) + payload).hexdigest() != digest:
+                return False
+            previous = digest
+        return True
