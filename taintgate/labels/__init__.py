@@ -57,3 +57,22 @@ class Provenance:
     @staticmethod
     def union(*sources):
         return frozenset().union(*sources)
+
+@dataclass(frozen=True)
+class Labeled:
+    value: Any
+    label: Label = Label()
+    sources: frozenset[str] = frozenset()
+
+    def __post_init__(self):
+        from types import MappingProxyType
+        object.__setattr__(self, 'sources', frozenset(self.sources))
+        def freeze(value):
+            if isinstance(value, (list, tuple)):
+                return tuple(freeze(v) for v in value)
+            if isinstance(value, dict):
+                return MappingProxyType({k: freeze(v) for k, v in value.items()})
+            if type(value) in (str, bool, int, float, type(None)) or isinstance(value, Labeled):
+                return value
+            raise TypeError('Unsupported runtime value')
+        object.__setattr__(self, 'value', freeze(self.value))

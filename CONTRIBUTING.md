@@ -102,8 +102,8 @@ Suggested window: Weeks 1-2.
 | ✅ | P02.03 | Describe A1 unauthorised action attacks |
 | ✅ | P02.04 | Describe A2 argument hijacking attacks |
 | ✅ | P02.05 | Describe A3 exfiltration attacks |
-| ❌ | P02.06 | Describe A4 tool poisoning attacks |
-| ❌ | P02.07 | Describe A5 post-approval tool changes |
+| ✅ | P02.06 | Describe A4 tool poisoning attacks |
+| ✅ | P02.07 | Describe A5 post-approval tool changes |
 | ❌ | P02.08 | Describe A6 cross-server tool shadowing |
 | ❌ | P02.09 | Describe A7 secret leakage attacks |
 | ❌ | P02.10 | Record excluded host, weights and timing attacks |
@@ -191,7 +191,7 @@ Suggested window: Weeks 3-5.
 
 | Status | ID | Subtask / completion deliverable |
 | :---: | --- | --- |
-| ❌ | P06.01 | Implement immutable labelled runtime values |
+| ✅ | P06.01 | Implement immutable labelled runtime values |
 | ❌ | P06.02 | Implement the labelled environment and variable lookup |
 | ❌ | P06.03 | Implement assignment with label preservation |
 | ❌ | P06.04 | Implement arithmetic with joined operand labels |
