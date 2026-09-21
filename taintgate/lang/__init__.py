@@ -50,3 +50,6 @@ class Validator(ast.NodeVisitor):
 
     def visit_List(self, node):
         self.generic_visit(node)
+
+    def visit_If(self, node):
+        self.generic_visit(node)
