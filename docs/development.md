@@ -11,3 +11,18 @@ parallel contributors' Git index writes and updates exactly one checklist row.
 Pass the task ID, a commit message and only the files belonging to that change.
 Run relevant checks before using it. Never delete a busy commit lock without
 checking whether its owner is active.
+
+## Reproduce local checks
+
+```powershell
+python -m venv .venv
+.venv\Scripts\python -m pip install -e ".[dev,mcp,ui]"
+.venv\Scripts\python -m ruff check .
+.venv\Scripts\python -m mypy
+.venv\Scripts\python -m pytest --cov=taintgate
+```
+
+On Unix, use `.venv/bin/python`. CI checks Python 3.12 and 3.13. Model weights
+are never needed for ordinary tests. Install the `models` extra separately
+only when running a real GGUF model; CPU mode must use `n_gpu_layers=0`.
+This machine has Python 3.13.1; Python 3.12 compatibility is checked by CI.

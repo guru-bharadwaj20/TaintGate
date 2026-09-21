@@ -6,6 +6,8 @@ from . import Atom, Program, Rule, Var, PolicyError
 _TOKEN = re.compile(r'\s*(?:(?P<ident>[A-Za-z_][A-Za-z_0-9]*)|(?P<int>-?\d+)|(?P<string>"(?:[^"\\]|\\.)*")|(?P<symbol>:-|[(),.]))')
 
 def _tokens(text):
+    if len(text) > 100_000:
+        raise PolicyError('Policy text budget exceeded')
     pos = 0
     result = []
     while pos < len(text):

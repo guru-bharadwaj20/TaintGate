@@ -89,7 +89,7 @@ Suggested window: Week 1.
 | ✅ | P01.12 | Configure pytest and coverage reporting |
 | ✅ | P01.13 | Add a gitignore for models, secrets, caches and run artifacts |
 | ✅ | P01.14 | Add CI for linting, typing and tests |
-| ❌ | P01.15 | Document a reproducible CPU-only development setup |
+| ✅ | P01.15 | Document a reproducible CPU-only development setup |
 
 ## P02 - Threat model and architecture
 
@@ -279,8 +279,8 @@ Suggested window: Weeks 3-5.
 | ✅ | P09.11 | Implement a naive bottom-up reference evaluator |
 | ✅ | P09.12 | Define default-deny and explicit allow rules |
 | ✅ | P09.13 | Define deny-over-ask-over-allow precedence |
-| ❌ | P09.14 | Bound policy size and evaluation resources |
-| ❌ | P09.15 | Test parsing, unsafe rules and simple derivations |
+| ✅ | P09.14 | Bound policy size and evaluation resources |
+| ✅ | P09.15 | Test parsing, unsafe rules and simple derivations |
 
 ## P10 - Stratification, semi-naive evaluation and explanations
 

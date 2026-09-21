@@ -1,11 +1,15 @@
 from . import BUILTIN_ARITIES, PolicyError, Var
 
 def validate(program):
+    if len(program.facts) + len(program.rules) > 2000:
+        raise PolicyError('Policy statement budget exceeded')
     arities = dict(BUILTIN_ARITIES)
     atoms = list(program.facts)
     for rule in program.rules:
         atoms.extend((rule.head, *rule.body))
     for atom in atoms:
+        if len(atom.args) > 16:
+            raise PolicyError('Predicate arity budget exceeded')
         if any(type(t) not in (str, int, Var) for t in atom.args):
             raise PolicyError('Function symbols and structured terms are forbidden')
         arity = arities.setdefault(atom.predicate, len(atom.args))
