@@ -339,3 +339,26 @@ def _control_expression(self, node):
 
 
 Interpreter.expression = _control_expression
+
+def _consume(self):
+    self.fuel -= 1
+    if self.fuel < 0:
+        raise RuntimeFault(self.effective_pc(), 'fuel_exhausted')
+
+
+_before_fuel_expression = Interpreter.expression
+_before_fuel_statement = Interpreter.statement
+
+
+def _fuel_expression(self, node):
+    _consume(self)
+    return _before_fuel_expression(self, node)
+
+
+def _fuel_statement(self, node):
+    _consume(self)
+    return _before_fuel_statement(self, node)
+
+
+Interpreter.expression = _fuel_expression
+Interpreter.statement = _fuel_statement
