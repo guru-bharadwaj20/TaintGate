@@ -60,3 +60,24 @@ def test_tainted_guard_blocks_later_constant(flag):
     with pytest.raises(RuntimeFault):
         vm.run('if flag:\n x = 1\nsend("constant")', {'flag': Labeled(flag, Label(Integrity.UNTRUSTED))})
     assert not sent
+
+
+def test_nested_loop_control():
+    from taintgate.interp import Tool
+    seen = []
+    vm = Interpreter({'send': Tool(lambda x: None)}, lambda name, args, pc: seen.append(pc) or True)
+    vm.run('for x in items:\n if x:\n  send("x")', {'items': Labeled([True], Label(Integrity.UNTRUSTED))})
+    assert all(p.integrity == Integrity.UNTRUSTED for p in seen)
+
+
+def test_early_failure_and_fuel():
+    from taintgate.interp import Tool
+    sent = []
+    vm = Interpreter({'send': Tool(lambda x: sent.append(x))}, lambda *args: True)
+    with pytest.raises(RuntimeFault):
+        vm.run('x = 1 / secret\nsend("x")', {'secret': Labeled(0, Label(Integrity.UNTRUSTED, {'owner'}))})
+    assert not sent
+    with pytest.raises(RuntimeFault, match='fuel_exhausted'):
+        Interpreter(fuel=1).run('x = 1 + 2')
+    with pytest.raises(RuntimeFault, match='result_size_limit'):
+        Interpreter(max_result=10).run('x = "a" * 100')
