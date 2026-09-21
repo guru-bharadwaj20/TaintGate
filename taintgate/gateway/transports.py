@@ -2,9 +2,14 @@
 from contextlib import AsyncExitStack
 from mcp import ClientSession
 from mcp.client.stdio import stdio_client, StdioServerParameters
+from mcp.client.streamable_http import streamablehttp_client
 
 
 class Upstream:
+    @classmethod
+    def http(cls, url, headers=None):
+        return cls(streamablehttp_client(url, headers=headers))
+
     @classmethod
     def stdio(cls, command, args=(), env=None):
         return cls(stdio_client(StdioServerParameters(command=command, args=list(args), env=env)))

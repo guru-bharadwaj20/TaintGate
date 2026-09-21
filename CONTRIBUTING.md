@@ -294,7 +294,7 @@ Suggested window: Weeks 6-8.
 | ✅ | P10.04 | Compute and order valid strata |
 | ✅ | P10.05 | Evaluate negation only against completed lower strata |
 | ✅ | P10.06 | Implement delta fact sets for recursive evaluation |
-| ❌ | P10.07 | Implement semi-naive rule variants for recursive joins |
+| ✅ | P10.07 | Implement semi-naive rule variants for recursive joins |
 | ❌ | P10.08 | Add relation argument indexes |
 | ❌ | P10.09 | Track the rule and supporting facts for each derivation |
 | ❌ | P10.10 | Generate bounded explanation trees with cycle handling |
@@ -316,9 +316,9 @@ Suggested window: Weeks 3-5; 9-10.
 | ✅ | P11.02 | Implement the gateway server interface |
 | ✅ | P11.03 | Implement upstream MCP client connections |
 | ✅ | P11.04 | Implement stdio transport integration |
-| ❌ | P11.05 | Implement Streamable HTTP transport integration |
-| ❌ | P11.06 | Remap request identifiers across multiple servers |
-| ❌ | P11.07 | Namespace tools by approved server identity |
+| ✅ | P11.05 | Implement Streamable HTTP transport integration |
+| ✅ | P11.06 | Remap request identifiers across multiple servers |
+| ✅ | P11.07 | Namespace tools by approved server identity |
 | ❌ | P11.08 | Reject namespace collisions and cross-server shadowing |
 | ❌ | P11.09 | Validate JSON-RPC messages and tool arguments |
 | ❌ | P11.10 | Implement cancellation propagation |

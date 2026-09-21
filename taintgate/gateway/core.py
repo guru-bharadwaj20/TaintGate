@@ -18,6 +18,8 @@ class Gateway:
         self.servers = {}
 
     def register(self, contract, upstream):
+        if contract.name != f"{contract.server}__{contract.tool}":
+            raise ValueError("Tool is outside its approved namespace")
         self.contracts[contract.name] = contract
         self.servers[contract.server] = upstream
 
