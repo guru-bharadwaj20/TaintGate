@@ -28,3 +28,8 @@ def plan_event(run_id: str, source: str) -> Event:
 
 def boundary_event(run_id: str, *, finished: bool = False) -> Event:
     return Event("run_end" if finished else "run_start", run_id, {})
+
+def decision_event(run_id: str, tool: str, action: str, reasons: list[str], label: dict[str, Any]) -> Event:
+    if action not in {"allow", "deny", "ask"}:
+        raise ValueError("Invalid audit decision")
+    return Event("policy", run_id, {"tool": tool, "action": action, "reasons": reasons, "label": label})
