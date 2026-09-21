@@ -175,8 +175,8 @@ Suggested window: Weeks 3-5.
 | ✅ | P05.05 | Validate lists and dictionaries |
 | ✅ | P05.06 | Validate if and else statements |
 | ✅ | P05.07 | Validate bounded for loops over supported containers |
-| ❌ | P05.08 | Validate registered calls and quarantined extraction calls |
-| ❌ | P05.09 | Validate comparisons and boolean operators |
+| ✅ | P05.08 | Validate registered calls and quarantined extraction calls |
+| ✅ | P05.09 | Validate comparisons and boolean operators |
 | ❌ | P05.10 | Validate indexing and approved field access |
 | ❌ | P05.11 | Validate f-strings and approved string methods |
 | ❌ | P05.12 | Reject imports, while, functions, classes and lambdas |
@@ -274,7 +274,7 @@ Suggested window: Weeks 3-5.
 | ✅ | P09.06 | Enforce safe variables in heads and negation |
 | ✅ | P09.07 | Reject unsupported function symbols and unbounded terms |
 | ✅ | P09.08 | Define per-call policy facts from labels and provenance |
-| ❌ | P09.09 | Implement relation storage and fact deduplication |
+| ✅ | P09.09 | Implement relation storage and fact deduplication |
 | ❌ | P09.10 | Implement variable binding and relational joins |
 | ❌ | P09.11 | Implement a naive bottom-up reference evaluator |
 | ❌ | P09.12 | Define default-deny and explicit allow rules |
