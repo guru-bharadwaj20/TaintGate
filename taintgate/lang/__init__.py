@@ -96,3 +96,25 @@ class Validator(ast.NodeVisitor):
     def visit_Name(self, node):
         if node.id.startswith('_') or node.id in {'globals', 'locals', 'getattr', 'setattr', 'eval', 'exec', 'compile', 'open'}:
             raise PlanError('Private or reflective identifier')
+
+    def visit(self, node):
+        self.depth += 1
+        try:
+            if self.depth > self.max_depth:
+                raise PlanError('Plan nesting limit exceeded')
+            if isinstance(node, ast.Constant):
+                if isinstance(node.value, (str, int)) and len(str(node.value)) > self.max_literal:
+                    raise PlanError('Literal size limit exceeded')
+            return super().visit(node)
+        finally:
+            self.depth -= 1
+
+
+_parse_unbounded = parse_plan
+
+
+def parse_plan(source: str, registered_calls=(), *, max_bytes=65536, max_depth=40, max_literal=8192):
+    if len(source.encode('utf-8')) > max_bytes:
+        raise PlanError('Plan byte limit exceeded')
+    return _parse_unbounded(source, registered_calls, max_bytes=max_bytes,
+                            max_depth=max_depth, max_literal=max_literal)

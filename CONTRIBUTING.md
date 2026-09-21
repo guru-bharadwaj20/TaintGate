@@ -87,7 +87,7 @@ Suggested window: Week 1.
 | ✅ | P01.10 | Configure formatting and linting |
 | ✅ | P01.11 | Configure strict mypy checks |
 | ✅ | P01.12 | Configure pytest and coverage reporting |
-| ❌ | P01.13 | Add a gitignore for models, secrets, caches and run artifacts |
+| ✅ | P01.13 | Add a gitignore for models, secrets, caches and run artifacts |
 | ❌ | P01.14 | Add CI for linting, typing and tests |
 | ❌ | P01.15 | Document a reproducible CPU-only development setup |
 
@@ -182,8 +182,8 @@ Suggested window: Weeks 3-5.
 | ✅ | P05.12 | Reject imports, while, functions, classes and lambdas |
 | ✅ | P05.13 | Reject dunder access and introspection paths |
 | ✅ | P05.14 | Reject try blocks and unsupported exception constructs |
-| ❌ | P05.15 | Bound plan size, nesting and literal size |
-| ❌ | P05.16 | Test accepted syntax and every rejection category |
+| ✅ | P05.15 | Bound plan size, nesting and literal size |
+| ✅ | P05.16 | Test accepted syntax and every rejection category |
 
 ## P06 - Labelled interpreter and explicit flows
 
