@@ -105,7 +105,7 @@ Suggested window: Weeks 1-2.
 | ✅ | P02.06 | Describe A4 tool poisoning attacks |
 | ✅ | P02.07 | Describe A5 post-approval tool changes |
 | ✅ | P02.08 | Describe A6 cross-server tool shadowing |
-| ❌ | P02.09 | Describe A7 secret leakage attacks |
+| ✅ | P02.09 | Describe A7 secret leakage attacks |
 | ❌ | P02.10 | Record excluded host, weights and timing attacks |
 | ❌ | P02.11 | Draw the planner, checker, interpreter and gateway boundaries |
 | ❌ | P02.12 | Specify what planner inputs may contain |
@@ -288,7 +288,7 @@ Suggested window: Weeks 6-8.
 
 | Status | ID | Subtask / completion deliverable |
 | :---: | --- | --- |
-| ❌ | P10.01 | Build signed predicate dependency graphs |
+| ✅ | P10.01 | Build signed predicate dependency graphs |
 | ❌ | P10.02 | Implement strongly connected components |
 | ❌ | P10.03 | Reject cycles containing negative dependencies |
 | ❌ | P10.04 | Compute and order valid strata |

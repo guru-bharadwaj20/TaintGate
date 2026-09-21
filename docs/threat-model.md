@@ -30,3 +30,7 @@ A server changes its schema or description after approval. Canonical metadata ha
 ## A6: shadowing
 
 A server impersonates another server tool or instructs the model how to use it. Namespaces and approved local signatures keep tool identity separate from server-authored prose.
+
+## A7: secret leakage
+
+An API key, hidden instruction or synthetic canary appears in outbound content. Reader checks provide the information-flow boundary; pattern and canary scans provide additional detection with documented false negatives.
