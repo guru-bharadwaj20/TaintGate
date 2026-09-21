@@ -1,9 +1,14 @@
 """Official SDK owns framing, request IDs, cancellation and transport parsing."""
 from contextlib import AsyncExitStack
 from mcp import ClientSession
+from mcp.client.stdio import stdio_client, StdioServerParameters
 
 
 class Upstream:
+    @classmethod
+    def stdio(cls, command, args=(), env=None):
+        return cls(stdio_client(StdioServerParameters(command=command, args=list(args), env=env)))
+
     def __init__(self, transport):
         self.transport = transport
         self.stack = AsyncExitStack()
