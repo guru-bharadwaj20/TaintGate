@@ -107,7 +107,7 @@ Suggested window: Weeks 1-2.
 | ✅ | P02.08 | Describe A6 cross-server tool shadowing |
 | ✅ | P02.09 | Describe A7 secret leakage attacks |
 | ✅ | P02.10 | Record excluded host, weights and timing attacks |
-| ❌ | P02.11 | Draw the planner, checker, interpreter and gateway boundaries |
+| ✅ | P02.11 | Draw the planner, checker, interpreter and gateway boundaries |
 | ❌ | P02.12 | Specify what planner inputs may contain |
 | ❌ | P02.13 | Define strict and permissive modes and their different guarantees |
 | ❌ | P02.14 | Define observable actions and approved exceptions for noninterference |

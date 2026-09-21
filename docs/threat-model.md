@@ -38,3 +38,21 @@ An API key, hidden instruction or synthetic canary appears in outbound content. 
 ## Excluded threats
 
 Malicious user requests, compromised hosts or policy administrators, model-weight compromise, timing/resource side channels and harmful-content jailbreaks are excluded. A malicious server may lie about its own behavior; metadata pinning cannot prove what a remote implementation executes.
+
+## Architecture
+
+```mermaid
+flowchart LR
+ U[Trusted request] --> P[Planner]
+ P --> S[Static checker]
+ S --> A[Scoped approvals]
+ S --> I[Labelled interpreter]
+ I --> Q[Tool-free extraction]
+ Q --> I
+ I --> D[Deterministic policy]
+ D --> G[MCP gateway]
+ G --> T[Untrusted servers]
+ I --> L[Audit log]
+ D --> L
+ G --> L
+```
