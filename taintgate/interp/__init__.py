@@ -286,3 +286,18 @@ def _branch_statement(self, node):
 
 
 Interpreter.statement = _branch_statement
+
+_before_branch_restore = Interpreter.statement
+
+
+def _restore_branch(self, node):
+    old_pc = self.pc
+    try:
+        return _before_branch_restore(self, node)
+    finally:
+        if isinstance(node, ast.If):
+            self.control = self.control.join(self.pc)
+            self.pc = old_pc
+
+
+Interpreter.statement = _restore_branch
