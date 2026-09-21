@@ -18,3 +18,7 @@ A document substitutes an attacker email address for a user-selected recipient. 
 ## A3: exfiltration
 
 A private invoice is sent through an email body, URL query, markdown image or final response. Reader constraints apply at sinks, and outbound rendering must not fetch attacker-controlled resources.
+
+## A4: tool poisoning
+
+A tool description instructs the model to disclose secrets or use another tool. Only trusted local contracts enter planner prompts; remote description scanning is supplemental and cannot prove benign intent.
