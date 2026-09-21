@@ -10,3 +10,7 @@ Tool results, documents, email, web content, extraction output and remote tool d
 ## A1: unauthorized actions
 
 A poisoned email asks an agent to delete a file or transfer money. The runtime can call only registered tools; protected side effects require explicit policy allow and trusted control dependencies in strict mode.
+
+## A2: argument hijacking
+
+A document substitutes an attacker email address for a user-selected recipient. Recipients derived from untrusted inputs require endorsement or a narrowly scoped approval; strings extracted under a schema remain untrusted.
