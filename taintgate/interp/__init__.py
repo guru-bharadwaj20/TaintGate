@@ -52,3 +52,19 @@ class Interpreter:
 
     def complex_expression(self, node):
         raise RuntimeFault(code='unsupported_expression')
+
+    _statement_base = statement
+
+    def statement(self, node):
+        if isinstance(node, ast.Assign):
+            self.env[node.targets[0].id] = self.expression(node.value)
+            return
+        return self._statement_base(node)
+
+    def combine(self, value, *operands):
+        label = Label()
+        sources = frozenset()
+        for operand in operands:
+            label = label.join(operand.label)
+            sources |= operand.sources
+        return Labeled(value, label, sources)
