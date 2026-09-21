@@ -39,3 +39,14 @@ def test_tool_pc():
     vm = Interpreter({'send': Tool(lambda x: None)}, lambda name, args, pc: seen.append(pc) or True)
     vm.run('if flag:\n send("constant")', {'flag': Labeled(True, Label(Integrity.UNTRUSTED))})
     assert seen[0].integrity == Integrity.UNTRUSTED
+
+
+def test_error_redaction():
+    from taintgate.interp import Tool
+    def fail():
+        raise ValueError('SECRET-CREDENTIAL')
+    vm = Interpreter({'read': Tool(fail)}, lambda *args: True)
+    with pytest.raises(RuntimeFault) as exc:
+        vm.run('read()')
+    assert 'SECRET' not in str(exc.value)
+    assert exc.value.__cause__ is None
