@@ -68,3 +68,17 @@ class Interpreter:
             label = label.join(operand.label)
             sources |= operand.sources
         return Labeled(value, label, sources)
+
+    arithmetic = {ast.Add: operator.add, ast.Sub: operator.sub, ast.Mult: operator.mul,
+                  ast.Div: operator.truediv, ast.FloorDiv: operator.floordiv, ast.Mod: operator.mod}
+    unary = {ast.Not: operator.not_, ast.USub: operator.neg, ast.UAdd: operator.pos}
+    _complex_base = complex_expression
+
+    def complex_expression(self, node):
+        if isinstance(node, ast.BinOp):
+            a, b = self.expression(node.left), self.expression(node.right)
+            return self.combine(self.arithmetic[type(node.op)](a.value, b.value), a, b)
+        if isinstance(node, ast.UnaryOp):
+            a = self.expression(node.operand)
+            return self.combine(self.unary[type(node.op)](a.value), a)
+        return self._complex_base(node)
