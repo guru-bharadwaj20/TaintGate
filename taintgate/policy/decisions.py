@@ -30,3 +30,15 @@ def decide(evaluation, call_id):
     if Atom('allow', (call_id,)) in evaluation.facts:
         return Decision('allow', (evaluation.explain(Atom('allow', (call_id,))),))
     return Decision('deny', ('no explicit allow rule',))
+
+def approval_facts(call_id, tool, args, amount_limit=1000, destructive_tools=()):
+    """Numeric/destructive thresholds are deterministic facts, never model judgments."""
+    facts = []
+    if tool in destructive_tools:
+        facts.append(Atom('approval_required', (call_id,)))
+    amount = args.get('amount')
+    if amount is not None:
+        amount = getattr(amount, 'value', amount)
+        if type(amount) not in (int, float) or not __import__('math').isfinite(amount) or amount > amount_limit:
+            facts.append(Atom('approval_required', (call_id,)))
+    return tuple(facts)

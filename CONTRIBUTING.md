@@ -300,7 +300,7 @@ Suggested window: Weeks 6-8.
 | ✅ | P10.10 | Generate bounded explanation trees with cycle handling |
 | ✅ | P10.11 | Implement recipient-integrity rules |
 | ✅ | P10.12 | Implement confidentiality reader checks |
-| ❌ | P10.13 | Implement amount and destructive-action approval rules |
+| ✅ | P10.13 | Implement amount and destructive-action approval rules |
 | ❌ | P10.14 | Test overlapping allow, ask and deny derivations |
 | ❌ | P10.15 | Compare optimized results with the naive evaluator |
 | ❌ | P10.16 | Generate small random stratified policies for differential tests |
@@ -411,8 +411,8 @@ Suggested window: Weeks 9-10.
 | ✅ | P15.05 | Redact sensitive payloads while preserving verification |
 | ✅ | P15.06 | Implement SQLite append-only event writes |
 | ✅ | P15.07 | Link entries with previous-entry SHA-256 hashes |
-| ❌ | P15.08 | Implement Merkle leaf and internal-node domain separation |
-| ❌ | P15.09 | Implement deterministic odd-leaf handling |
+| ✅ | P15.08 | Implement Merkle leaf and internal-node domain separation |
+| ✅ | P15.09 | Implement deterministic odd-leaf handling |
 | ❌ | P15.10 | Build checkpoint roots and trusted external anchors |
 | ❌ | P15.11 | Implement inclusion proof generation |
 | ❌ | P15.12 | Implement inclusion proof verification |
