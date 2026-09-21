@@ -106,7 +106,7 @@ Suggested window: Weeks 1-2.
 | ✅ | P02.07 | Describe A5 post-approval tool changes |
 | ✅ | P02.08 | Describe A6 cross-server tool shadowing |
 | ✅ | P02.09 | Describe A7 secret leakage attacks |
-| ❌ | P02.10 | Record excluded host, weights and timing attacks |
+| ✅ | P02.10 | Record excluded host, weights and timing attacks |
 | ❌ | P02.11 | Draw the planner, checker, interpreter and gateway boundaries |
 | ❌ | P02.12 | Specify what planner inputs may contain |
 | ❌ | P02.13 | Define strict and permissive modes and their different guarantees |
@@ -290,7 +290,7 @@ Suggested window: Weeks 6-8.
 | :---: | --- | --- |
 | ✅ | P10.01 | Build signed predicate dependency graphs |
 | ✅ | P10.02 | Implement strongly connected components |
-| ❌ | P10.03 | Reject cycles containing negative dependencies |
+| ✅ | P10.03 | Reject cycles containing negative dependencies |
 | ❌ | P10.04 | Compute and order valid strata |
 | ❌ | P10.05 | Evaluate negation only against completed lower strata |
 | ❌ | P10.06 | Implement delta fact sets for recursive evaluation |
@@ -314,7 +314,7 @@ Suggested window: Weeks 3-5; 9-10.
 | :---: | --- | --- |
 | ✅ | P11.01 | Pin an MCP SDK version and supported protocol revision |
 | ✅ | P11.02 | Implement the gateway server interface |
-| ❌ | P11.03 | Implement upstream MCP client connections |
+| ✅ | P11.03 | Implement upstream MCP client connections |
 | ❌ | P11.04 | Implement stdio transport integration |
 | ❌ | P11.05 | Implement Streamable HTTP transport integration |
 | ❌ | P11.06 | Remap request identifiers across multiple servers |

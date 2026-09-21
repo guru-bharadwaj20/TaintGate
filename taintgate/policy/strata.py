@@ -44,3 +44,10 @@ def components(graph):
             stack.extend(reverse[node])
         result.append(frozenset(group))
     return result
+
+def reject_negative_cycles(graph):
+    membership = {node: i for i, group in enumerate(components(graph)) for node in group}
+    for node, edges in graph.items():
+        for dep, negative in edges:
+            if negative and membership[node] == membership[dep]:
+                raise PolicyError(f'Negative dependency cycle: {node} -> {dep}')
