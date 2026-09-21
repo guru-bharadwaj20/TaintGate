@@ -277,7 +277,7 @@ Suggested window: Weeks 3-5.
 | ✅ | P09.09 | Implement relation storage and fact deduplication |
 | ✅ | P09.10 | Implement variable binding and relational joins |
 | ✅ | P09.11 | Implement a naive bottom-up reference evaluator |
-| ❌ | P09.12 | Define default-deny and explicit allow rules |
+| ✅ | P09.12 | Define default-deny and explicit allow rules |
 | ❌ | P09.13 | Define deny-over-ask-over-allow precedence |
 | ❌ | P09.14 | Bound policy size and evaluation resources |
 | ❌ | P09.15 | Test parsing, unsafe rules and simple derivations |
