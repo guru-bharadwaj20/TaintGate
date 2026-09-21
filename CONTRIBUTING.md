@@ -207,8 +207,8 @@ Suggested window: Weeks 3-5.
 | ✅ | P06.14 | Implement a registered-tool interface |
 | ✅ | P06.15 | Label tool results before exposing them to plans |
 | ✅ | P06.16 | Implement quarantined extraction as a runtime primitive |
-| ❌ | P06.17 | Record operation provenance and execution traces |
-| ❌ | P06.18 | Compare pure supported expressions with CPython in an isolated test oracle |
+| ✅ | P06.17 | Record operation provenance and execution traces |
+| ✅ | P06.18 | Compare pure supported expressions with CPython in an isolated test oracle |
 
 ## P07 - Implicit flows and runtime limits
 
@@ -292,7 +292,7 @@ Suggested window: Weeks 6-8.
 | ✅ | P10.02 | Implement strongly connected components |
 | ✅ | P10.03 | Reject cycles containing negative dependencies |
 | ✅ | P10.04 | Compute and order valid strata |
-| ❌ | P10.05 | Evaluate negation only against completed lower strata |
+| ✅ | P10.05 | Evaluate negation only against completed lower strata |
 | ❌ | P10.06 | Implement delta fact sets for recursive evaluation |
 | ❌ | P10.07 | Implement semi-naive rule variants for recursive joins |
 | ❌ | P10.08 | Add relation argument indexes |

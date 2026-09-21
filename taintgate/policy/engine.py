@@ -19,19 +19,19 @@ class NaiveEngine:
 
     def evaluate(self, facts=()):
         relations = Relations((*self.program.facts, *facts))
-        if any(a.negated for r in self.program.rules for a in r.body):
-            raise PolicyError('Negation requires stratified evaluation')
+        from .strata import stratify
         rounds = work = 0
-        changed = True
-        while changed:
-            rounds += 1
-            if rounds > self.max_rounds or sum(map(len, relations.data.values())) > self.max_facts:
-                raise PolicyError("Evaluation budget exceeded")
-            changed = False
-            for rule in self.program.rules:
-                for binding, support in list(join(rule.body, relations)):
-                    work += 1
-                    if work > self.max_work:
-                        raise PolicyError("Evaluation work budget exceeded")
-                    changed |= relations.add(instantiate(rule.head, binding))
+        for rules in stratify(self.program):
+            changed = True
+            while changed:
+                rounds += 1
+                if rounds > self.max_rounds or sum(map(len, relations.data.values())) > self.max_facts:
+                    raise PolicyError("Evaluation budget exceeded")
+                changed = False
+                for rule in rules:
+                    for binding, support in list(join(rule.body, relations)):
+                        work += 1
+                        if work > self.max_work:
+                            raise PolicyError("Evaluation work budget exceeded")
+                        changed |= relations.add(instantiate(rule.head, binding))
         return Evaluation(relations.facts())

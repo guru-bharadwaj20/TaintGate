@@ -246,3 +246,15 @@ def _extract_expression(self, node):
 
 
 Interpreter.complex_expression = _extract_expression
+
+_before_provenance = Interpreter.combine
+
+
+def _combine_provenance(self, value, *operands):
+    result = _before_provenance(self, value, *operands)
+    identity = provenance_id('operation', result.sources)
+    self.trace.append({'operation': identity, 'label': result.label})
+    return Labeled(result.value, result.label, result.sources | {identity})
+
+
+Interpreter.combine = _combine_provenance
