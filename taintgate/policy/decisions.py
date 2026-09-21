@@ -16,3 +16,14 @@ def call_facts(call_id, tool, args, destination=None, pc=None):
     if pc is not None and 'UNTRUSTED' in str(getattr(pc, 'integrity', 'UNTRUSTED')).upper():
         facts.append(Atom('untrusted_control', (call_id,)))
     return tuple(facts)
+from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class Decision:
+    action: str
+    reasons: tuple
+
+def decide(evaluation, call_id):
+    if Atom('allow', (call_id,)) in evaluation.facts:
+        return Decision('allow', ('explicit allow rule',))
+    return Decision('deny', ('no explicit allow rule',))
