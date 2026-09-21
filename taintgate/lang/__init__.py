@@ -79,3 +79,11 @@ class Validator(ast.NodeVisitor):
 
     def visit_BoolOp(self, node):
         self.generic_visit(node)
+
+    def visit_Subscript(self, node):
+        self.generic_visit(node)
+
+    def visit_Attribute(self, node):
+        if node.attr.startswith('_'):
+            raise PlanError('Private fields are forbidden')
+        self.generic_visit(node)

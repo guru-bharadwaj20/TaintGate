@@ -177,7 +177,7 @@ Suggested window: Weeks 3-5.
 | ✅ | P05.07 | Validate bounded for loops over supported containers |
 | ✅ | P05.08 | Validate registered calls and quarantined extraction calls |
 | ✅ | P05.09 | Validate comparisons and boolean operators |
-| ❌ | P05.10 | Validate indexing and approved field access |
+| ✅ | P05.10 | Validate indexing and approved field access |
 | ❌ | P05.11 | Validate f-strings and approved string methods |
 | ❌ | P05.12 | Reject imports, while, functions, classes and lambdas |
 | ❌ | P05.13 | Reject dunder access and introspection paths |
