@@ -222,7 +222,7 @@ Suggested window: Weeks 6-8.
 | ✅ | P07.04 | Track control dependencies on assignments |
 | ✅ | P07.05 | Raise the counter label on loop selection and iteration |
 | ✅ | P07.06 | Include counter labels in every protected tool-call decision |
-| ❌ | P07.07 | Implement strict mode as the default security mode |
+| ✅ | P07.07 | Implement strict mode as the default security mode |
 | ❌ | P07.08 | Implement and clearly label permissive mode limitations |
 | ❌ | P07.09 | Track tainted short-circuit control dependencies |
 | ❌ | P07.10 | Specify loop termination and exception observables |

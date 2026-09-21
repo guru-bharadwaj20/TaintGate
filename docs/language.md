@@ -10,3 +10,10 @@
 
 Imports, functions, classes, mutation, comprehensions, exceptions, reflection,
 and arbitrary host-object attributes are excluded.
+
+## Control-flow modes
+
+Strict mode is the default. Every protected call receives a program-counter
+label. Control dependencies remain sticky after a branch, including untaken
+branches, because termination and errors can affect whether later calls occur.
+This conservatively reduces task success. Runtime authorization still applies.
