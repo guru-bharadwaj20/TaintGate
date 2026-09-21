@@ -228,3 +228,21 @@ class Tool:
     function: object
     result_label: Label = Label(Integrity.UNTRUSTED)
     identity: str = 'registered'
+
+_before_extract = Interpreter.complex_expression
+
+
+def _extract_expression(self, node):
+    if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id == 'extract':
+        if self.extractor is None or len(node.args) != 2 or node.keywords:
+            raise RuntimeFault(code='extraction_unavailable')
+        text, schema = [self.expression(n) for n in node.args]
+        from jsonschema import validate
+        result = self.extractor(self.raw(text), self.raw(schema))
+        validate(result, self.raw(schema))
+        value = self.combine(result, text, schema)
+        return Labeled(value.value, value.label.join(Label(Integrity.UNTRUSTED)), value.sources)
+    return _before_extract(self, node)
+
+
+Interpreter.complex_expression = _extract_expression
