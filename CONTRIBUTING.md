@@ -98,7 +98,7 @@ Suggested window: Weeks 1-2.
 | Status | ID | Subtask / completion deliverable |
 | :---: | --- | --- |
 | ✅ | P02.01 | Document trusted user input and trusted configuration |
-| ❌ | P02.02 | Document untrusted tool outputs and server metadata |
+| ✅ | P02.02 | Document untrusted tool outputs and server metadata |
 | ❌ | P02.03 | Describe A1 unauthorised action attacks |
 | ❌ | P02.04 | Describe A2 argument hijacking attacks |
 | ❌ | P02.05 | Describe A3 exfiltration attacks |
