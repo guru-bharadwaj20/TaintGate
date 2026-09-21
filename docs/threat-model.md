@@ -68,3 +68,7 @@ Strict mode joins the program-counter label with protected action arguments. Per
 ## Observable actions
 
 Compare protected side-effect traces by tool identity, destination and argument values for worlds agreeing on trusted inputs. Explicit scoped approvals and policy-authorized data flows are exceptions. Do not demand identical results for deliberately permitted extraction or data-dependent reads. This is a policy-relative property, not unconditional noninterference.
+
+## Reads versus side effects
+
+A configured read capability may accept untrusted search terms within a restricted dataset. Sending, writing, deleting, transferring and externally observable network requests are protected sinks. A remote read can itself leak its arguments, so read classification must include destination and confidentiality constraints.
