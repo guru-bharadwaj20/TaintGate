@@ -177,8 +177,8 @@ Suggested window: Weeks 3-5.
 | ✅ | P05.07 | Validate bounded for loops over supported containers |
 | ✅ | P05.08 | Validate registered calls and quarantined extraction calls |
 | ✅ | P05.09 | Validate comparisons and boolean operators |
-| ❌ | P05.10 | Validate indexing and approved field access |
-| ❌ | P05.11 | Validate f-strings and approved string methods |
+| ✅ | P05.10 | Validate indexing and approved field access |
+| ✅ | P05.11 | Validate f-strings and approved string methods |
 | ❌ | P05.12 | Reject imports, while, functions, classes and lambdas |
 | ❌ | P05.13 | Reject dunder access and introspection paths |
 | ❌ | P05.14 | Reject try blocks and unsupported exception constructs |
@@ -343,7 +343,7 @@ Suggested window: Weeks 6-8.
 | ✅ | P12.05 | Persist approval pins by server and tool identity |
 | ✅ | P12.06 | Compare current metadata with approved hashes |
 | ✅ | P12.07 | Detect tool list and schema changes |
-| ❌ | P12.08 | Quarantine tools that change after approval |
+| ✅ | P12.08 | Quarantine tools that change after approval |
 | ❌ | P12.09 | Display a bounded metadata diff for reapproval |
 | ❌ | P12.10 | Scan model-directed imperatives and concealment requests |
 | ❌ | P12.11 | Scan references to unrelated tools and servers |

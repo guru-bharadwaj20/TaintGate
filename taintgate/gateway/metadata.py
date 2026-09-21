@@ -44,6 +44,22 @@ class PinStore:
         return frozenset(changed)
 
 
+class MetadataGuard:
+    def __init__(self, pins):
+        self.pins = pins
+        self.quarantined = set()
+
+    def check(self, server, tool, metadata):
+        identity = (server, tool)
+        if not self.pins.matches(server, tool, metadata):
+            self.quarantined.add(identity)
+        return identity not in self.quarantined
+
+    def reapprove(self, server, tool, metadata):
+        self.pins.approve(server, tool, metadata)
+        self.quarantined.discard((server, tool))
+
+
 @dataclass(frozen=True)
 class Contract:
     server: str
