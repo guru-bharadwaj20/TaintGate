@@ -84,3 +84,12 @@ def leaf_hash(payload: bytes) -> bytes:
 
 def parent_hash(left: bytes, right: bytes) -> bytes:
     return hashlib.sha256(b"\x01" + left + right).digest()
+
+def merkle_levels(payloads: list[bytes]) -> list[list[bytes]]:
+    if not payloads:
+        return [[hashlib.sha256(b"\x02").digest()]]
+    levels = [[leaf_hash(p) for p in payloads]]
+    while len(levels[-1]) > 1:
+        current = levels[-1]
+        levels.append([parent_hash(current[i], current[i+1] if i+1<len(current) else current[i]) for i in range(0,len(current),2)])
+    return levels
