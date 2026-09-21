@@ -73,3 +73,9 @@ class Validator(ast.NodeVisitor):
         if any(k.arg is None for k in node.keywords):
             raise PlanError('Keyword unpacking is forbidden')
         self.generic_visit(node)
+
+    def visit_Compare(self, node):
+        self.generic_visit(node)
+
+    def visit_BoolOp(self, node):
+        self.generic_visit(node)
