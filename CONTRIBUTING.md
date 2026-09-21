@@ -181,7 +181,7 @@ Suggested window: Weeks 3-5.
 | ✅ | P05.11 | Validate f-strings and approved string methods |
 | ✅ | P05.12 | Reject imports, while, functions, classes and lambdas |
 | ✅ | P05.13 | Reject dunder access and introspection paths |
-| ❌ | P05.14 | Reject try blocks and unsupported exception constructs |
+| ✅ | P05.14 | Reject try blocks and unsupported exception constructs |
 | ❌ | P05.15 | Bound plan size, nesting and literal size |
 | ❌ | P05.16 | Test accepted syntax and every rejection category |
 
