@@ -34,3 +34,7 @@ A server impersonates another server tool or instructs the model how to use it. 
 ## A7: secret leakage
 
 An API key, hidden instruction or synthetic canary appears in outbound content. Reader checks provide the information-flow boundary; pattern and canary scans provide additional detection with documented false negatives.
+
+## Excluded threats
+
+Malicious user requests, compromised hosts or policy administrators, model-weight compromise, timing/resource side channels and harmful-content jailbreaks are excluded. A malicious server may lie about its own behavior; metadata pinning cannot prove what a remote implementation executes.
