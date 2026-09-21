@@ -69,6 +69,11 @@ class MetadataGuard:
         self.pins.approve(server, tool, metadata)
         self.quarantined.discard((server, tool))
 
+    def planner_view(self, contracts, current):
+        return [contract.planner_metadata() for contract in contracts
+                if (contract.server, contract.tool) in current
+                and self.check(contract.server, contract.tool, current[(contract.server, contract.tool)])]
+
 
 @dataclass(frozen=True)
 class Contract:
