@@ -72,3 +72,7 @@ Compare protected side-effect traces by tool identity, destination and argument 
 ## Reads versus side effects
 
 A configured read capability may accept untrusted search terms within a restricted dataset. Sending, writing, deleting, transferring and externally observable network requests are protected sinks. A remote read can itself leak its arguments, so read classification must include destination and confidentiality constraints.
+
+## Fail closed and trusted base
+
+Unknown tools, malformed plans, unsupported syntax, policy errors, missing approvals and changed pins deny execution. The trusted base includes the parser, label propagation, policy engine, gateway enforcement, approval storage and configuration. Audit storage provides evidence but does not substitute for enforcement.

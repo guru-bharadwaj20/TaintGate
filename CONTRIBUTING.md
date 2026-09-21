@@ -112,7 +112,7 @@ Suggested window: Weeks 1-2.
 | ✅ | P02.13 | Define strict and permissive modes and their different guarantees |
 | ✅ | P02.14 | Define observable actions and approved exceptions for noninterference |
 | ✅ | P02.15 | Distinguish allowed data-dependent reads from protected side effects |
-| ❌ | P02.16 | Specify fail-closed behaviour and the trusted computing base |
+| ✅ | P02.16 | Specify fail-closed behaviour and the trusted computing base |
 | ❌ | P02.17 | Document extensions over CaMeL and FIDES without novelty claims |
 | ❌ | P02.18 | Assign module interfaces and ownership for a team of four |
 
