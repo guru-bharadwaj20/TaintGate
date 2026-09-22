@@ -2,6 +2,7 @@
 import json
 import re
 from dataclasses import dataclass
+from .backend import Backend
 
 @dataclass(frozen=True)
 class ApprovedSignature:
@@ -45,3 +46,21 @@ def validate_plan(source: str, tools: tuple[ApprovedSignature, ...]) -> str:
     from taintgate.lang import parse_plan
     parse_plan(source, (t.name for t in tools))
     return source
+
+class Planner:
+    def __init__(self, backend: 'Backend', tools: tuple[ApprovedSignature, ...], retries: int = 2) -> None:
+        if not 0 <= retries <= 3:
+            raise ValueError('Planner retry budget out of range')
+        self.backend, self.tools, self.retries = backend, tools, retries
+
+    def plan(self, user_request: str) -> str:
+        from taintgate.lang import PlanError
+        base = planner_prompt(user_request, self.tools)
+        feedback = ''
+        for attempt in range(self.retries + 1):
+            source = self.backend.generate(base + feedback, grammar=plan_grammar(self.tools))
+            try:
+                return validate_plan(source, self.tools)
+            except PlanError:
+                feedback = '\nThe previous plan failed deterministic validation. Return a valid plan.\n'
+        raise ValueError('Planner exhausted bounded attempts')

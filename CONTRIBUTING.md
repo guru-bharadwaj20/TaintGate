@@ -132,7 +132,7 @@ Suggested window: Weeks 1-2; 9-10.
 | ✅ | P03.08 | Build planner prompts from trusted inputs only |
 | ✅ | P03.09 | Expose only locally approved tool signatures to the planner |
 | ✅ | P03.10 | Constrain planner output to the plan language |
-| ❌ | P03.11 | Implement bounded planner retries |
+| ✅ | P03.11 | Implement bounded planner retries |
 | ❌ | P03.12 | Generate trusted parse-error summaries without input excerpts |
 | ❌ | P03.13 | Generate trusted unknown-tool summaries without tool output |
 | ❌ | P03.14 | Test that tool results never enter planner context |
