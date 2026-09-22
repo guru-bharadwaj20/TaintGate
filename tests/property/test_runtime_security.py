@@ -36,3 +36,12 @@ def test_bounded_paired_world_generator(plan, worlds):
     # Both worlds agree on trusted code, tool configuration and policy.
     first, second = worlds
     assert execute(plan, first) == execute(plan, second)
+
+
+@given(st.text(max_size=80), st.text(max_size=80))
+@settings(max_examples=100, derandomize=True)
+def test_strict_protected_actions_ignore_payload(first, second):
+    for plan in ['send(untrusted)', 'x = [untrusted]\nsend(x)',
+                 'x = {"message": untrusted}\nsend(x)',
+                 'if untrusted:\n send("constant")']:
+        assert execute(plan, first) == execute(plan, second) == []
