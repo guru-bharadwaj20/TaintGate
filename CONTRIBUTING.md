@@ -256,7 +256,7 @@ Suggested window: Weeks 6-8.
 | ✅ | P08.15 | Validate decoded JSON again with Pydantic |
 | ✅ | P08.16 | Apply semantic validation that grammars cannot enforce |
 | ✅ | P08.17 | Support an explicit insufficient-information result |
-| ❌ | P08.18 | Label all extracted fields with input provenance and untrusted integrity |
+| ✅ | P08.18 | Label all extracted fields with input provenance and untrusted integrity |
 | ❌ | P08.19 | Reject trailing text, tool-call objects and malformed responses |
 | ❌ | P08.20 | Test injected instructions remaining inert field data |
 
