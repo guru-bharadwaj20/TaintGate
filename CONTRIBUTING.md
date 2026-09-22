@@ -325,7 +325,7 @@ Suggested window: Weeks 3-5; 9-10.
 | ✅ | P11.11 | Implement upstream timeouts and disconnect handling |
 | ✅ | P11.12 | Implement bounded queues and back-pressure |
 | ✅ | P11.13 | Load per-server trust and reader configuration |
-| ❌ | P11.14 | Label every tool result including errors and structured content |
+| ✅ | P11.14 | Label every tool result including errors and structured content |
 | ❌ | P11.15 | Enforce policy on every tools/call entry point |
 | ❌ | P11.16 | Return structured denial and approval-required responses |
 | ❌ | P11.17 | Test transport failures without accidental tool execution |
@@ -359,7 +359,7 @@ Suggested window: Weeks 11-12.
 
 | Status | ID | Subtask / completion deliverable |
 | :---: | --- | --- |
-| ❌ | P13.01 | Define abstract values for labels, shape and provenance |
+| ✅ | P13.01 | Define abstract values for labels, shape and provenance |
 | ❌ | P13.02 | Use a finite configured principal universe for analysis |
 | ❌ | P13.03 | Implement abstract environments and assignments |
 | ❌ | P13.04 | Implement abstract expression transfer functions |

@@ -6,6 +6,7 @@ import asyncio
 from jsonschema import Draft202012Validator
 from mcp.types import JSONRPCMessage
 from .config import ServerConfig
+from taintgate.labels import Labeled
 
 
 @dataclass(frozen=True)
@@ -33,11 +34,17 @@ class Gateway:
     async def _execute(self, server, tool, arguments):
         try:
             async with asyncio.timeout(self.timeout):
-                return GatewayResponse("allow", await self.servers[server].call_tool(tool, arguments))
+                result = await self.servers[server].call_tool(tool, arguments)
+                return GatewayResponse("allow", self._label(server, result))
         except TimeoutError:
-            return GatewayResponse("error", reason="Upstream timed out")
+            return GatewayResponse("error", self._label(server, {"error": "timeout"}), reason="Upstream timed out")
         except Exception:
-            return GatewayResponse("error", reason="Upstream unavailable")
+            return GatewayResponse("error", self._label(server, {"error": "unavailable"}), reason="Upstream unavailable")
+
+    def _label(self, server, result):
+        if hasattr(result, "model_dump"):
+            result = result.model_dump(by_alias=True, exclude_none=True)
+        return Labeled(result, self.config[server].result_label, frozenset({"mcp:" + server}))
 
     async def call_with_id(self, request_id, name, arguments, *, context):
         if len(self.pending) >= self.max_pending:
