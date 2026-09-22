@@ -249,7 +249,7 @@ Suggested window: Weeks 6-8.
 | ✅ | P08.08 | Compile escaped JSON strings |
 | ✅ | P08.09 | Compile numeric, integer and boolean values |
 | ✅ | P08.10 | Handle supported email, date and datetime formats |
-| ❌ | P08.11 | Bound schema depth and grammar size |
+| ✅ | P08.11 | Bound schema depth and grammar size |
 | ❌ | P08.12 | Reject unsupported or recursive schema features safely |
 | ❌ | P08.13 | Test grammar acceptance and rejection with the pinned backend |
 | ❌ | P08.14 | Run the quarantined model without tool access |

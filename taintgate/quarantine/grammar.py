@@ -39,7 +39,12 @@ class Compiler:
 
     def compile(self, schema: dict[str,Any]) -> str:
         self.rules = {"ws": '[ \t\n\r]*'}
+        if len(json.dumps(schema))>100_000:
+            raise SchemaError("Schema too large")
+        check_depth(schema)
         expression = self.node(normalize(schema))
+        if sum(len(v) for v in self.rules.values())>250_000:
+            raise SchemaError("Grammar too large")
         return "root ::= ws " + expression + " ws\n" + "\n".join(k+" ::= "+v for k,v in self.rules.items()) + "\n"
 
     def node(self, schema: dict[str,Any]) -> str:
@@ -111,3 +116,14 @@ def string_rule(compiler: Compiler, schema: dict[str,Any]) -> str:
     if type(minimum) is not int or type(maximum) is not int or not 0<=minimum<=maximum<=4096:
         raise SchemaError("Invalid string bounds")
     return terminal('"')+" char{"+str(minimum)+","+str(maximum)+"} "+terminal('"')
+
+
+def check_depth(value: Any, depth: int = 0) -> None:
+    if depth>24:
+        raise SchemaError("Schema too deep")
+    if isinstance(value,dict):
+        for child in value.values():
+            check_depth(child,depth+1)
+    elif isinstance(value,list):
+        for child in value:
+            check_depth(child,depth+1)
