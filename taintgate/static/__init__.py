@@ -107,3 +107,48 @@ class Analyzer:
             self.env = self.merge_env(left, self.env)
         elif isinstance(node, ast.For):
             self.loop(node)
+
+    def loop(self, node):
+        collection = self.expression(node.iter)
+        self.pc = self.pc.join(collection.label).join(collection.shape)
+        initial = dict(self.env)
+        # Labels have finite height; known values are discarded by joins.
+        limit = (len(self.principals) + 3) * (len(self.env) + len(list(ast.walk(node))) + 1)
+        for _ in range(limit):
+            before = dict(self.env)
+            self.env[node.target.id] = AbstractValue(collection.label.join(self.pc), collection.shape, collection.sources)
+            self.block(node.body)
+            self.env = self.merge_env(initial, self.env)
+            if self.env == before:
+                return
+        raise ValueError('Abstract loop did not converge')
+
+    def collect_call(self, node, args, label):
+        site = CallSite(node.lineno, node.func.id, label, tuple(args))
+        if site not in self.calls:
+            self.calls.append(site)
+
+
+@dataclass(frozen=True)
+class CallSite:
+    line: int
+    tool: str
+    label: Label
+    arguments: tuple[AbstractValue, ...]
+
+    @property
+    def potentially_unsafe(self):
+        return self.label.integrity == Integrity.UNTRUSTED or self.label.readers is not None or any(not a.resolved for a in self.arguments)
+
+
+@dataclass(frozen=True)
+class Analysis:
+    environment: dict[str, AbstractValue]
+    calls: tuple[CallSite, ...]
+
+def describe_argument(value):
+    if value.resolved:
+        return {'resolved': True, 'value': value.known}
+    return {'resolved': False, 'description': 'Runtime value unknown',
+            'integrity': value.label.integrity.name,
+            'readers': None if value.label.readers is None else sorted(value.label.readers)}
