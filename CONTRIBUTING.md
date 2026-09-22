@@ -131,7 +131,7 @@ Suggested window: Weeks 1-2; 9-10.
 | ✅ | P03.07 | Implement an offline inference smoke test |
 | ✅ | P03.08 | Build planner prompts from trusted inputs only |
 | ✅ | P03.09 | Expose only locally approved tool signatures to the planner |
-| ❌ | P03.10 | Constrain planner output to the plan language |
+| ✅ | P03.10 | Constrain planner output to the plan language |
 | ❌ | P03.11 | Implement bounded planner retries |
 | ❌ | P03.12 | Generate trusted parse-error summaries without input excerpts |
 | ❌ | P03.13 | Generate trusted unknown-tool summaries without tool output |
@@ -505,7 +505,7 @@ Suggested window: Weeks 15-16.
 | ❌ | P19.01 | Expand README with setup and architecture after implementation |
 | ❌ | P19.02 | Publish threat model and policy semantics |
 | ✅ | P19.03 | Publish TaintScript language reference |
-| ❌ | P19.04 | Publish label, endorsement and declassification reference |
+| ✅ | P19.04 | Publish label, endorsement and declassification reference |
 | ❌ | P19.05 | Document the static checker and soundness test limits |
 | ❌ | P19.06 | Document tool onboarding and approval pin management |
 | ❌ | P19.07 | Document audit checkpoint storage and recovery |
