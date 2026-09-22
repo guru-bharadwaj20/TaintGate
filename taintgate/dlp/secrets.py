@@ -38,3 +38,26 @@ def entropy_findings(text, threshold=4.5, minimum=24):
         raise ValueError("Invalid entropy configuration")
     return [Finding("high_entropy", m.start(), m.end()) for m in re.finditer(r"[A-Za-z0-9_+/=-]+", text)
             if len(m.group()) >= minimum and entropy(m.group()) >= threshold]
+
+
+def luhn(digits):
+    if not digits.isascii() or not digits.isdigit():
+        return False
+    total = 0
+    for index, char in enumerate(reversed(digits)):
+        number = int(char)
+        if index % 2:
+            number *= 2
+            number -= 9 if number > 9 else 0
+        total += number
+    return total % 10 == 0
+
+
+def card_findings(text):
+    results = []
+    for match in re.finditer(r"(?<!\d)(?:\d[ -]?){12,18}\d(?!\d)", text):
+        number = re.sub(r"[ -]", "", match.group())
+        context = text[max(0, match.start() - 40):match.start()].lower()
+        if 13 <= len(number) <= 19 and luhn(number) and re.search(r"card|visa|mastercard|payment|credit", context):
+            results.append(Finding("payment_card", match.start(), match.end()))
+    return results
