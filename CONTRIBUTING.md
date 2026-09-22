@@ -450,7 +450,7 @@ Suggested window: Weeks 11-14.
 | Status | ID | Subtask / completion deliverable |
 | :---: | --- | --- |
 | ✅ | P17.01 | Generate bounded plans and paired trusted-equivalent worlds |
-| ❌ | P17.02 | Define action equivalence with labels, sinks and approval exceptions |
+| ✅ | P17.02 | Define action equivalence with labels, sinks and approval exceptions |
 | ❌ | P17.03 | Test strict-mode noninterference for protected side effects |
 | ❌ | P17.04 | Test permissive-mode limitations with explicit counterexamples |
 | ❌ | P17.05 | Shrink failing generated examples into regression fixtures |
