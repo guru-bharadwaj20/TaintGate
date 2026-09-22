@@ -100,3 +100,38 @@ def checkpoint(log: AuditLog) -> dict[str, Any]:
 
 def verify_checkpoint(log: AuditLog, anchor: dict[str, Any]) -> bool:
     return log.verify() and checkpoint(log) == anchor
+
+def inclusion_proof(log: AuditLog, index: int) -> dict[str, Any]:
+    rows = log.rows()
+    if index < 0 or index >= len(rows):
+        raise IndexError("Audit entry outside log")
+    levels = merkle_levels([r[1] for r in rows])
+    position = index
+    siblings = []
+    for level in levels[:-1]:
+        neighbor = position ^ 1
+        siblings.append(level[neighbor if neighbor < len(level) else position].hex())
+        position //= 2
+    return {"index": index, "count": len(rows), "siblings": siblings, "root": levels[-1][0].hex()}
+
+def verify_proof(payload: bytes, proof: dict[str, Any], expected_root: str) -> bool:
+    try:
+        index, count, siblings = proof["index"], proof["count"], proof["siblings"]
+        if type(index) is not int or type(count) is not int or index < 0 or index >= count:
+            return False
+        if len(siblings) != (count-1).bit_length():
+            return False
+        value = leaf_hash(payload)
+        width = count
+        for sibling in siblings:
+            other = bytes.fromhex(sibling)
+            if len(other) != 32:
+                return False
+            if index % 2 == 0 and index+1 >= width and other != value:
+                return False
+            value = parent_hash(other,value) if index % 2 else parent_hash(value,other)
+            index //= 2
+            width = (width+1)//2
+        return value.hex() == expected_root == proof["root"]
+    except (KeyError, TypeError, ValueError):
+        return False
