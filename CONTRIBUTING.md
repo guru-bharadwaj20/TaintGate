@@ -242,7 +242,7 @@ Suggested window: Weeks 6-8.
 | ✅ | P08.01 | Define the supported JSON Schema dialect and rejection rules |
 | ✅ | P08.02 | Normalize Pydantic schemas and supported references |
 | ✅ | P08.03 | Compile required object fields |
-| ❌ | P08.04 | Compile optional fields and additional-property constraints |
+| ✅ | P08.04 | Compile optional fields and additional-property constraints |
 | ❌ | P08.05 | Compile arrays and supported length bounds |
 | ❌ | P08.06 | Compile enum and constant values |
 | ❌ | P08.07 | Compile nullable values and supported unions |

@@ -56,11 +56,20 @@ class Compiler:
 def object_rule(compiler: Compiler, schema: dict[str,Any]) -> str:
     properties = schema.get("properties",{})
     required = set(schema.get("required",properties))
-    if required != set(properties):
-        raise SchemaError("Optional fields not yet supported")
-    fields = [terminal(json.dumps(k))+" ws "+terminal(":")+" ws "+compiler.node(v) for k,v in properties.items()]
-    body = (" ws "+terminal(",")+" ws ").join(fields)
-    return terminal("{")+" ws "+body+" ws "+terminal("}")
+    if schema.get("additionalProperties",False) is not False:
+        raise SchemaError("Open objects unsupported")
+    if not required <= set(properties):
+        raise SchemaError("Unknown required field")
+    optional = [k for k in properties if k not in required]
+    if len(optional)>8 or len(properties)>64:
+        raise SchemaError("Object exceeds bounds")
+    expressions = {k:terminal(json.dumps(k))+" ws "+terminal(":")+" ws "+compiler.node(v) for k,v in properties.items()}
+    variants = []
+    for bits in itertools.product((False,True),repeat=len(optional)):
+        included = required | {k for k,b in zip(optional,bits) if b}
+        body = (" ws "+terminal(",")+" ws ").join(expressions[k] for k in properties if k in included)
+        variants.append(terminal("{")+" ws "+body+" ws "+terminal("}"))
+    return "("+" | ".join(variants)+")"
 
 def compile_schema(schema: dict[str,Any]) -> str:
     compiler = Compiler()
