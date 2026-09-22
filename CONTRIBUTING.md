@@ -302,7 +302,7 @@ Suggested window: Weeks 6-8.
 | ✅ | P10.12 | Implement confidentiality reader checks |
 | ✅ | P10.13 | Implement amount and destructive-action approval rules |
 | ✅ | P10.14 | Test overlapping allow, ask and deny derivations |
-| ❌ | P10.15 | Compare optimized results with the naive evaluator |
+| ✅ | P10.15 | Compare optimized results with the naive evaluator |
 | ❌ | P10.16 | Generate small random stratified policies for differential tests |
 | ❌ | P10.17 | Measure policy evaluation cost on growing provenance graphs |
 
@@ -323,7 +323,7 @@ Suggested window: Weeks 3-5; 9-10.
 | ✅ | P11.09 | Validate JSON-RPC messages and tool arguments |
 | ✅ | P11.10 | Implement cancellation propagation |
 | ✅ | P11.11 | Implement upstream timeouts and disconnect handling |
-| ❌ | P11.12 | Implement bounded queues and back-pressure |
+| ✅ | P11.12 | Implement bounded queues and back-pressure |
 | ❌ | P11.13 | Load per-server trust and reader configuration |
 | ❌ | P11.14 | Label every tool result including errors and structured content |
 | ❌ | P11.15 | Enforce policy on every tools/call entry point |
@@ -419,7 +419,7 @@ Suggested window: Weeks 9-10.
 | ✅ | P15.13 | Implement audit verify and prove commands |
 | ✅ | P15.14 | Test edited, reordered and deleted entries |
 | ✅ | P15.15 | Test truncated logs against anchored checkpoints |
-| ❌ | P15.16 | Document that an unanchored log cannot detect a fully rewritten history |
+| ✅ | P15.16 | Document that an unanchored log cannot detect a fully rewritten history |
 
 ## P16 - Integration, UI and attack laboratory
 

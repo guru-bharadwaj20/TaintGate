@@ -15,7 +15,7 @@ class GatewayResponse:
 
 
 class Gateway:
-    def __init__(self, guard, authorize=None, timeout=30):
+    def __init__(self, guard, authorize=None, timeout=30, max_pending=32):
         if timeout <= 0:
             raise ValueError("Timeout must be positive")
         self.guard = guard
@@ -24,6 +24,9 @@ class Gateway:
         self.servers = {}
         self.pending = {}
         self.timeout = timeout
+        if max_pending < 1:
+            raise ValueError("Pending bound must be positive")
+        self.max_pending = max_pending
 
     async def _execute(self, server, tool, arguments):
         try:
@@ -35,6 +38,8 @@ class Gateway:
             return GatewayResponse("error", reason="Upstream unavailable")
 
     async def call_with_id(self, request_id, name, arguments, *, context):
+        if len(self.pending) >= self.max_pending:
+            return GatewayResponse("deny", reason="Gateway overloaded")
         if request_id in self.pending:
             return GatewayResponse("deny", reason="Duplicate active request")
         task = asyncio.create_task(self.call(name, arguments, context=context))
