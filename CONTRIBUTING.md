@@ -433,9 +433,9 @@ Suggested window: Weeks 11-12.
 | ✅ | P16.04 | Build a minimal run timeline |
 | ✅ | P16.05 | Render provenance as a data-flow graph |
 | ✅ | P16.06 | Show human-readable policy derivation explanations |
-| ❌ | P16.07 | Show tool metadata change diffs |
-| ❌ | P16.08 | Show scoped approval consequences |
-| ❌ | P16.09 | Escape untrusted text and disable unsafe rendering |
+| ✅ | P16.07 | Show tool metadata change diffs |
+| ✅ | P16.08 | Show scoped approval consequences |
+| ✅ | P16.09 | Escape untrusted text and disable unsafe rendering |
 | ✅ | P16.10 | Build a malicious tool-description server |
 | ✅ | P16.11 | Build a server that changes approved metadata |
 | ✅ | P16.12 | Build a poisoned-email and invoice-exfiltration server |
