@@ -382,7 +382,7 @@ Suggested window: Weeks 9-10.
 
 | Status | ID | Subtask / completion deliverable |
 | :---: | --- | --- |
-| ❌ | P14.01 | Define outbound sinks including final rendered responses |
+| ✅ | P14.01 | Define outbound sinks including final rendered responses |
 | ❌ | P14.02 | Implement labelled markdown parsing |
 | ❌ | P14.03 | Inspect image, link and autolink destinations |
 | ❌ | P14.04 | Normalize URL schemes, hosts and encodings |
