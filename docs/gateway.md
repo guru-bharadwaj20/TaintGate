@@ -19,3 +19,10 @@ quarantined even if the peer later restores its old metadata.
 Each upstream owns a separate ClientSession. JSON-RPC IDs are session-scoped;
 downstream calls return through their awaiting handler instead of forwarding raw
 upstream IDs. Two peers can both use request ID 1 without a routing collision.
+
+Every allowed call re-fetches metadata immediately before dispatch and checks the
+persistent pin. This closes stale cached-approval use, but **cannot atomically bind
+a remote server's implementation to its metadata**. A malicious peer may change
+behaviour after recheck or lie about its schema. Strong execution guarantees need
+a trusted, versioned server implementation or an isolated capability-limited host.
+Cancellation also cannot roll back effects already performed by a peer.

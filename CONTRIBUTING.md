@@ -304,7 +304,7 @@ Suggested window: Weeks 6-8.
 | ✅ | P10.14 | Test overlapping allow, ask and deny derivations |
 | ✅ | P10.15 | Compare optimized results with the naive evaluator |
 | ✅ | P10.16 | Generate small random stratified policies for differential tests |
-| ❌ | P10.17 | Measure policy evaluation cost on growing provenance graphs |
+| ✅ | P10.17 | Measure policy evaluation cost on growing provenance graphs |
 
 ## P11 - MCP gateway transports and isolation
 
@@ -327,7 +327,7 @@ Suggested window: Weeks 3-5; 9-10.
 | ✅ | P11.13 | Load per-server trust and reader configuration |
 | ✅ | P11.14 | Label every tool result including errors and structured content |
 | ✅ | P11.15 | Enforce policy on every tools/call entry point |
-| ❌ | P11.16 | Return structured denial and approval-required responses |
+| ✅ | P11.16 | Return structured denial and approval-required responses |
 | ❌ | P11.17 | Test transport failures without accidental tool execution |
 
 ## P12 - Tool metadata approval and change detection
@@ -350,7 +350,7 @@ Suggested window: Weeks 6-8.
 | ✅ | P12.12 | Scan invisible Unicode and excessive description length |
 | ✅ | P12.13 | Keep unapproved raw metadata outside planner context |
 | ✅ | P12.14 | Treat description scanning as an extra layer rather than a guarantee |
-| ❌ | P12.15 | Close approval-to-execution metadata race windows |
+| ✅ | P12.15 | Close approval-to-execution metadata race windows |
 | ❌ | P12.16 | Test poisoning, rug pulls and shadowing regressions |
 
 ## P13 - Static checking and approval scopes
