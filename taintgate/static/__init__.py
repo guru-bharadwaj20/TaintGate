@@ -107,3 +107,18 @@ class Analyzer:
             self.env = self.merge_env(left, self.env)
         elif isinstance(node, ast.For):
             self.loop(node)
+
+    def loop(self, node):
+        collection = self.expression(node.iter)
+        self.pc = self.pc.join(collection.label).join(collection.shape)
+        initial = dict(self.env)
+        # Labels have finite height; known values are discarded by joins.
+        limit = (len(self.principals) + 3) * (len(self.env) + len(list(ast.walk(node))) + 1)
+        for _ in range(limit):
+            before = dict(self.env)
+            self.env[node.target.id] = AbstractValue(collection.label.join(self.pc), collection.shape, collection.sources)
+            self.block(node.body)
+            self.env = self.merge_env(initial, self.env)
+            if self.env == before:
+                return
+        raise ValueError('Abstract loop did not converge')

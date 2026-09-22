@@ -366,8 +366,8 @@ Suggested window: Weeks 11-12.
 | ✅ | P13.05 | Model tool outputs from server trust configuration |
 | ✅ | P13.06 | Model quarantined extraction conservatively |
 | ✅ | P13.07 | Merge abstract states at branch joins |
-| ❌ | P13.08 | Track abstract program-counter labels |
-| ❌ | P13.09 | Compute loop fixed points with documented termination assumptions |
+| ✅ | P13.08 | Track abstract program-counter labels |
+| ✅ | P13.09 | Compute loop fixed points with documented termination assumptions |
 | ❌ | P13.10 | Collect potentially unsafe call sites |
 | ❌ | P13.11 | Describe unresolved arguments without pretending to know runtime values |
 | ❌ | P13.12 | Create plan-, tool-, policy- and recipient-bound approval scopes |
