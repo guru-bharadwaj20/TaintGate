@@ -90,3 +90,20 @@ class Analyzer:
         if isinstance(node.func, ast.Name) and node.func.id == 'extract':
             label = label.join(Label(Integrity.UNTRUSTED))
         return AbstractValue(label, label)
+
+    def merge_env(self, left, right):
+        top = AbstractValue(Label(Integrity.UNTRUSTED, frozenset()))
+        return {name: left.get(name, top).join(right.get(name, top)) for name in left.keys() | right.keys()}
+
+    def control_statement(self, node):
+        if isinstance(node, ast.If):
+            condition = self.expression(node.test)
+            initial = dict(self.env)
+            self.pc = self.pc.join(condition.label)
+            self.block(node.body)
+            left = dict(self.env)
+            self.env = initial
+            self.block(node.orelse)
+            self.env = self.merge_env(left, self.env)
+        elif isinstance(node, ast.For):
+            self.loop(node)
