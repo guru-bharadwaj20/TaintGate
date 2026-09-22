@@ -1,5 +1,7 @@
 from taintgate.gateway.scanner import scan_description
 from taintgate.gateway.metadata import Contract, MetadataGuard, PinStore
+from taintgate.gateway.core import Gateway
+import pytest
 
 
 def test_a4_poisoning_never_enters_contract():
@@ -20,3 +22,13 @@ def test_a5_schema_rug_pull(tmp_path):
     guard.reapprove("mail", "send", before)
     assert guard.check("mail", "send", before)
     pins.close()
+
+
+def test_a6_namespace_shadowing():
+    gateway = Gateway(None)
+    contract = Contract("approved", "read", "Local", {})
+    gateway.register(contract, object())
+    with pytest.raises(ValueError):
+        gateway.register(contract, object())
+    with pytest.raises(ValueError):
+        gateway.register(Contract("approved", "send", "Local", {}), object())

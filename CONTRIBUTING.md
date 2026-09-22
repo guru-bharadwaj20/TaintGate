@@ -126,13 +126,13 @@ Suggested window: Weeks 1-2; 9-10.
 | ✅ | P03.02 | Select a quantised planner model and record its license |
 | ✅ | P03.03 | Select a quantised extraction model and record its license |
 | ✅ | P03.04 | Record model hashes, quantisation and CPU settings |
-| ❌ | P03.05 | Measure RAM use and short-request CPU latency |
+| ✅ | P03.05 | Measure RAM use and short-request CPU latency |
 | ✅ | P03.06 | Define a backend interface for inference |
 | ✅ | P03.07 | Implement an offline inference smoke test |
 | ✅ | P03.08 | Build planner prompts from trusted inputs only |
 | ✅ | P03.09 | Expose only locally approved tool signatures to the planner |
 | ✅ | P03.10 | Constrain planner output to the plan language |
-| ❌ | P03.11 | Implement bounded planner retries |
+| ✅ | P03.11 | Implement bounded planner retries |
 | ❌ | P03.12 | Generate trusted parse-error summaries without input excerpts |
 | ❌ | P03.13 | Generate trusted unknown-tool summaries without tool output |
 | ❌ | P03.14 | Test that tool results never enter planner context |
@@ -460,7 +460,7 @@ Suggested window: Weeks 11-14.
 | ❌ | P17.09 | Test A3 outbound exfiltration regressions |
 | ✅ | P17.10 | Test A4 tool poisoning regressions |
 | ✅ | P17.11 | Test A5 metadata rug-pull regressions |
-| ❌ | P17.12 | Test A6 namespace shadowing regressions |
+| ✅ | P17.12 | Test A6 namespace shadowing regressions |
 | ❌ | P17.13 | Test A7 secret leakage regressions |
 | ❌ | P17.14 | Fuzz the AST parser and policy parser |
 | ❌ | P17.15 | Fuzz JSON-RPC decoding and gateway state transitions |
