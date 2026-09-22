@@ -301,7 +301,7 @@ Suggested window: Weeks 6-8.
 | ✅ | P10.11 | Implement recipient-integrity rules |
 | ✅ | P10.12 | Implement confidentiality reader checks |
 | ✅ | P10.13 | Implement amount and destructive-action approval rules |
-| ❌ | P10.14 | Test overlapping allow, ask and deny derivations |
+| ✅ | P10.14 | Test overlapping allow, ask and deny derivations |
 | ❌ | P10.15 | Compare optimized results with the naive evaluator |
 | ❌ | P10.16 | Generate small random stratified policies for differential tests |
 | ❌ | P10.17 | Measure policy evaluation cost on growing provenance graphs |
