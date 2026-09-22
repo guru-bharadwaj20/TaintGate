@@ -360,7 +360,7 @@ Suggested window: Weeks 11-12.
 | Status | ID | Subtask / completion deliverable |
 | :---: | --- | --- |
 | ✅ | P13.01 | Define abstract values for labels, shape and provenance |
-| ❌ | P13.02 | Use a finite configured principal universe for analysis |
+| ✅ | P13.02 | Use a finite configured principal universe for analysis |
 | ❌ | P13.03 | Implement abstract environments and assignments |
 | ❌ | P13.04 | Implement abstract expression transfer functions |
 | ❌ | P13.05 | Model tool outputs from server trust configuration |
