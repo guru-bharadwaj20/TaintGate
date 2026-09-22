@@ -252,7 +252,7 @@ Suggested window: Weeks 6-8.
 | ✅ | P08.11 | Bound schema depth and grammar size |
 | ✅ | P08.12 | Reject unsupported or recursive schema features safely |
 | ❌ | P08.13 | Test grammar acceptance and rejection with the pinned backend |
-| ❌ | P08.14 | Run the quarantined model without tool access |
+| ✅ | P08.14 | Run the quarantined model without tool access |
 | ❌ | P08.15 | Validate decoded JSON again with Pydantic |
 | ❌ | P08.16 | Apply semantic validation that grammars cannot enforce |
 | ❌ | P08.17 | Support an explicit insufficient-information result |
