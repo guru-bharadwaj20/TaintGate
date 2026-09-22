@@ -257,8 +257,8 @@ Suggested window: Weeks 6-8.
 | ✅ | P08.16 | Apply semantic validation that grammars cannot enforce |
 | ✅ | P08.17 | Support an explicit insufficient-information result |
 | ✅ | P08.18 | Label all extracted fields with input provenance and untrusted integrity |
-| ❌ | P08.19 | Reject trailing text, tool-call objects and malformed responses |
-| ❌ | P08.20 | Test injected instructions remaining inert field data |
+| ✅ | P08.19 | Reject trailing text, tool-call objects and malformed responses |
+| ✅ | P08.20 | Test injected instructions remaining inert field data |
 
 ## P09 - Datalog parser and reference evaluator
 
@@ -328,7 +328,7 @@ Suggested window: Weeks 3-5; 9-10.
 | ✅ | P11.14 | Label every tool result including errors and structured content |
 | ✅ | P11.15 | Enforce policy on every tools/call entry point |
 | ✅ | P11.16 | Return structured denial and approval-required responses |
-| ❌ | P11.17 | Test transport failures without accidental tool execution |
+| ✅ | P11.17 | Test transport failures without accidental tool execution |
 
 ## P12 - Tool metadata approval and change detection
 
@@ -351,7 +351,7 @@ Suggested window: Weeks 6-8.
 | ✅ | P12.13 | Keep unapproved raw metadata outside planner context |
 | ✅ | P12.14 | Treat description scanning as an extra layer rather than a guarantee |
 | ✅ | P12.15 | Close approval-to-execution metadata race windows |
-| ❌ | P12.16 | Test poisoning, rug pulls and shadowing regressions |
+| ✅ | P12.16 | Test poisoning, rug pulls and shadowing regressions |
 
 ## P13 - Static checking and approval scopes
 

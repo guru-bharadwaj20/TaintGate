@@ -42,9 +42,10 @@ def main() -> None:
                 raise SystemExit("Only workspace project files can be committed")
         text = roadmap.read_text(encoding="utf-8")
         pending = f"| \u274c | {args.task} |"
-        if text.count(pending) != 1:
-            raise SystemExit("Task missing or already completed")
-        roadmap.write_text(text.replace(pending, f"| \u2705 | {args.task} |"), encoding="utf-8", newline="\n")
+        completed = f"| \u2705 | {args.task} |"
+        if text.count(pending) != 1 and text.count(completed) != 1:
+            raise SystemExit("Task missing or ambiguous")
+        roadmap.write_text(text.replace(pending, completed), encoding="utf-8", newline="\n")
         subprocess.run(["git", "add", "--", *args.files, "CONTRIBUTING.md"], check=True)
         subprocess.run(["git", "diff", "--cached", "--check"], check=True)
         subprocess.run(
