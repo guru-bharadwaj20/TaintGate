@@ -16,6 +16,14 @@ class GatewayResponse:
     result: Any = None
     reason: str = ""
 
+    def as_dict(self):
+        result = self.result
+        if isinstance(result, Labeled):
+            result = {"value": result.value, "integrity": result.label.integrity.name,
+                      "readers": None if result.label.readers is None else sorted(result.label.readers),
+                      "sources": sorted(result.sources)}
+        return {"status": self.status, "reason": self.reason, "result": result}
+
 
 class Gateway:
     def __init__(self, guard, authorize=None, timeout=30, max_pending=32):
