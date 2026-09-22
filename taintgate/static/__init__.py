@@ -52,3 +52,22 @@ class Analyzer:
                 self.expression(node.value)
             else:
                 self.control_statement(node)
+
+    def expression(self, node):
+        if isinstance(node, ast.Constant):
+            return AbstractValue(known=node.value, resolved=True)
+        if isinstance(node, ast.Name):
+            value = self.env.get(node.id, AbstractValue(Label(Integrity.UNTRUSTED, frozenset())))
+            if self.strict:
+                self.pc = self.pc.join(value.label)
+            return value
+        if isinstance(node, ast.Call):
+            return self.call(node)
+        values = [self.expression(child) for child in ast.iter_child_nodes(node)
+                  if isinstance(child, ast.expr)]
+        label, sources = Label(), frozenset()
+        for value in values:
+            label, sources = label.join(value.label), sources | value.sources
+        if self.strict:
+            self.pc = self.pc.join(label)
+        return AbstractValue(label, label, sources)
