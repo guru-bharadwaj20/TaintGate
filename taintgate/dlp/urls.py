@@ -26,3 +26,13 @@ def decoded_components(value):
             break
         decoded = next_value
     return decoded
+
+
+def destination_allowed(value, allowed_domains):
+    try:
+        normalized = normalize_url(value)
+        host = urlsplit(normalized).hostname
+        allowed = {domain.rstrip(".").encode("idna").decode().lower() for domain in allowed_domains}
+        return host in allowed
+    except (ValueError, UnicodeError):
+        return False
