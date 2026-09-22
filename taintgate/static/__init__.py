@@ -152,3 +152,16 @@ def describe_argument(value):
     return {'resolved': False, 'description': 'Runtime value unknown',
             'integrity': value.label.integrity.name,
             'readers': None if value.label.readers is None else sorted(value.label.readers)}
+
+@dataclass(frozen=True)
+class ApprovalScope:
+    plan_digest: str
+    tool_digest: str
+    policy_digest: str
+    recipients: frozenset[str]
+
+    @classmethod
+    def create(cls, plan, tool_configuration, policy_configuration, recipients=()):
+        def digest(value):
+            return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
+        return cls(digest(plan), digest(tool_configuration), digest(policy_configuration), frozenset(recipients))
