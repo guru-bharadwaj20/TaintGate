@@ -14,3 +14,10 @@ PAN and Aadhaar checks recognize formats only. They do not verify issuance,
 identity, PAN holder type or Aadhaar checksum; Aadhaar detection requires nearby
 context to reduce accidental matches. Card checksum matches likewise do not prove
 a real account. Only synthetic values are used in test fixtures.
+
+The ten-line benign fixture in test_dlp_scanners.py produces 0/10 alerts under the
+pattern/card/identifier scanner. This small synthetic check is not a population
+false-positive estimate. Entropy alerts are opt-in because hashes and random
+identifiers often look like keys. Encoded canaries cover percent, hex and base64;
+arbitrary encryption, fragmentation or new encodings can evade supplementary
+scanners. Labels and recipient checks provide the independent confidentiality rule.

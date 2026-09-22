@@ -396,7 +396,7 @@ Suggested window: Weeks 9-10.
 | ✅ | P14.12 | Create synthetic canary tokens for private test fixtures |
 | ✅ | P14.13 | Check outbound arguments and final outputs for canaries |
 | ✅ | P14.14 | Test encoded secrets and markdown exfiltration examples |
-| ❌ | P14.15 | Measure scanner false positives and record limitations |
+| ✅ | P14.15 | Measure scanner false positives and record limitations |
 
 ## P15 - Tamper-evident audit storage
 
