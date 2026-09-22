@@ -74,4 +74,14 @@ def object_rule(compiler: Compiler, schema: dict[str,Any]) -> str:
 def compile_schema(schema: dict[str,Any]) -> str:
     compiler = Compiler()
     compiler.handlers["object"] = lambda s:object_rule(compiler,s)
+    compiler.handlers["array"] = lambda s:array_rule(compiler,s)
     return compiler.compile(schema)
+
+
+def array_rule(compiler: Compiler, schema: dict[str,Any]) -> str:
+    minimum, maximum = schema.get("minItems",0),schema.get("maxItems",32)
+    if type(minimum) is not int or type(maximum) is not int or not 0<=minimum<=maximum<=128:
+        raise SchemaError("Invalid array bounds")
+    item = compiler.node(schema.get("items",{}))
+    variants = [(" ws "+terminal(",")+" ws ").join([item]*n) for n in range(minimum,maximum+1)]
+    return terminal("[")+" ws ("+" | ".join(variants)+") ws "+terminal("]")
