@@ -71,3 +71,22 @@ class Analyzer:
         if self.strict:
             self.pc = self.pc.join(label)
         return AbstractValue(label, label, sources)
+
+    def call(self, node):
+        args = [self.expression(a) for a in node.args]
+        args.extend(self.expression(k.value) for k in node.keywords)
+        label = self.pc
+        for arg in args:
+            label = label.join(arg.label)
+        if isinstance(node.func, ast.Name) and node.func.id in self.tools:
+            output = self.tools[node.func.id]
+            output = output.result_label if hasattr(output, 'result_label') else output
+            self.check_label(output)
+            self.collect_call(node, args, label)
+            return AbstractValue(label.join(output), label.join(output), frozenset({node.func.id}))
+        if isinstance(node.func, ast.Attribute):
+            receiver = self.expression(node.func.value)
+            label = label.join(receiver.label)
+        if isinstance(node.func, ast.Name) and node.func.id == 'extract':
+            label = label.join(Label(Integrity.UNTRUSTED))
+        return AbstractValue(label, label)

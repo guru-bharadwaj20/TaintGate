@@ -363,7 +363,7 @@ Suggested window: Weeks 11-12.
 | ✅ | P13.02 | Use a finite configured principal universe for analysis |
 | ✅ | P13.03 | Implement abstract environments and assignments |
 | ✅ | P13.04 | Implement abstract expression transfer functions |
-| ❌ | P13.05 | Model tool outputs from server trust configuration |
+| ✅ | P13.05 | Model tool outputs from server trust configuration |
 | ❌ | P13.06 | Model quarantined extraction conservatively |
 | ❌ | P13.07 | Merge abstract states at branch joins |
 | ❌ | P13.08 | Track abstract program-counter labels |
