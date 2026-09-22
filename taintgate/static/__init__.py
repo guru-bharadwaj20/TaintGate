@@ -122,3 +122,26 @@ class Analyzer:
             if self.env == before:
                 return
         raise ValueError('Abstract loop did not converge')
+
+    def collect_call(self, node, args, label):
+        site = CallSite(node.lineno, node.func.id, label, tuple(args))
+        if site not in self.calls:
+            self.calls.append(site)
+
+
+@dataclass(frozen=True)
+class CallSite:
+    line: int
+    tool: str
+    label: Label
+    arguments: tuple[AbstractValue, ...]
+
+    @property
+    def potentially_unsafe(self):
+        return self.label.integrity == Integrity.UNTRUSTED or self.label.readers is not None or any(not a.resolved for a in self.arguments)
+
+
+@dataclass(frozen=True)
+class Analysis:
+    environment: dict[str, AbstractValue]
+    calls: tuple[CallSite, ...]
