@@ -48,6 +48,11 @@ class Compiler:
         return "root ::= ws " + expression + " ws\n" + "\n".join(k+" ::= "+v for k,v in self.rules.items()) + "\n"
 
     def node(self, schema: dict[str,Any]) -> str:
+        allowed = {"type","properties","required","additionalProperties","items","minItems","maxItems","enum","const","anyOf","minLength","maxLength","format","$defs","title","description","default","$schema"}
+        if set(schema)-allowed:
+            raise SchemaError("Unsupported schema keyword")
+        if "format" in schema and schema["format"] not in {"email","date","date-time"}:
+            raise SchemaError("Unsupported string format")
         if "anyOf" in schema:
             choices = schema["anyOf"]
             if not choices or len(choices)>16:
