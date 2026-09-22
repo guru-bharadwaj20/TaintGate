@@ -9,6 +9,7 @@ email__send(to=mail.recipient, body=mail.body)</textarea>
 <button id="run">Run plan</button><p id="status" role="status"></p>
 <section><h2>Run timeline</h2><ol id="timeline"></ol></section>
 <section><h2>Provenance</h2><svg id="graph" role="img" aria-label="Execution provenance graph"></svg></section>
+<section><h2>Policy explanations</h2><pre id="reasons"></pre></section>
 <script>
 const el=id=>document.getElementById(id);
 let latest;
@@ -16,5 +17,5 @@ async function api(path,body){const response=await fetch(path,{method:'POST',hea
 function timeline(data){el('timeline').replaceChildren();for(const event of data.decisions){const item=document.createElement('li');item.textContent=event.tool+': '+event.action;item.className=event.action;el('timeline').append(item);}}
 el('run').onclick=async()=>{try{latest=await api('/runs',{source:el('plan').value});el('status').textContent=latest.status;timeline(latest);if(window.renderDetails)window.renderDetails(latest);}catch(error){el('status').textContent=error.message;}};
 function graph(data){const svg=el('graph');svg.replaceChildren();const ns='http://www.w3.org/2000/svg';const nodes=data.trace;svg.setAttribute('viewBox','0 0 900 '+Math.max(300,nodes.length*55));const positions=new Map(nodes.map((n,i)=>[n.operation||String(i),[160+(i%3)*280,35+i*55]]));for(const [i,n] of nodes.entries()){const pos=positions.get(n.operation||String(i));for(const parent of n.parents||[]){if(!positions.has(parent))continue;const p=positions.get(parent);const line=document.createElementNS(ns,'line');for(const [k,v]of Object.entries({x1:p[0],y1:p[1],x2:pos[0],y2:pos[1],stroke:'#89a7bf'}))line.setAttribute(k,v);svg.append(line);}const circle=document.createElementNS(ns,'circle');circle.setAttribute('cx',pos[0]);circle.setAttribute('cy',pos[1]);circle.setAttribute('r','12');circle.setAttribute('fill',n.integrity==='UNTRUSTED'?'#d77e67':'#69ad86');svg.append(circle);const text=document.createElementNS(ns,'text');text.setAttribute('x',pos[0]+18);text.setAttribute('y',pos[1]+5);text.setAttribute('fill','#e6edf4');text.textContent='Step '+i+' '+(n.integrity||'');svg.append(text);}}
-window.renderDetails=graph;
+window.renderDetails=data=>{graph(data);el("reasons").textContent=JSON.stringify(data.decisions,null,2);};
 </script></html>

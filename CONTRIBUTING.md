@@ -432,7 +432,7 @@ Suggested window: Weeks 11-12.
 | ❌ | P16.03 | Implement FastAPI run and approval endpoints |
 | ✅ | P16.04 | Build a minimal run timeline |
 | ✅ | P16.05 | Render provenance as a data-flow graph |
-| ❌ | P16.06 | Show human-readable policy derivation explanations |
+| ✅ | P16.06 | Show human-readable policy derivation explanations |
 | ❌ | P16.07 | Show tool metadata change diffs |
 | ❌ | P16.08 | Show scoped approval consequences |
 | ❌ | P16.09 | Escape untrusted text and disable unsafe rendering |
