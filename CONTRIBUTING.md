@@ -124,7 +124,7 @@ Suggested window: Weeks 1-2; 9-10.
 | :---: | --- | --- |
 | ✅ | P03.01 | Choose and pin the CPU inference backend version |
 | ✅ | P03.02 | Select a quantised planner model and record its license |
-| ❌ | P03.03 | Select a quantised extraction model and record its license |
+| ✅ | P03.03 | Select a quantised extraction model and record its license |
 | ❌ | P03.04 | Record model hashes, quantisation and CPU settings |
 | ❌ | P03.05 | Measure RAM use and short-request CPU latency |
 | ❌ | P03.06 | Define a backend interface for inference |
