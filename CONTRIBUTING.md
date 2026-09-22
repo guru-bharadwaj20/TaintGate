@@ -458,8 +458,8 @@ Suggested window: Weeks 11-14.
 | ❌ | P17.07 | Test A1 unauthorized action regressions |
 | ❌ | P17.08 | Test A2 argument hijacking regressions |
 | ❌ | P17.09 | Test A3 outbound exfiltration regressions |
-| ❌ | P17.10 | Test A4 tool poisoning regressions |
-| ❌ | P17.11 | Test A5 metadata rug-pull regressions |
+| ✅ | P17.10 | Test A4 tool poisoning regressions |
+| ✅ | P17.11 | Test A5 metadata rug-pull regressions |
 | ❌ | P17.12 | Test A6 namespace shadowing regressions |
 | ❌ | P17.13 | Test A7 secret leakage regressions |
 | ❌ | P17.14 | Fuzz the AST parser and policy parser |
@@ -506,7 +506,7 @@ Suggested window: Weeks 15-16.
 | ❌ | P19.02 | Publish threat model and policy semantics |
 | ✅ | P19.03 | Publish TaintScript language reference |
 | ✅ | P19.04 | Publish label, endorsement and declassification reference |
-| ❌ | P19.05 | Document the static checker and soundness test limits |
+| ✅ | P19.05 | Document the static checker and soundness test limits |
 | ❌ | P19.06 | Document tool onboarding and approval pin management |
 | ❌ | P19.07 | Document audit checkpoint storage and recovery |
 | ❌ | P19.08 | Document CPU models, memory and expected runtime |
