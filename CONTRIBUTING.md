@@ -388,7 +388,7 @@ Suggested window: Weeks 9-10.
 | ✅ | P14.04 | Normalize URL schemes, hosts and encodings |
 | ✅ | P14.05 | Enforce destination domain allowlists |
 | ✅ | P14.06 | Reject confidential data in outbound URL components |
-| ❌ | P14.07 | Define safe rendering behaviour for stripped destinations |
+| ✅ | P14.07 | Define safe rendering behaviour for stripped destinations |
 | ❌ | P14.08 | Implement common API-key pattern detectors |
 | ❌ | P14.09 | Implement configurable entropy checks |
 | ❌ | P14.10 | Implement Luhn and contextual card detection |
