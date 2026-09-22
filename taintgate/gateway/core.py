@@ -5,6 +5,8 @@ import json
 import asyncio
 from jsonschema import Draft202012Validator
 from mcp.types import JSONRPCMessage
+from .config import ServerConfig
+from taintgate.labels import Labeled
 
 
 @dataclass(frozen=True)
@@ -22,6 +24,7 @@ class Gateway:
         self.authorize = authorize
         self.contracts = {}
         self.servers = {}
+        self.config = {}
         self.pending = {}
         self.timeout = timeout
         if max_pending < 1:
@@ -31,11 +34,17 @@ class Gateway:
     async def _execute(self, server, tool, arguments):
         try:
             async with asyncio.timeout(self.timeout):
-                return GatewayResponse("allow", await self.servers[server].call_tool(tool, arguments))
+                result = await self.servers[server].call_tool(tool, arguments)
+                return GatewayResponse("allow", self._label(server, result))
         except TimeoutError:
-            return GatewayResponse("error", reason="Upstream timed out")
+            return GatewayResponse("error", self._label(server, {"error": "timeout"}), reason="Upstream timed out")
         except Exception:
-            return GatewayResponse("error", reason="Upstream unavailable")
+            return GatewayResponse("error", self._label(server, {"error": "unavailable"}), reason="Upstream unavailable")
+
+    def _label(self, server, result):
+        if hasattr(result, "model_dump"):
+            result = result.model_dump(by_alias=True, exclude_none=True)
+        return Labeled(result, self.config[server].result_label, frozenset({"mcp:" + server}))
 
     async def call_with_id(self, request_id, name, arguments, *, context):
         if len(self.pending) >= self.max_pending:
@@ -56,7 +65,7 @@ class Gateway:
             return True
         return False
 
-    def register(self, contract, upstream):
+    def register(self, contract, upstream, config=None):
         if contract.name != f"{contract.server}__{contract.tool}":
             raise ValueError("Tool is outside its approved namespace")
         if contract.name in self.contracts:
@@ -65,6 +74,7 @@ class Gateway:
             raise ValueError("Server identity already bound to another session")
         self.contracts[contract.name] = contract
         self.servers[contract.server] = upstream
+        self.config[contract.server] = config or ServerConfig(contract.server)
 
     def list_tools(self):
         # Remote data is deliberately not consulted by the planner interface.
