@@ -127,7 +127,7 @@ Suggested window: Weeks 1-2; 9-10.
 | ✅ | P03.03 | Select a quantised extraction model and record its license |
 | ✅ | P03.04 | Record model hashes, quantisation and CPU settings |
 | ❌ | P03.05 | Measure RAM use and short-request CPU latency |
-| ❌ | P03.06 | Define a backend interface for inference |
+| ✅ | P03.06 | Define a backend interface for inference |
 | ❌ | P03.07 | Implement an offline inference smoke test |
 | ❌ | P03.08 | Build planner prompts from trusted inputs only |
 | ❌ | P03.09 | Expose only locally approved tool signatures to the planner |
