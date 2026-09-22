@@ -5,6 +5,7 @@ import json
 import asyncio
 from jsonschema import Draft202012Validator
 from mcp.types import JSONRPCMessage
+from .config import ServerConfig
 
 
 @dataclass(frozen=True)
@@ -22,6 +23,7 @@ class Gateway:
         self.authorize = authorize
         self.contracts = {}
         self.servers = {}
+        self.config = {}
         self.pending = {}
         self.timeout = timeout
         if max_pending < 1:
@@ -56,7 +58,7 @@ class Gateway:
             return True
         return False
 
-    def register(self, contract, upstream):
+    def register(self, contract, upstream, config=None):
         if contract.name != f"{contract.server}__{contract.tool}":
             raise ValueError("Tool is outside its approved namespace")
         if contract.name in self.contracts:
@@ -65,6 +67,7 @@ class Gateway:
             raise ValueError("Server identity already bound to another session")
         self.contracts[contract.name] = contract
         self.servers[contract.server] = upstream
+        self.config[contract.server] = config or ServerConfig(contract.server)
 
     def list_tools(self):
         # Remote data is deliberately not consulted by the planner interface.
