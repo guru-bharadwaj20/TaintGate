@@ -1,6 +1,6 @@
-﻿{
+{
   "format": 1,
-  "backend": "llama-cpp-python==0.3.16",
+  "backend": "llama-cpp-python==0.3.36",
   "repository": "Qwen/Qwen2.5-0.5B-Instruct-GGUF",
   "revision": "9217f5db79a29953eb74d5343926648285ec7e67",
   "filename": "qwen2.5-0.5b-instruct-q4_k_m.gguf",
