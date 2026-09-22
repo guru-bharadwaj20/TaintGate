@@ -1,7 +1,10 @@
-﻿from . import PolicyError
+﻿from . import PolicyError, Program, Rule
 
-def dependency_graph(program):
-    graph = {}
+Graph = dict[str, list[tuple[str, bool]]]
+
+
+def dependency_graph(program: Program) -> Graph:
+    graph: Graph = {}
     for fact in program.facts:
         graph.setdefault(fact.predicate, [])
     for rule in program.rules:
@@ -11,7 +14,7 @@ def dependency_graph(program):
             edges.append((atom.predicate, atom.negated))
     return graph
 
-def components(graph):
+def components(graph: Graph) -> list[frozenset[str]]:
     """Iterative Kosaraju avoids Python stack limits on adversarial chains."""
     visited, order = set(), []
     for start in graph:
@@ -26,7 +29,7 @@ def components(graph):
             visited.add(node)
             stack.append((node, True))
             stack.extend((dep, False) for dep, _ in graph[node] if dep not in visited)
-    reverse = {node: [] for node in graph}
+    reverse: dict[str, list[str]] = {node: [] for node in graph}
     for node, edges in graph.items():
         for dep, _ in edges:
             reverse[dep].append(node)
@@ -34,25 +37,25 @@ def components(graph):
     for start in reversed(order):
         if start in assigned:
             continue
-        group, stack = set(), [start]
-        while stack:
-            node = stack.pop()
+        group, pending = set(), [start]
+        while pending:
+            node = pending.pop()
             if node in assigned:
                 continue
             assigned.add(node)
             group.add(node)
-            stack.extend(reverse[node])
+            pending.extend(reverse[node])
         result.append(frozenset(group))
     return result
 
-def reject_negative_cycles(graph):
+def reject_negative_cycles(graph: Graph) -> None:
     membership = {node: i for i, group in enumerate(components(graph)) for node in group}
     for node, edges in graph.items():
         for dep, negative in edges:
             if negative and membership[node] == membership[dep]:
                 raise PolicyError(f'Negative dependency cycle: {node} -> {dep}')
 
-def stratify(program):
+def stratify(program: Program) -> list[tuple[Rule, ...]]:
     graph = dependency_graph(program)
     reject_negative_cycles(graph)
     levels = {node: 0 for node in graph}

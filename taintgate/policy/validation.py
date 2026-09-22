@@ -1,6 +1,7 @@
-from . import BUILTIN_ARITIES, PolicyError, Var
+from . import BUILTIN_ARITIES, PolicyError, Program, Var
 
-def validate(program):
+
+def validate(program: Program) -> Program:
     if len(program.facts) + len(program.rules) > 2000:
         raise PolicyError('Policy statement budget exceeded')
     arities = dict(BUILTIN_ARITIES)

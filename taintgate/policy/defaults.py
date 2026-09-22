@@ -12,7 +12,7 @@ APPROVAL_RULES = '''
 ask(C) :- approval_required(C).
 '''
 
-def policy_for_tools(tools):
+def policy_for_tools(tools: list[str] | tuple[str, ...]) -> str:
     import json
     return RECIPIENT_RULES + CONFIDENTIALITY_RULES + APPROVAL_RULES + '\n'.join(
         f'allow(C) :- call(C, {json.dumps(tool)}).' for tool in tools)

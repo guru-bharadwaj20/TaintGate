@@ -2,8 +2,10 @@
 import json
 import platform
 import time
+
 from taintgate.policy import Atom
 from taintgate.policy.engine import Engine, NaiveEngine
+
 
 def measure():
     rows = []

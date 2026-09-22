@@ -1,6 +1,8 @@
+from collections.abc import Iterable
 from dataclasses import dataclass, field
+from typing import Any
 
-from . import PolicyError, Program
+from . import Atom, PolicyError, Program, Rule, Term
 from .joins import instantiate, join
 from .relations import Relations
 from .validation import validate
@@ -8,16 +10,16 @@ from .validation import validate
 
 @dataclass
 class Evaluation:
-    facts: frozenset
-    derivations: dict = field(default_factory=dict)
+    facts: frozenset[Atom]
+    derivations: dict[Atom, tuple[Rule | None, tuple[Atom, ...]]] = field(default_factory=dict)
 
-    def explain(self, fact, max_depth=12, max_nodes=100):
+    def explain(self, fact: Atom, max_depth: int = 12, max_nodes: int = 100) -> dict[str, Any]:
         budget = [max_nodes]
-        def visit(current, path, depth):
+        def visit(current: Atom, path: set[Atom], depth: int) -> dict[str, Any]:
             if budget[0] <= 0:
                 return {'fact': repr(current), 'truncated': True}
             budget[0] -= 1
-            node = {'fact': repr(current)}
+            node: dict[str, Any] = {'fact': repr(current)}
             if current in path:
                 return {**node, 'cycle': True}
             if depth >= max_depth:
@@ -37,14 +39,14 @@ class Evaluation:
         return visit(fact, set(), 0)
 
 class NaiveEngine:
-    def __init__(self, program, max_facts=10000, max_rounds=1000, max_work=1000000):
+    def __init__(self, program: Program | str, max_facts: int = 10000, max_rounds: int = 1000, max_work: int = 1000000) -> None:
         self.max_facts = max_facts
         self.max_rounds = max_rounds
         self.max_work = max_work
         from .parser import parse
         self.program = validate(parse(program) if isinstance(program, str) else program)
 
-    def evaluate(self, facts=()):
+    def evaluate(self, facts: Iterable[Atom] = ()) -> Evaluation:
         facts = tuple(facts)
         validate(Program(tuple(facts)))
         combined = (*self.program.facts, *facts)
@@ -52,7 +54,7 @@ class NaiveEngine:
             raise PolicyError('Input fact budget exceeded')
         relations = Relations(combined)
         budget = [self.max_work]
-        derivations = {fact: (None, ()) for fact in relations.facts()}
+        derivations: dict[Atom, tuple[Rule | None, tuple[Atom, ...]]] = {fact: (None, ()) for fact in relations.facts()}
         from .strata import stratify
         rounds = work = 0
         for rules in stratify(self.program):
@@ -77,21 +79,21 @@ class NaiveEngine:
 
 class Delta:
     """A round's newly inserted facts, partitioned by predicate."""
-    def __init__(self, facts=()):
+    def __init__(self, facts: Iterable[Atom] = ()) -> None:
         from collections import defaultdict
-        self.data = defaultdict(set)
+        self.data: dict[str, set[tuple[Term, ...]]] = defaultdict(set)
         for fact in facts:
             self.data[fact.predicate].add(fact.args)
 
-    def add(self, fact):
+    def add(self, fact: Atom) -> None:
         self.data[fact.predicate].add(fact.args)
 
-    def __bool__(self):
+    def __bool__(self) -> bool:
         return any(self.data.values())
 
 class Engine(NaiveEngine):
     """Semi-naive evaluation: every recursive variant consumes a delta relation."""
-    def evaluate(self, facts=()):
+    def evaluate(self, facts: Iterable[Atom] = ()) -> Evaluation:
         from .strata import stratify
         facts = tuple(facts)
         validate(Program((*self.program.facts, *facts), self.program.rules))
@@ -102,7 +104,7 @@ class Engine(NaiveEngine):
             raise PolicyError('Input fact budget exceeded')
         relations = Relations(combined)
         budget = [self.max_work]
-        derivations = {fact: (None, ()) for fact in relations.facts()}
+        derivations: dict[Atom, tuple[Rule | None, tuple[Atom, ...]]] = {fact: (None, ()) for fact in relations.facts()}
         rounds = work = 0
         for rules in stratify(self.program):
             delta = Delta(relations.facts())

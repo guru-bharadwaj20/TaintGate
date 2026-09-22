@@ -1,5 +1,6 @@
 ﻿from taintgate.policy.engine import Engine, NaiveEngine
 
+
 def test_recursive_reference_equivalence():
     policy = '''edge(1,2). edge(2,3). edge(3,1).
     reach(X,Y) :- edge(X,Y).

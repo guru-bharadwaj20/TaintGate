@@ -1,8 +1,10 @@
 ﻿import pytest
+
 from taintgate.policy import Atom, PolicyError
-from taintgate.policy.parser import parse
-from taintgate.policy.engine import NaiveEngine
 from taintgate.policy.decisions import decide
+from taintgate.policy.engine import NaiveEngine
+from taintgate.policy.parser import parse
+
 
 @pytest.mark.parametrize('text', [
     'allow(X).', 'allow(X) :- not deny(X).',
