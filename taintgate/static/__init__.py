@@ -145,3 +145,10 @@ class CallSite:
 class Analysis:
     environment: dict[str, AbstractValue]
     calls: tuple[CallSite, ...]
+
+def describe_argument(value):
+    if value.resolved:
+        return {'resolved': True, 'value': value.known}
+    return {'resolved': False, 'description': 'Runtime value unknown',
+            'integrity': value.label.integrity.name,
+            'readers': None if value.label.readers is None else sorted(value.label.readers)}
