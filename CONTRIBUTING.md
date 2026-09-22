@@ -417,8 +417,8 @@ Suggested window: Weeks 9-10.
 | ✅ | P15.11 | Implement inclusion proof generation |
 | ✅ | P15.12 | Implement inclusion proof verification |
 | ✅ | P15.13 | Implement audit verify and prove commands |
-| ❌ | P15.14 | Test edited, reordered and deleted entries |
-| ❌ | P15.15 | Test truncated logs against anchored checkpoints |
+| ✅ | P15.14 | Test edited, reordered and deleted entries |
+| ✅ | P15.15 | Test truncated logs against anchored checkpoints |
 | ❌ | P15.16 | Document that an unanchored log cannot detect a fully rewritten history |
 
 ## P16 - Integration, UI and attack laboratory
