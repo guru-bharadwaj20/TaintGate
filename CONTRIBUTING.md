@@ -125,7 +125,7 @@ Suggested window: Weeks 1-2; 9-10.
 | ✅ | P03.01 | Choose and pin the CPU inference backend version |
 | ✅ | P03.02 | Select a quantised planner model and record its license |
 | ✅ | P03.03 | Select a quantised extraction model and record its license |
-| ❌ | P03.04 | Record model hashes, quantisation and CPU settings |
+| ✅ | P03.04 | Record model hashes, quantisation and CPU settings |
 | ❌ | P03.05 | Measure RAM use and short-request CPU latency |
 | ❌ | P03.06 | Define a backend interface for inference |
 | ❌ | P03.07 | Implement an offline inference smoke test |
@@ -394,7 +394,7 @@ Suggested window: Weeks 9-10.
 | ✅ | P14.10 | Implement Luhn and contextual card detection |
 | ✅ | P14.11 | Implement PAN and Aadhaar format checks with documented limits |
 | ✅ | P14.12 | Create synthetic canary tokens for private test fixtures |
-| ❌ | P14.13 | Check outbound arguments and final outputs for canaries |
+| ✅ | P14.13 | Check outbound arguments and final outputs for canaries |
 | ❌ | P14.14 | Test encoded secrets and markdown exfiltration examples |
 | ❌ | P14.15 | Measure scanner false positives and record limitations |
 
@@ -449,7 +449,7 @@ Suggested window: Weeks 11-14.
 
 | Status | ID | Subtask / completion deliverable |
 | :---: | --- | --- |
-| ❌ | P17.01 | Generate bounded plans and paired trusted-equivalent worlds |
+| ✅ | P17.01 | Generate bounded plans and paired trusted-equivalent worlds |
 | ❌ | P17.02 | Define action equivalence with labels, sinks and approval exceptions |
 | ❌ | P17.03 | Test strict-mode noninterference for protected side effects |
 | ❌ | P17.04 | Test permissive-mode limitations with explicit counterexamples |

@@ -1,13 +1,16 @@
 """Information-flow labels: trusted <= untrusted."""
+import hashlib
+import json
+from collections.abc import Iterable, Mapping
+from dataclasses import dataclass
 from enum import IntEnum
+from typing import Any
 
 
 class Integrity(IntEnum):
     TRUSTED = 0
     UNTRUSTED = 1
 
-from dataclasses import dataclass
-from typing import Any
 
 
 @dataclass(frozen=True)
@@ -15,7 +18,7 @@ class Label:
     integrity: Integrity = Integrity.TRUSTED
     readers: frozenset[str] | None = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         object.__setattr__(self, 'integrity', Integrity(self.integrity))
         if self.readers is not None:
             readers = frozenset(self.readers)
@@ -37,11 +40,9 @@ class Label:
     def may_read(self, principal: str) -> bool:
         return self.readers is None or principal in self.readers
 
-import hashlib
-import json
 
 
-def provenance_id(operation: str, parents=()) -> str:
+def provenance_id(operation: str, parents: Iterable[str] = ()) -> str:
     payload = json.dumps([operation, sorted(set(parents))], separators=(',', ':'))
     return hashlib.sha256(payload.encode()).hexdigest()
 
@@ -51,11 +52,11 @@ class Provenance:
     parents: frozenset[str] = frozenset()
 
     @property
-    def id(self):
+    def id(self) -> str:
         return provenance_id(self.operation, self.parents)
 
     @staticmethod
-    def union(*sources):
+    def union(*sources: Iterable[str]) -> frozenset[str]:
         return frozenset().union(*sources)
 
 @dataclass(frozen=True)
@@ -64,13 +65,13 @@ class Labeled:
     label: Label = Label()
     sources: frozenset[str] = frozenset()
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         from types import MappingProxyType
         object.__setattr__(self, 'sources', frozenset(self.sources))
-        def freeze(value):
+        def freeze(value: Any) -> Any:
             if isinstance(value, (list, tuple)):
                 return tuple(freeze(v) for v in value)
-            if isinstance(value, dict):
+            if isinstance(value, Mapping):
                 return MappingProxyType({k: freeze(v) for k, v in value.items()})
             if type(value) in (str, bool, int, float, type(None)) or isinstance(value, Labeled):
                 return value

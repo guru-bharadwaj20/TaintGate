@@ -1,5 +1,6 @@
 
 from itertools import product
+
 from taintgate.labels import Integrity, Label
 
 LABELS = [Label(i, r) for i, r in product(Integrity, [None, frozenset(), frozenset({'a'}), frozenset({'a', 'b'})])]
