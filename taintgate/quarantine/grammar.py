@@ -43,6 +43,11 @@ class Compiler:
         return "root ::= ws " + expression + " ws\n" + "\n".join(k+" ::= "+v for k,v in self.rules.items()) + "\n"
 
     def node(self, schema: dict[str,Any]) -> str:
+        if "const" in schema or "enum" in schema:
+            values = [schema["const"]] if "const" in schema else schema["enum"]
+            if not values or len(values)>128:
+                raise SchemaError("Invalid enum bounds")
+            return "("+" | ".join(terminal(json.dumps(v,separators=(",",":"),ensure_ascii=False,allow_nan=False)) for v in values)+")"
         kind = schema.get("type")
         handler = self.handlers.get(kind)
         if handler is None:

@@ -244,7 +244,7 @@ Suggested window: Weeks 6-8.
 | ✅ | P08.03 | Compile required object fields |
 | ✅ | P08.04 | Compile optional fields and additional-property constraints |
 | ✅ | P08.05 | Compile arrays and supported length bounds |
-| ❌ | P08.06 | Compile enum and constant values |
+| ✅ | P08.06 | Compile enum and constant values |
 | ❌ | P08.07 | Compile nullable values and supported unions |
 | ❌ | P08.08 | Compile escaped JSON strings |
 | ❌ | P08.09 | Compile numeric, integer and boolean values |
