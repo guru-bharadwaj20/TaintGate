@@ -371,8 +371,8 @@ Suggested window: Weeks 11-12.
 | ✅ | P13.10 | Collect potentially unsafe call sites |
 | ✅ | P13.11 | Describe unresolved arguments without pretending to know runtime values |
 | ✅ | P13.12 | Create plan-, tool-, policy- and recipient-bound approval scopes |
-| ❌ | P13.13 | Invalidate approvals after relevant configuration or plan changes |
-| ❌ | P13.14 | Enforce runtime checks even after static approval |
+| ✅ | P13.13 | Invalidate approvals after relevant configuration or plan changes |
+| ✅ | P13.14 | Enforce runtime checks even after static approval |
 | ❌ | P13.15 | Test that runtime-flagged calls are conservatively predicted |
 | ❌ | P13.16 | Document dynamic cases that still require approval |
 
