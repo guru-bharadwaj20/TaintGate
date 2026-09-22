@@ -93,3 +93,10 @@ def merkle_levels(payloads: list[bytes]) -> list[list[bytes]]:
         current = levels[-1]
         levels.append([parent_hash(current[i], current[i+1] if i+1<len(current) else current[i]) for i in range(0,len(current),2)])
     return levels
+
+def checkpoint(log: AuditLog) -> dict[str, Any]:
+    rows = log.rows()
+    return {"count": len(rows), "root": merkle_levels([r[1] for r in rows])[-1][0].hex(), "head": rows[-1][3] if rows else "0"*64}
+
+def verify_checkpoint(log: AuditLog, anchor: dict[str, Any]) -> bool:
+    return log.verify() and checkpoint(log) == anchor
