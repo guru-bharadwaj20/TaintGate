@@ -395,7 +395,7 @@ Suggested window: Weeks 9-10.
 | ✅ | P14.11 | Implement PAN and Aadhaar format checks with documented limits |
 | ✅ | P14.12 | Create synthetic canary tokens for private test fixtures |
 | ✅ | P14.13 | Check outbound arguments and final outputs for canaries |
-| ❌ | P14.14 | Test encoded secrets and markdown exfiltration examples |
+| ✅ | P14.14 | Test encoded secrets and markdown exfiltration examples |
 | ❌ | P14.15 | Measure scanner false positives and record limitations |
 
 ## P15 - Tamper-evident audit storage
@@ -428,7 +428,7 @@ Suggested window: Weeks 11-12.
 | Status | ID | Subtask / completion deliverable |
 | :---: | --- | --- |
 | ✅ | P16.01 | Integrate planner, checker, interpreter, policy and gateway |
-| ❌ | P16.02 | Build a safe dry-run mode with mocked tools |
+| ✅ | P16.02 | Build a safe dry-run mode with mocked tools |
 | ❌ | P16.03 | Implement FastAPI run and approval endpoints |
 | ❌ | P16.04 | Build a minimal run timeline |
 | ❌ | P16.05 | Render provenance as a data-flow graph |
@@ -450,7 +450,7 @@ Suggested window: Weeks 11-14.
 | Status | ID | Subtask / completion deliverable |
 | :---: | --- | --- |
 | ✅ | P17.01 | Generate bounded plans and paired trusted-equivalent worlds |
-| ❌ | P17.02 | Define action equivalence with labels, sinks and approval exceptions |
+| ✅ | P17.02 | Define action equivalence with labels, sinks and approval exceptions |
 | ❌ | P17.03 | Test strict-mode noninterference for protected side effects |
 | ❌ | P17.04 | Test permissive-mode limitations with explicit counterexamples |
 | ❌ | P17.05 | Shrink failing generated examples into regression fixtures |

@@ -1,6 +1,6 @@
-﻿# CPU models
+# CPU models
 
-The optional backend is pinned to `llama-cpp-python==0.3.16` and loads local GGUF
+The optional backend is pinned to `llama-cpp-python==0.3.36` and loads local GGUF
 files with `n_gpu_layers=0`. Model files stay outside Git. Inference is never
 needed for the deterministic policy tests.
 
