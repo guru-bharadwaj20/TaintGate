@@ -326,7 +326,7 @@ Suggested window: Weeks 3-5; 9-10.
 | ✅ | P11.12 | Implement bounded queues and back-pressure |
 | ✅ | P11.13 | Load per-server trust and reader configuration |
 | ✅ | P11.14 | Label every tool result including errors and structured content |
-| ❌ | P11.15 | Enforce policy on every tools/call entry point |
+| ✅ | P11.15 | Enforce policy on every tools/call entry point |
 | ❌ | P11.16 | Return structured denial and approval-required responses |
 | ❌ | P11.17 | Test transport failures without accidental tool execution |
 
