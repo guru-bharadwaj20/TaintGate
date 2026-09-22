@@ -100,3 +100,16 @@ def checkpoint(log: AuditLog) -> dict[str, Any]:
 
 def verify_checkpoint(log: AuditLog, anchor: dict[str, Any]) -> bool:
     return log.verify() and checkpoint(log) == anchor
+
+def inclusion_proof(log: AuditLog, index: int) -> dict[str, Any]:
+    rows = log.rows()
+    if index < 0 or index >= len(rows):
+        raise IndexError("Audit entry outside log")
+    levels = merkle_levels([r[1] for r in rows])
+    position = index
+    siblings = []
+    for level in levels[:-1]:
+        neighbor = position ^ 1
+        siblings.append(level[neighbor if neighbor < len(level) else position].hex())
+        position //= 2
+    return {"index": index, "count": len(rows), "siblings": siblings, "root": levels[-1][0].hex()}
