@@ -23,3 +23,32 @@ A relaxation implementation must verify a scoped approval before changing
 labels and append the previous label, new label, approval identity and source
 identifiers to the audit log. This package deliberately exposes no automatic
 label-relaxation operation.
+
+## API and worked joins
+
+| Operation | Result |
+| --- | --- |
+| `Label()` | trusted, public |
+| `Label(UNTRUSTED, {"owner"})` | untrusted, owner-readable |
+| public trusted joined with owner-only untrusted | untrusted, owner-only |
+| readers `{owner, audit}` joined with `{owner}` | readers `{owner}` |
+| readers `{owner}` joined with `{outside}` | empty reader set |
+| `a.flows_to(b)` | integrity is no stronger and source readers include destination readers |
+| `a.may_read(p)` | true for public or an explicitly permitted principal |
+
+`Labeled(value, label, sources)` freezes dictionaries and lists to prevent alias
+mutation. A literal container has a shape label, with each evaluated element
+retaining its own label. Indexing joins shape, index and selected element labels.
+A tool sink receives the recursive join of all element labels, so wrapping a
+secret in a public-shaped list cannot make it public. `len` reads shape only;
+strict mode may nevertheless retain earlier element-evaluation dependencies.
+
+Provenance IDs are SHA-256 hashes of an operation name and sorted unique parent
+IDs. The interpreter exposes operation edges and label metadata in its trace,
+without raw data. Caller-provided source IDs should represent authenticated
+source records; a provenance ID alone is not an authentication or trust claim.
+
+The finite examples in unit tests exhaustively check commutativity,
+associativity, idempotence and upper bounds over both integrity values and four
+reader sets. They verify this implementation's representative lattice cases;
+they are not a mechanized proof over all possible principal sets.
