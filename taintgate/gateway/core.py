@@ -108,6 +108,13 @@ class Gateway:
         if decision != "allow":
             return GatewayResponse("ask" if decision == "ask" else "deny", reason="Policy requires approval" if decision == "ask" else "Policy denied")
         contract = self.contracts[name]
+        try:
+            async with asyncio.timeout(self.timeout):
+                metadata = await self.servers[contract.server].metadata()
+            if contract.tool not in metadata or not self.guard.check(contract.server, contract.tool, metadata[contract.tool]):
+                return GatewayResponse("deny", reason="Metadata missing, changed or quarantined")
+        except Exception:
+            return GatewayResponse("deny", reason="Metadata recheck failed")
         return await self._execute(contract.server, contract.tool, arguments)
 
 
