@@ -51,3 +51,18 @@ class Compiler:
         name = "r"+str(len(self.rules))
         self.rules[name] = body
         return name
+
+
+def object_rule(compiler: Compiler, schema: dict[str,Any]) -> str:
+    properties = schema.get("properties",{})
+    required = set(schema.get("required",properties))
+    if required != set(properties):
+        raise SchemaError("Optional fields not yet supported")
+    fields = [terminal(json.dumps(k))+" ws "+terminal(":")+" ws "+compiler.node(v) for k,v in properties.items()]
+    body = (" ws "+terminal(",")+" ws ").join(fields)
+    return terminal("{")+" ws "+body+" ws "+terminal("}")
+
+def compile_schema(schema: dict[str,Any]) -> str:
+    compiler = Compiler()
+    compiler.handlers["object"] = lambda s:object_rule(compiler,s)
+    return compiler.compile(schema)
