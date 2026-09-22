@@ -244,11 +244,11 @@ Suggested window: Weeks 6-8.
 | ✅ | P08.03 | Compile required object fields |
 | ✅ | P08.04 | Compile optional fields and additional-property constraints |
 | ✅ | P08.05 | Compile arrays and supported length bounds |
-| ❌ | P08.06 | Compile enum and constant values |
-| ❌ | P08.07 | Compile nullable values and supported unions |
-| ❌ | P08.08 | Compile escaped JSON strings |
-| ❌ | P08.09 | Compile numeric, integer and boolean values |
-| ❌ | P08.10 | Handle supported email, date and datetime formats |
+| ✅ | P08.06 | Compile enum and constant values |
+| ✅ | P08.07 | Compile nullable values and supported unions |
+| ✅ | P08.08 | Compile escaped JSON strings |
+| ✅ | P08.09 | Compile numeric, integer and boolean values |
+| ✅ | P08.10 | Handle supported email, date and datetime formats |
 | ❌ | P08.11 | Bound schema depth and grammar size |
 | ❌ | P08.12 | Reject unsupported or recursive schema features safely |
 | ❌ | P08.13 | Test grammar acceptance and rejection with the pinned backend |
