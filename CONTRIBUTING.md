@@ -122,8 +122,8 @@ Suggested window: Weeks 1-2; 9-10.
 
 | Status | ID | Subtask / completion deliverable |
 | :---: | --- | --- |
-| ❌ | P03.01 | Choose and pin the CPU inference backend version |
-| ❌ | P03.02 | Select a quantised planner model and record its license |
+| ✅ | P03.01 | Choose and pin the CPU inference backend version |
+| ✅ | P03.02 | Select a quantised planner model and record its license |
 | ❌ | P03.03 | Select a quantised extraction model and record its license |
 | ❌ | P03.04 | Record model hashes, quantisation and CPU settings |
 | ❌ | P03.05 | Measure RAM use and short-request CPU latency |
@@ -392,8 +392,8 @@ Suggested window: Weeks 9-10.
 | ✅ | P14.08 | Implement common API-key pattern detectors |
 | ✅ | P14.09 | Implement configurable entropy checks |
 | ✅ | P14.10 | Implement Luhn and contextual card detection |
-| ❌ | P14.11 | Implement PAN and Aadhaar format checks with documented limits |
-| ❌ | P14.12 | Create synthetic canary tokens for private test fixtures |
+| ✅ | P14.11 | Implement PAN and Aadhaar format checks with documented limits |
+| ✅ | P14.12 | Create synthetic canary tokens for private test fixtures |
 | ❌ | P14.13 | Check outbound arguments and final outputs for canaries |
 | ❌ | P14.14 | Test encoded secrets and markdown exfiltration examples |
 | ❌ | P14.15 | Measure scanner false positives and record limitations |
