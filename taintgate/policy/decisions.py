@@ -1,22 +1,44 @@
+from dataclasses import dataclass
+
 from . import Atom
 
+
 def call_facts(call_id, tool, args, destination=None, pc=None):
-    """Lower labelled arguments without granting any authority implicitly."""
+    """Lower real labels recursively; invalid metadata fails closed."""
+    from collections.abc import Mapping
+    from taintgate.labels import Integrity, Label, Labeled
+    from . import PolicyError
     facts = [Atom('call', (call_id, tool))]
+    def nested(value, depth=0):
+        if depth > 32:
+            raise PolicyError('Nested label budget exceeded')
+        if isinstance(value, Labeled):
+            if not isinstance(value.label, Label):
+                raise PolicyError('Invalid runtime label')
+            yield value
+            yield from nested(value.value, depth + 1)
+        elif isinstance(value, Mapping):
+            for child in value.values():
+                yield from nested(child, depth + 1)
+        elif isinstance(value, (tuple, list)):
+            for child in value:
+                yield from nested(child, depth + 1)
     for name, value in args.items():
-        label = getattr(value, 'label', None)
-        for source in getattr(value, 'sources', ()):
-            facts.append(Atom('source', (call_id, str(source))))
-        integrity = str(getattr(label, 'integrity', 'UNTRUSTED')).upper()
-        if name in ('to', 'recipient', 'destination', 'url') and 'UNTRUSTED' in integrity:
-            facts.append(Atom('untrusted_recipient', (call_id,)))
-        readers = getattr(label, 'readers', frozenset())
-        if destination is not None and readers is not None and destination not in readers:
-            facts.append(Atom('reader_denied', (call_id,)))
-    if pc is not None and 'UNTRUSTED' in str(getattr(pc, 'integrity', 'UNTRUSTED')).upper():
-        facts.append(Atom('untrusted_control', (call_id,)))
+        if not isinstance(value, Labeled):
+            raise PolicyError('Unlabelled policy argument')
+        for item in nested(value):
+            for source in item.sources:
+                facts.append(Atom('source', (call_id, str(source))))
+            if name in ('to', 'recipient', 'destination', 'url') and item.label.integrity == Integrity.UNTRUSTED:
+                facts.append(Atom('untrusted_recipient', (call_id,)))
+            if destination is not None and not item.label.may_read(destination):
+                facts.append(Atom('reader_denied', (call_id,)))
+    if pc is not None:
+        if not isinstance(pc, Label):
+            raise PolicyError('Invalid control-flow label')
+        if pc.integrity == Integrity.UNTRUSTED:
+            facts.append(Atom('untrusted_control', (call_id,)))
     return tuple(facts)
-from dataclasses import dataclass
 
 @dataclass(frozen=True)
 class Decision:
