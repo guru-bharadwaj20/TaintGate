@@ -43,6 +43,15 @@ class Compiler:
         return "root ::= ws " + expression + " ws\n" + "\n".join(k+" ::= "+v for k,v in self.rules.items()) + "\n"
 
     def node(self, schema: dict[str,Any]) -> str:
+        if "anyOf" in schema:
+            choices = schema["anyOf"]
+            if not choices or len(choices)>16:
+                raise SchemaError("Invalid union")
+            return "("+" | ".join(self.node(v) for v in choices)+")"
+        if isinstance(schema.get("type"),list):
+            return "("+" | ".join(self.node({**schema,"type":kind}) for kind in schema["type"])+")"
+        if schema.get("type") == "null":
+            return terminal("null")
         if "const" in schema or "enum" in schema:
             values = [schema["const"]] if "const" in schema else schema["enum"]
             if not values or len(values)>128:
@@ -80,6 +89,10 @@ def compile_schema(schema: dict[str,Any]) -> str:
     compiler = Compiler()
     compiler.handlers["object"] = lambda s:object_rule(compiler,s)
     compiler.handlers["array"] = lambda s:array_rule(compiler,s)
+    compiler.handlers["string"] = lambda s:string_rule(compiler,s)
+    compiler.handlers["integer"] = lambda s:r'"-"? ("0" | [1-9] [0-9]{0,18})'
+    compiler.handlers["number"] = lambda s:r'"-"? ("0" | [1-9] [0-9]{0,18}) ("." [0-9]{1,18})? ([eE] [+-]? [0-9]{1,3})?'
+    compiler.handlers["boolean"] = lambda s:'"true" | "false"'
     return compiler.compile(schema)
 
 
@@ -90,3 +103,11 @@ def array_rule(compiler: Compiler, schema: dict[str,Any]) -> str:
     item = compiler.node(schema.get("items",{}))
     variants = [(" ws "+terminal(",")+" ws ").join([item]*n) for n in range(minimum,maximum+1)]
     return terminal("[")+" ws ("+" | ".join(variants)+") ws "+terminal("]")
+
+
+def string_rule(compiler: Compiler, schema: dict[str,Any]) -> str:
+    compiler.rules["char"] = r'[^"\\\x00-\x1f] | "\\" (["\\/bfnrt] | "u" [0-9a-fA-F]{4})'
+    minimum,maximum = schema.get("minLength",0),schema.get("maxLength",4096)
+    if type(minimum) is not int or type(maximum) is not int or not 0<=minimum<=maximum<=4096:
+        raise SchemaError("Invalid string bounds")
+    return terminal('"')+" char{"+str(minimum)+","+str(maximum)+"} "+terminal('"')
