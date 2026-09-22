@@ -439,7 +439,7 @@ Suggested window: Weeks 11-12.
 | ✅ | P16.10 | Build a malicious tool-description server |
 | ✅ | P16.11 | Build a server that changes approved metadata |
 | ✅ | P16.12 | Build a poisoned-email and invoice-exfiltration server |
-| ❌ | P16.13 | Provide isolated fixtures without real accounts or transactions |
+| ✅ | P16.13 | Provide isolated fixtures without real accounts or transactions |
 | ❌ | P16.14 | Record each covered attack blocked in strict mode |
 | ❌ | P16.15 | Demonstrate success and failure paths with cached CPU responses |
 
