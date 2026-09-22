@@ -1,5 +1,6 @@
 import pytest
-from taintgate.lang import parse_plan, PlanError
+
+from taintgate.lang import PlanError, parse_plan
 
 
 @pytest.mark.parametrize('source', ['import os', 'while True: pass', 'def f(): pass', 'class C: pass', 'x = lambda: 1'])

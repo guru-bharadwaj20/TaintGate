@@ -1,6 +1,7 @@
 import pytest
-from taintgate.labels import Label, Labeled, Integrity
+
 from taintgate.interp import Interpreter, RuntimeFault
+from taintgate.labels import Integrity, Label, Labeled
 
 
 def test_immutable_alias():
@@ -21,7 +22,9 @@ def test_assignment():
 
 @pytest.mark.parametrize('expression', ['1+2*3', '8//3', 'not False', '3 < 4 < 5', 'False or 4', '"A".lower()', 'f"x{3}"', '[1,2][0]', 'len([1,2])'])
 def test_python_oracle(expression):
-    import subprocess, sys, json
+    import json
+    import subprocess
+    import sys
     result = subprocess.run([sys.executable, '-I', '-c', 'import json; print(json.dumps(' + expression + '))'], capture_output=True, text=True, check=True, timeout=5)
     actual = Interpreter().run('x = ' + expression)['x'].value
     assert actual == json.loads(result.stdout)

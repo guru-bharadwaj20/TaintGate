@@ -1,5 +1,5 @@
-from taintgate.labels import Label, Integrity, Labeled
-from taintgate.static import Analyzer, AbstractValue
+from taintgate.labels import Integrity, Label, Labeled
+from taintgate.static import AbstractValue, Analyzer
 
 
 def test_extract_conservative():
@@ -25,7 +25,8 @@ def test_scope_changes():
 
 def test_runtime_checks_remain():
     import pytest
-    from taintgate.interp import Interpreter, Tool, RuntimeFault
+
+    from taintgate.interp import Interpreter, RuntimeFault, Tool
     source = 'send("hello")'
     Analyzer({'send': Label()}).analyze(source)
     with pytest.raises(RuntimeFault, match='tool_denied'):
