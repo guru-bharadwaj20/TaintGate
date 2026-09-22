@@ -34,3 +34,21 @@ class Analyzer:
     def check_label(self, label):
         if label.readers is not None and not label.readers <= self.principals:
             raise ValueError('Label readers outside configured principal universe')
+
+    def analyze(self, source, inputs=None):
+        self.env = dict(inputs or {})
+        self.calls, self.pc = [], Label()
+        for value in self.env.values():
+            self.check_label(value.label)
+        self.block(parse_plan(source, self.tools).body)
+        return Analysis(dict(self.env), tuple(self.calls))
+
+    def block(self, nodes):
+        for node in nodes:
+            if isinstance(node, ast.Assign):
+                value = self.expression(node.value)
+                self.env[node.targets[0].id] = AbstractValue(value.label.join(self.pc), value.shape.join(self.pc), value.sources, value.known, value.resolved)
+            elif isinstance(node, ast.Expr):
+                self.expression(node.value)
+            else:
+                self.control_statement(node)
