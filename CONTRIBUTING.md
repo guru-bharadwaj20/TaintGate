@@ -130,7 +130,7 @@ Suggested window: Weeks 1-2; 9-10.
 | ✅ | P03.06 | Define a backend interface for inference |
 | ✅ | P03.07 | Implement an offline inference smoke test |
 | ✅ | P03.08 | Build planner prompts from trusted inputs only |
-| ❌ | P03.09 | Expose only locally approved tool signatures to the planner |
+| ✅ | P03.09 | Expose only locally approved tool signatures to the planner |
 | ❌ | P03.10 | Constrain planner output to the plan language |
 | ❌ | P03.11 | Implement bounded planner retries |
 | ❌ | P03.12 | Generate trusted parse-error summaries without input excerpts |
