@@ -1,15 +1,22 @@
+from collections.abc import Iterator, Mapping
 from dataclasses import dataclass
+from typing import Any
+
+from taintgate.labels import Label
 
 from . import Atom
+from .engine import Evaluation
 
 
-def call_facts(call_id, tool, args, destination=None, pc=None):
+def call_facts(call_id: str, tool: str, args: Mapping[str, Any], destination: str | None = None, pc: Label | None = None) -> tuple[Atom, ...]:
     """Lower real labels recursively; invalid metadata fails closed."""
     from collections.abc import Mapping
+
     from taintgate.labels import Integrity, Label, Labeled
+
     from . import PolicyError
     facts = [Atom('call', (call_id, tool))]
-    def nested(value, depth=0):
+    def nested(value: Any, depth: int = 0) -> Iterator[Any]:
         if depth > 32:
             raise PolicyError('Nested label budget exceeded')
         if isinstance(value, Labeled):
@@ -43,9 +50,9 @@ def call_facts(call_id, tool, args, destination=None, pc=None):
 @dataclass(frozen=True)
 class Decision:
     action: str
-    reasons: tuple
+    reasons: tuple[Any, ...]
 
-def decide(evaluation, call_id):
+def decide(evaluation: Evaluation, call_id: str) -> Decision:
     for action in ('deny', 'ask'):
         if Atom(action, (call_id,)) in evaluation.facts:
             return Decision(action, (evaluation.explain(Atom(action, (call_id,))),))
@@ -53,7 +60,7 @@ def decide(evaluation, call_id):
         return Decision('allow', (evaluation.explain(Atom('allow', (call_id,))),))
     return Decision('deny', ('no explicit allow rule',))
 
-def approval_facts(call_id, tool, args, amount_limit=1000, destructive_tools=()):
+def approval_facts(call_id: str, tool: str, args: Mapping[str, Any], amount_limit: float = 1000, destructive_tools: tuple[str, ...] = ()) -> tuple[Atom, ...]:
     """Numeric/destructive thresholds are deterministic facts, never model judgments."""
     facts = []
     if tool in destructive_tools:

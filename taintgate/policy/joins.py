@@ -1,7 +1,12 @@
-from . import Atom, PolicyError, Var
+from collections.abc import Iterator
+
+from . import Atom, PolicyError, Term, Var
+from .relations import Relations
+
+Binding = dict[Var, Term]
 
 
-def match(args, row, binding):
+def match(args: tuple[Term, ...], row: tuple[Term, ...], binding: Binding) -> Binding | None:
     result = dict(binding)
     for term, value in zip(args, row):
         if isinstance(term, Var):
@@ -12,11 +17,11 @@ def match(args, row, binding):
             return None
     return result
 
-def instantiate(atom, binding):
+def instantiate(atom: Atom, binding: Binding) -> Atom:
     return Atom(atom.predicate, tuple(binding[t] if isinstance(t, Var) else t for t in atom.args))
 
-def join(body, relations, overrides=None, budget=None):
-    states = [({}, ())]
+def join(body: tuple[Atom, ...], relations: Relations, overrides: dict[int, set[tuple[Term, ...]]] | None = None, budget: list[int] | None = None) -> Iterator[tuple[Binding, tuple[Atom, ...]]]:
+    states: list[tuple[Binding, tuple[Atom, ...]]] = [({}, ())]
     positives = [(i, a) for i, a in enumerate(body) if not a.negated]
     negatives = [a for a in body if a.negated]
     for index, atom in positives:

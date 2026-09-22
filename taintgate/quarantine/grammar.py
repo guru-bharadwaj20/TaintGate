@@ -34,11 +34,11 @@ def terminal(value: str) -> str:
 
 class Compiler:
     def __init__(self) -> None:
-        self.rules: dict[str,str] = {"ws": '[ \t\n\r]*'}
+        self.rules: dict[str,str] = {"ws": r'[ \t\n\r]*'}
         self.handlers: dict[str,Callable[[dict[str,Any]],str]] = {}
 
     def compile(self, schema: dict[str,Any]) -> str:
-        self.rules = {"ws": '[ \t\n\r]*'}
+        self.rules = {"ws": r'[ \t\n\r]*'}
         if len(json.dumps(schema))>100_000:
             raise SchemaError("Schema too large")
         check_depth(schema)
@@ -68,7 +68,7 @@ class Compiler:
                 raise SchemaError("Invalid enum bounds")
             return "("+" | ".join(terminal(json.dumps(v,separators=(",",":"),ensure_ascii=False,allow_nan=False)) for v in values)+")"
         kind = schema.get("type")
-        handler = self.handlers.get(kind)
+        handler = self.handlers.get(kind) if isinstance(kind,str) else None
         if handler is None:
             raise SchemaError("Unsupported schema type")
         body = handler(schema)
@@ -79,7 +79,7 @@ class Compiler:
 
 def object_rule(compiler: Compiler, schema: dict[str,Any]) -> str:
     properties = schema.get("properties",{})
-    required = set(schema.get("required",properties))
+    required = set(schema.get("required",[]))
     if schema.get("additionalProperties",False) is not False:
         raise SchemaError("Open objects unsupported")
     if not required <= set(properties):

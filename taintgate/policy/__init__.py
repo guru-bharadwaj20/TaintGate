@@ -5,13 +5,13 @@ commas and ``not`` for negation. Constants are quoted strings or integers.
 Decision predicates take one call identifier: allow/1, ask/1, deny/1.
 """
 from dataclasses import dataclass
-from typing import Union
+
 
 @dataclass(frozen=True)
 class Var:
     name: str
 
-Term = Union[Var, str, int]
+Term = Var | str | int
 
 @dataclass(frozen=True)
 class Atom:
