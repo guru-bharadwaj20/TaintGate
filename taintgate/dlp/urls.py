@@ -36,3 +36,8 @@ def destination_allowed(value, allowed_domains):
         return host in allowed
     except (ValueError, UnicodeError):
         return False
+
+
+def labelled_destination_allowed(value, allowed_domains):
+    """Public browser destinations cannot carry a confidential source value."""
+    return value.label.readers is None and destination_allowed(value.value, allowed_domains)
