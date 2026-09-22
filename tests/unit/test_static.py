@@ -30,3 +30,15 @@ def test_runtime_checks_remain():
     Analyzer({'send': Label()}).analyze(source)
     with pytest.raises(RuntimeFault, match='tool_denied'):
         Interpreter({'send': Tool(lambda x: None)}).run(source)
+
+
+def test_static_predicts_runtime_taint():
+    from taintgate.interp import Interpreter, Tool
+    for source in ['if flag:\n send("a")', 'if flag:\n x = 1\nsend("a")', 'for x in items:\n send(x)', 'send(flag)']:
+        inputs = {'flag': AbstractValue(Label(Integrity.UNTRUSTED)), 'items': AbstractValue(Label(Integrity.UNTRUSTED))}
+        result = Analyzer({'send': Label()}).analyze(source, inputs)
+        seen = []
+        vm = Interpreter({'send': Tool(lambda x: None)}, lambda name,args,pc: seen.append(pc) or True)
+        vm.run(source, {'flag': Labeled(True, Label(Integrity.UNTRUSTED)), 'items': Labeled([1], Label(Integrity.UNTRUSTED))})
+        assert seen and result.calls
+        assert all(call.potentially_unsafe for call in result.calls)

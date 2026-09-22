@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from typing import Any
 import json
 import asyncio
+import inspect
 from jsonschema import Draft202012Validator
 from mcp.types import JSONRPCMessage
 from .config import ServerConfig
@@ -86,9 +87,20 @@ class Gateway:
         try:
             json.dumps(arguments, allow_nan=False)
             Draft202012Validator(self.contracts[name].input_schema).validate(arguments)
-        except (ValueError, TypeError, Exception) as error:
+        except Exception:
             return GatewayResponse("deny", reason="Arguments fail trusted schema")
-        return GatewayResponse("deny", reason="Call boundary not configured")
+        if self.authorize is None or context is None:
+            return GatewayResponse("deny", reason="Missing trusted policy context")
+        try:
+            decision = self.authorize(context, name, arguments)
+            if inspect.isawaitable(decision):
+                decision = await decision
+        except Exception:
+            return GatewayResponse("deny", reason="Policy evaluation failed")
+        if decision != "allow":
+            return GatewayResponse("ask" if decision == "ask" else "deny", reason="Policy requires approval" if decision == "ask" else "Policy denied")
+        contract = self.contracts[name]
+        return await self._execute(contract.server, contract.tool, arguments)
 
 
 def validate_rpc(payload):

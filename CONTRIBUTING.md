@@ -326,7 +326,7 @@ Suggested window: Weeks 3-5; 9-10.
 | ✅ | P11.12 | Implement bounded queues and back-pressure |
 | ✅ | P11.13 | Load per-server trust and reader configuration |
 | ✅ | P11.14 | Label every tool result including errors and structured content |
-| ❌ | P11.15 | Enforce policy on every tools/call entry point |
+| ✅ | P11.15 | Enforce policy on every tools/call entry point |
 | ❌ | P11.16 | Return structured denial and approval-required responses |
 | ❌ | P11.17 | Test transport failures without accidental tool execution |
 
@@ -373,8 +373,8 @@ Suggested window: Weeks 11-12.
 | ✅ | P13.12 | Create plan-, tool-, policy- and recipient-bound approval scopes |
 | ✅ | P13.13 | Invalidate approvals after relevant configuration or plan changes |
 | ✅ | P13.14 | Enforce runtime checks even after static approval |
-| ❌ | P13.15 | Test that runtime-flagged calls are conservatively predicted |
-| ❌ | P13.16 | Document dynamic cases that still require approval |
+| ✅ | P13.15 | Test that runtime-flagged calls are conservatively predicted |
+| ✅ | P13.16 | Document dynamic cases that still require approval |
 
 ## P14 - Outbound filtering and secret detection
 
