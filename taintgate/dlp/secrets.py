@@ -61,3 +61,11 @@ def card_findings(text):
         if 13 <= len(number) <= 19 and luhn(number) and re.search(r"card|visa|mastercard|payment|credit", context):
             results.append(Finding("payment_card", match.start(), match.end()))
     return results
+
+
+def indian_identifier_findings(text):
+    results = [Finding("pan_format", m.start(), m.end()) for m in re.finditer(r"\b[A-Z]{5}[0-9]{4}[A-Z]\b", text)]
+    for match in re.finditer(r"(?<!\d)[2-9]\d{3}[ -]?\d{4}[ -]?\d{4}(?!\d)", text):
+        if re.search(r"aadhaar|aadhar|uid", text[max(0, match.start()-40):match.start()], re.I):
+            results.append(Finding("aadhaar_format", match.start(), match.end()))
+    return results

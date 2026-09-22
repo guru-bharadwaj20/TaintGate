@@ -392,7 +392,7 @@ Suggested window: Weeks 9-10.
 | ✅ | P14.08 | Implement common API-key pattern detectors |
 | ✅ | P14.09 | Implement configurable entropy checks |
 | ✅ | P14.10 | Implement Luhn and contextual card detection |
-| ❌ | P14.11 | Implement PAN and Aadhaar format checks with documented limits |
+| ✅ | P14.11 | Implement PAN and Aadhaar format checks with documented limits |
 | ❌ | P14.12 | Create synthetic canary tokens for private test fixtures |
 | ❌ | P14.13 | Check outbound arguments and final outputs for canaries |
 | ❌ | P14.14 | Test encoded secrets and markdown exfiltration examples |
