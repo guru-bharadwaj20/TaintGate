@@ -1,0 +1,54 @@
+﻿{
+  "python": "3.13.1",
+  "platform": "Windows-11-10.0.22000-SP0",
+  "results": [
+    {
+      "edges": 10,
+      "engine": "NaiveEngine",
+      "seconds": 0.033801,
+      "derived_and_input_facts": 65
+    },
+    {
+      "edges": 10,
+      "engine": "Engine",
+      "seconds": 0.003369,
+      "derived_and_input_facts": 65
+    },
+    {
+      "edges": 25,
+      "engine": "NaiveEngine",
+      "seconds": 0.144726,
+      "derived_and_input_facts": 350
+    },
+    {
+      "edges": 25,
+      "engine": "Engine",
+      "seconds": 0.010555,
+      "derived_and_input_facts": 350
+    },
+    {
+      "edges": 50,
+      "engine": "NaiveEngine",
+      "seconds": 1.525551,
+      "derived_and_input_facts": 1325
+    },
+    {
+      "edges": 50,
+      "engine": "Engine",
+      "seconds": 0.035485,
+      "derived_and_input_facts": 1325
+    },
+    {
+      "edges": 100,
+      "engine": "NaiveEngine",
+      "seconds": 33.900429,
+      "derived_and_input_facts": 5150
+    },
+    {
+      "edges": 100,
+      "engine": "Engine",
+      "seconds": 0.680439,
+      "derived_and_input_facts": 5150
+    }
+  ]
+}
