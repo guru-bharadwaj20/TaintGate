@@ -390,8 +390,8 @@ Suggested window: Weeks 9-10.
 | ✅ | P14.06 | Reject confidential data in outbound URL components |
 | ✅ | P14.07 | Define safe rendering behaviour for stripped destinations |
 | ✅ | P14.08 | Implement common API-key pattern detectors |
-| ❌ | P14.09 | Implement configurable entropy checks |
-| ❌ | P14.10 | Implement Luhn and contextual card detection |
+| ✅ | P14.09 | Implement configurable entropy checks |
+| ✅ | P14.10 | Implement Luhn and contextual card detection |
 | ❌ | P14.11 | Implement PAN and Aadhaar format checks with documented limits |
 | ❌ | P14.12 | Create synthetic canary tokens for private test fixtures |
 | ❌ | P14.13 | Check outbound arguments and final outputs for canaries |
@@ -427,7 +427,7 @@ Suggested window: Weeks 11-12.
 
 | Status | ID | Subtask / completion deliverable |
 | :---: | --- | --- |
-| ❌ | P16.01 | Integrate planner, checker, interpreter, policy and gateway |
+| ✅ | P16.01 | Integrate planner, checker, interpreter, policy and gateway |
 | ❌ | P16.02 | Build a safe dry-run mode with mocked tools |
 | ❌ | P16.03 | Implement FastAPI run and approval endpoints |
 | ❌ | P16.04 | Build a minimal run timeline |
