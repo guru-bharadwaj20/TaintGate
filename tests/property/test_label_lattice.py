@@ -1,8 +1,9 @@
-from hypothesis import given, strategies as st
+from hypothesis import given
+from hypothesis import strategies as st
 
 from taintgate.labels import Integrity, Label
 
-READERS = st.one_of(st.none(), st.frozensets(st.sampled_from(['owner', 'audit', 'outside'])))
+READERS = st.one_of(st.none(), st.frozensets(st.sampled_from(["owner", "audit", "outside"])))
 LABELS = st.builds(Label, st.sampled_from(list(Integrity)), READERS)
 
 
@@ -18,7 +19,7 @@ def test_generated_lattice_laws(a, b, c):
 @given(LABELS, LABELS)
 def test_generated_mixing_never_adds_readers(a, b):
     joined = a.join(b)
-    for principal in ['owner', 'audit', 'outside']:
+    for principal in ["owner", "audit", "outside"]:
         if joined.may_read(principal):
             assert a.may_read(principal)
             assert b.may_read(principal)
