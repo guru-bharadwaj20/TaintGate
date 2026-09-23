@@ -25,3 +25,10 @@ def approvals(records: list[dict[str, Any]]) -> dict[str, Any]:
         by_task[key] = by_task.get(key,0) + record.get('approvals',0)
     return {'total':sum(by_task.values()),'by_task':by_task,
             'per_run':sum(by_task.values()) / len(records) if records else None}
+
+def overhead(records: list[dict[str, Any]]) -> dict[str, Any]:
+    import math
+    import statistics
+    values = sorted(v for r in records for v in r.get('overheads_seconds',[]))
+    return {'samples':len(values),'median_seconds':statistics.median(values) if values else None,
+            'p95_seconds':values[max(0,math.ceil(.95*len(values))-1)] if values else None}
