@@ -1,8 +1,9 @@
 ﻿"""Optional CPU inference and injectable backend interface."""
+import hashlib
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Protocol
-import hashlib
+
 
 @dataclass(frozen=True)
 class Decode:

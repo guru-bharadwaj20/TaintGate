@@ -1,8 +1,11 @@
+from pathlib import Path
 ﻿"""Response cache identity includes trust domain and every decoding input."""
 import hashlib
 import json
 from dataclasses import asdict
+
 from .backend import Backend, Decode
+
 
 def cache_key(model_id: str, prompt: str, settings: Decode, grammar: str | None, domain: str) -> str:
     if domain not in ('planner', 'extractor', 'baseline'):
@@ -11,7 +14,7 @@ def cache_key(model_id: str, prompt: str, settings: Decode, grammar: str | None,
                             'settings':asdict(settings),'grammar':grammar,'domain':domain},
                            sort_keys=True,separators=(',',':'))
     return hashlib.sha256(canonical.encode()).hexdigest()
-from pathlib import Path
+
 
 class CachedBackend:
     def __init__(self, backend: 'Backend', directory: Path, domain: str) -> None:
