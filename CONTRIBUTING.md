@@ -464,7 +464,7 @@ Suggested window: Weeks 11-14.
 | ✅ | P17.13 | Test A7 secret leakage regressions |
 | ✅ | P17.14 | Fuzz the AST parser and policy parser |
 | ✅ | P17.15 | Fuzz JSON-RPC decoding and gateway state transitions |
-| ❌ | P17.16 | Fuzz schema compilation and label propagation |
+| ✅ | P17.16 | Fuzz schema compilation and label propagation |
 | ✅ | P17.17 | Set deterministic seeds and retain fuzz crash artifacts |
 | ❌ | P17.18 | Measure core coverage and address meaningful gaps toward 85 percent |
 | ❌ | P17.19 | Run the full required CI checks without model downloads |

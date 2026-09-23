@@ -1,8 +1,9 @@
 """Deterministic outbound filtering; pattern detection is supplementary."""
-from enum import Enum
+
+from enum import StrEnum
 
 
-class Sink(str, Enum):
+class Sink(StrEnum):
     TOOL_ARGUMENT = "tool_argument"
     FINAL_RESPONSE = "final_response"
     RENDERED_DESTINATION = "rendered_destination"

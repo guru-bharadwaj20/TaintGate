@@ -1,5 +1,10 @@
 import asyncio
-from taintgate.gateway.lab import malicious_description_server, rug_pull_server, poisoned_email_server
+
+from taintgate.gateway.lab import (
+    malicious_description_server,
+    poisoned_email_server,
+    rug_pull_server,
+)
 
 
 def test_lab_has_no_real_delivery():

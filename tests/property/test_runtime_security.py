@@ -1,7 +1,7 @@
 """Bounded paired-world checks; no timing/termination equivalence claim."""
 
-import pytest
-from hypothesis import given, settings, strategies as st
+from hypothesis import given, settings
+from hypothesis import strategies as st
 
 from taintgate.interp import Interpreter, RuntimeFault, Tool
 from taintgate.labels import Integrity, Label, Labeled
@@ -57,7 +57,7 @@ def test_strict_protected_actions_ignore_payload(first, second):
 
 
 def test_permissive_counterexample():
-    plan = 'x = 0\nif untrusted:\n x = 1\nsend(x)'
+    plan = "x = 0\nif untrusted:\n x = 1\nsend(x)"
     assert execute(plan, False, strict=False) == [0]
     assert execute(plan, True, strict=False) == []
 
@@ -66,11 +66,12 @@ def test_permissive_counterexample():
 @settings(max_examples=50, derandomize=True)
 def test_static_predicts_concrete_protected_taint(plan, payload):
     from taintgate.static import AbstractValue, Analyzer
+
     result = Analyzer({"send": Label()}).analyze(
-        plan, {"untrusted": AbstractValue(Label(Integrity.UNTRUSTED))})
+        plan, {"untrusted": AbstractValue(Label(Integrity.UNTRUSTED))}
+    )
     seen = []
-    vm = Interpreter({"send": Tool(lambda x: None)},
-                     lambda name, args, pc: seen.append(pc) or True)
+    vm = Interpreter({"send": Tool(lambda x: None)}, lambda name, args, pc: seen.append(pc) or True)
     vm.run(plan, {"untrusted": Labeled(payload, Label(Integrity.UNTRUSTED))})
     if seen:
         assert result.calls

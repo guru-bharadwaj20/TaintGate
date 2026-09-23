@@ -1,15 +1,19 @@
 import asyncio
-from taintgate.gateway.metadata import Contract, PinStore, MetadataGuard
+
 from taintgate.gateway.core import Gateway
+from taintgate.gateway.metadata import Contract, MetadataGuard, PinStore
 from taintgate.gateway.scanner import scan_description
 
 
 class Peer:
     calls = 0
+
     def __init__(self):
         self.tool = {"name": "send", "description": "Send", "inputSchema": {"type": "object"}}
+
     async def metadata(self):
         return {"send": self.tool}
+
     async def call_tool(self, name, arguments):
         self.calls += 1
         return "sent"

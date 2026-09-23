@@ -1,6 +1,6 @@
 import pytest
-from taintgate.gateway.metadata import Contract
-from taintgate.gateway.metadata import canonical_metadata
+
+from taintgate.gateway.metadata import Contract, canonical_metadata
 
 
 def test_contract_identity_is_local():

@@ -5,7 +5,13 @@ from taintgate.gateway.metadata import PinStore, MetadataGuard
 
 
 @settings(max_examples=100, derandomize=True, deadline=None)
-@given(st.recursive(st.none() | st.booleans() | st.integers() | st.text(), lambda s: st.lists(s, max_size=5) | st.dictionaries(st.text(max_size=20), s, max_size=5), max_leaves=15))
+@given(
+    st.recursive(
+        st.none() | st.booleans() | st.integers() | st.text(),
+        lambda s: st.lists(s, max_size=5) | st.dictionaries(st.text(max_size=20), s, max_size=5),
+        max_leaves=15,
+    )
+)
 def test_jsonrpc_decoder_never_accepts_invalid_envelopes(payload):
     try:
         message = validate_rpc(payload)

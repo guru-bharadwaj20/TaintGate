@@ -1,11 +1,33 @@
-from taintgate.dlp.secrets import scan_secrets, card_findings, indian_identifier_findings, entropy, entropy_findings
+from taintgate.dlp.secrets import (
+    card_findings,
+    entropy,
+    entropy_findings,
+    indian_identifier_findings,
+    scan_secrets,
+)
 
-
-BENIGN = ("Read the latest status", "Version 2026.10.2", "The card display is empty", "https://example.com/docs", "a" * 50, "Total cost is 1250", "Please summarize this email", "Build succeeded", "Meeting at noon", "See issue #1234")
+BENIGN = (
+    "Read the latest status",
+    "Version 2026.10.2",
+    "The card display is empty",
+    "https://example.com/docs",
+    "a" * 50,
+    "Total cost is 1250",
+    "Please summarize this email",
+    "Build succeeded",
+    "Meeting at noon",
+    "See issue #1234",
+)
 
 
 def test_small_benign_corpus_false_positives():
-    assert sum(bool(scan_secrets(text) or card_findings(text) or indian_identifier_findings(text)) for text in BENIGN) == 0
+    assert (
+        sum(
+            bool(scan_secrets(text) or card_findings(text) or indian_identifier_findings(text))
+            for text in BENIGN
+        )
+        == 0
+    )
 
 
 def test_synthetic_pattern_checks():

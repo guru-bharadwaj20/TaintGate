@@ -1,13 +1,17 @@
 import asyncio
+
 import pytest
+
 from taintgate.gateway.core import Gateway
-from taintgate.gateway.metadata import Contract, PinStore, MetadataGuard
+from taintgate.gateway.metadata import Contract, MetadataGuard, PinStore
 
 
 class Peer:
     def __init__(self):
         self.calls = 0
-        self.tools = {"echo": {"name": "echo", "description": "remote", "inputSchema": {"type": "object"}}}
+        self.tools = {
+            "echo": {"name": "echo", "description": "remote", "inputSchema": {"type": "object"}}
+        }
         self.failure = False
 
     async def metadata(self):
