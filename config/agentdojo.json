@@ -1,0 +1,34 @@
+{
+  "repository": "https://github.com/ethz-spylab/agentdojo",
+  "revision": "089ed468cf3ed0322acc66b0211f26d9d90dbf60",
+  "benchmark_version": "v1",
+  "verification": "AST count of registered original v1 task classes plus create_combined_task registrations in downloaded pinned source",
+  "suites": {
+    "banking": {
+      "user_tasks": 16,
+      "injection_tasks": 9,
+      "cartesian_attack_cases": 144,
+      "combined_user_tasks": 0
+    },
+    "slack": {
+      "user_tasks": 21,
+      "injection_tasks": 5,
+      "cartesian_attack_cases": 105,
+      "combined_user_tasks": 4
+    },
+    "travel": {
+      "user_tasks": 20,
+      "injection_tasks": 7,
+      "cartesian_attack_cases": 140,
+      "combined_user_tasks": 0
+    },
+    "workspace": {
+      "user_tasks": 40,
+      "injection_tasks": 6,
+      "cartesian_attack_cases": 240,
+      "combined_user_tasks": 7
+    }
+  },
+  "total_user_tasks": 97,
+  "total_cartesian_attack_cases": 629
+}

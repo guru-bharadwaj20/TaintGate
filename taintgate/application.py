@@ -58,16 +58,21 @@ class Application:
         *,
         strict: bool = True,
         canaries: tuple[str, ...] = (),
+        planner: Any = None,
+        quarantine: Any = None,
     ) -> None:
         self.gateway = gateway
         self.audit = audit
         self.strict = strict
         self.canaries = canaries
+        self.planner = planner
+        self.quarantine = quarantine
         self.policy = policy_for_tools(tuple(gateway.contracts))
         self.engine = Engine(self.policy)
         self.approved: set[str] = set()
         self.pending_scopes: dict[str, str] = {}
         self.plan_digest = ""
+        self._run_lock = asyncio.Lock()
         gateway.authorize = self._gateway_authorize
 
     def decision(self, call: Invocation) -> Any:
@@ -76,7 +81,9 @@ class Application:
         if destination is not None and not isinstance(destination, str):
             destination = "<invalid-destination>"
         principal = destination or self.gateway.contracts[call.tool].server
-        if not check_outbound(call.arguments, principal, self.canaries):
+        if not call.pc.may_read(principal) or not check_outbound(
+            call.arguments, principal, self.canaries
+        ):
             return Decision("deny", ("outbound confidentiality or secret check failed",))
         facts = call_facts(
             "pending", call.tool, call.arguments, destination=destination, pc=call.pc
@@ -99,6 +106,9 @@ class Application:
             }
             for name, value in call.arguments.items()
         }
+        provenance = sorted(
+            {source for value in call.arguments.values() for source in value.sources}
+        )
         payload = [
             self.plan_digest,
             self.policy,
@@ -106,6 +116,7 @@ class Application:
             call.tool,
             plain(call.arguments),
             labels,
+            provenance,
             call.pc.integrity.name,
             None if call.pc.readers is None else sorted(call.pc.readers),
         ]
@@ -128,6 +139,16 @@ class Application:
         return str(self.decision(context).action)
 
     async def run(self, source: str) -> RunResult:
+        async with self._run_lock:
+            return await self._run(source)
+
+    async def run_request(self, user_request: str) -> RunResult:
+        if self.planner is None:
+            raise ValueError("No CPU planner configured")
+        source = await asyncio.to_thread(self.planner.plan, user_request)
+        return await self.run(source)
+
+    async def _run(self, source: str) -> RunResult:
         loop = asyncio.get_running_loop()
         run_id = hashlib.sha256(source.encode()).hexdigest()
         self.plan_digest = run_id
@@ -174,7 +195,19 @@ class Application:
             )
             return bool(decision.action == "allow")
 
-        interpreter = Interpreter(tools, authorize=authorize, strict=self.strict)
+        def extract(text: str, schema: dict[str, Any]) -> Any:
+            from taintgate.quarantine.validation import parse_validated
+
+            if self.quarantine is None:
+                raise ValueError("No quarantined extraction backend configured")
+            return parse_validated(self.quarantine.decode(text, schema), schema)
+
+        interpreter = Interpreter(
+            tools,
+            authorize=authorize,
+            strict=self.strict,
+            extractor=extract if self.quarantine is not None else None,
+        )
         self.audit.append(plan_event(run_id, source))
         self.audit.append(boundary_event(run_id))
         try:
@@ -204,13 +237,16 @@ class Application:
                     )
                 )
             self.audit.append(boundary_event(run_id, finished=True))
+        guard = self.gateway.guard
+        if guard is None:
+            return result
         for contract in self.gateway.contracts.values():
-            if (contract.server, contract.tool) in self.gateway.guard.quarantined:
+            if (contract.server, contract.tool) in guard.quarantined:
                 try:
                     async with asyncio.timeout(self.gateway.timeout):
                         metadata = await self.gateway.servers[contract.server].metadata()
                     result.metadata_diffs.append(
-                        self.gateway.guard.pins.diff(
+                        guard.pins.diff(
                             contract.server, contract.tool, metadata.get(contract.tool, {})
                         )
                     )

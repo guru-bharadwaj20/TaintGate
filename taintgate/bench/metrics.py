@@ -32,3 +32,17 @@ def overhead(records: list[dict[str, Any]]) -> dict[str, Any]:
     values = sorted(v for r in records for v in r.get('overheads_seconds',[]))
     return {'samples':len(values),'median_seconds':statistics.median(values) if values else None,
             'p95_seconds':values[max(0,math.ceil(.95*len(values))-1)] if values else None}
+
+def environment_metadata() -> dict[str, Any]:
+    import os
+    import platform
+    from importlib.metadata import PackageNotFoundError, version
+    versions = {}
+    for package in ('agentdojo','llama-cpp-python','taintgate'):
+        try:
+            versions[package] = version(package)
+        except PackageNotFoundError:
+            versions[package] = 'uninstalled source checkout'
+    return {'python':platform.python_version(),'platform':platform.platform(),
+            'cpu':os.getenv('PROCESSOR_IDENTIFIER',platform.processor()),'logical_cpus':os.cpu_count(),
+            'versions':versions,'memory_reference':'benchmarks/cpu_results.json contains measured peak process working set'}

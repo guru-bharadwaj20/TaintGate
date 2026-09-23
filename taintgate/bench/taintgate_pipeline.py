@@ -2,15 +2,17 @@
 import json
 import time
 from typing import Any
+
 from taintgate.inference.backend import Backend
 from taintgate.inference.planner import ApprovedSignature, Planner
 from taintgate.interp import Interpreter, RuntimeFault, Tool
 from taintgate.labels import Integrity, Label, Labeled
-from taintgate.policy import Atom
-from taintgate.policy.engine import Engine
-from taintgate.policy.decisions import call_facts, approval_facts, decide
+from taintgate.policy.decisions import approval_facts, call_facts, decide
 from taintgate.policy.defaults import policy_for_tools
+from taintgate.policy.engine import Engine
+
 from .adapter import ToolAdapter
+
 
 class TaintgatePipeline:
     name = 'taintgate_permissive'
@@ -45,7 +47,7 @@ class TaintgatePipeline:
             self.overheads.append(time.perf_counter() - started)
             if decision.action == 'ask':
                 self.approvals += 1
-            return decision.action == 'allow'
+            return bool(decision.action == 'allow')
         tools = adapter.tools()
         if self.strict:
             tools = {n:Tool(t.function,Label(Integrity.UNTRUSTED,frozenset({'user'})),t.identity) for n,t in tools.items()}

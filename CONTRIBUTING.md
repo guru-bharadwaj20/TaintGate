@@ -475,7 +475,7 @@ Suggested window: Weeks 13-14.
 
 | Status | ID | Subtask / completion deliverable |
 | :---: | --- | --- |
-| ❌ | P18.01 | Pin AgentDojo revision and verify task and attack-case counts |
+| ✅ | P18.01 | Pin AgentDojo revision and verify task and attack-case counts |
 | ✅ | P18.02 | Implement the benchmark tool and label adapter |
 | ✅ | P18.03 | Choose and publish a fixed development subset |
 | ✅ | P18.04 | Implement the plain-agent baseline |
@@ -491,8 +491,8 @@ Suggested window: Weeks 13-14.
 | ✅ | P18.14 | Track attack success with threat-model coverage annotations |
 | ✅ | P18.15 | Track approvals per run and per task |
 | ✅ | P18.16 | Measure median and tail deterministic tool-call overhead |
-| ❌ | P18.17 | Record CPU, memory, versions, seeds and wall-clock cost |
-| ❌ | P18.18 | Support resumable overnight benchmark runs |
+| ✅ | P18.17 | Record CPU, memory, versions, seeds and wall-clock cost |
+| ✅ | P18.18 | Support resumable overnight benchmark runs |
 | ❌ | P18.19 | Run complete comparisons and preserve raw outcomes |
 | ❌ | P18.20 | Publish measured results without filling gaps with estimates |
 
