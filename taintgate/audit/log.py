@@ -171,8 +171,9 @@ def inclusion_proof(log: AuditLog, index: int) -> dict[str, Any]:
     return {"index": index, "count": len(rows), "siblings": siblings, "root": levels[-1][0].hex()}
 
 
-def verify_proof(payload: bytes, proof: dict[str, Any], expected_root: str,
-                 expected_count: int | None = None) -> bool:
+def verify_proof(
+    payload: bytes, proof: dict[str, Any], expected_root: str, expected_count: int | None = None
+) -> bool:
     try:
         index, count, siblings = proof["index"], proof["count"], proof["siblings"]
         if type(index) is not int or type(count) is not int or index < 0 or index >= count:
