@@ -45,6 +45,18 @@ The defaults are 64 KiB source, 40 AST levels, 8 KiB scalar literals, 10,000
 runtime fuel units, 1,000 iterations per loop and 65,536 units per result. These
 are deterministic guardrails, not a host CPU or memory isolation mechanism.
 
+Fuel also counts recursive container visits during label aggregation and raw
+argument conversion, so deeply aliased containers cannot hide unbounded work.
+String replacement checks the predicted output size before allocation.
+Numeric modulo is supported; string percent-formatting is rejected because
+format widths can allocate excessively. Use the supported f-string subset.
+
+Extraction validates against Draft 2020-12. Remote references and recursive
+reference keywords are rejected before extraction; the validator's resource
+retrieval callback is also disabled. Local nonrecursive references remain
+supported. The reference scan is conservative, including reference-shaped keys
+in nested mappings; unsupported schemas fail closed rather than fetching URLs.
+
 ## Control-flow modes
 
 Strict mode is the default. Every protected call receives a program-counter
