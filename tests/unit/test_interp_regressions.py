@@ -1,43 +1,55 @@
 """Small retained regressions, including a nested-container sink bypass."""
+
 import pytest
 
 from taintgate.interp import Interpreter, RuntimeFault, Tool
 from taintgate.labels import Integrity, Label, Labeled
 
 
-@pytest.mark.parametrize('expression', ['[secret]', '{"data": secret}', '[[secret]]'])
+@pytest.mark.parametrize("expression", ["[secret]", '{"data": secret}', "[[secret]]"])
 def test_nested_secret_sink(expression):
     sent = []
-    vm = Interpreter({'send': Tool(lambda x: sent.append(x))},
-                     lambda name, args, pc: args['0'].label.may_read('outside'), strict=False)
-    with pytest.raises(RuntimeFault, match='tool_denied'):
-        vm.run('send(' + expression + ')', {'secret': Labeled('PRIVATE', Label(readers={'owner'}))})
+    vm = Interpreter(
+        {"send": Tool(lambda x: sent.append(x))},
+        lambda name, args, pc: args["0"].label.may_read("outside"),
+        strict=False,
+    )
+    with pytest.raises(RuntimeFault, match="tool_denied"):
+        vm.run("send(" + expression + ")", {"secret": Labeled("PRIVATE", Label(readers={"owner"}))})
     assert not sent
 
 
 def test_a1_poisoned_condition_cannot_authorize_action():
     calls = []
-    vm = Interpreter({'delete': Tool(lambda: calls.append('deleted'))},
-                     lambda name, args, pc: pc.integrity == Integrity.TRUSTED)
-    with pytest.raises(RuntimeFault, match='tool_denied'):
-        vm.run('if poisoned:\n delete()', {'poisoned': Labeled(True, Label(Integrity.UNTRUSTED))})
+    vm = Interpreter(
+        {"delete": Tool(lambda: calls.append("deleted"))},
+        lambda name, args, pc: pc.integrity == Integrity.TRUSTED,
+    )
+    with pytest.raises(RuntimeFault, match="tool_denied"):
+        vm.run("if poisoned:\n delete()", {"poisoned": Labeled(True, Label(Integrity.UNTRUSTED))})
     assert calls == []
 
 
 def test_a2_recipient_hijack():
     sent = []
-    vm = Interpreter({'send': Tool(lambda recipient, body: sent.append(recipient))},
-                     lambda name, args, pc: args['0'].label.integrity == Integrity.TRUSTED)
-    with pytest.raises(RuntimeFault, match='tool_denied'):
-        vm.run('send(recipient, "approved text")',
-               {'recipient': Labeled('attacker@example.test', Label(Integrity.UNTRUSTED))})
+    vm = Interpreter(
+        {"send": Tool(lambda recipient, body: sent.append(recipient))},
+        lambda name, args, pc: args["0"].label.integrity == Integrity.TRUSTED,
+    )
+    with pytest.raises(RuntimeFault, match="tool_denied"):
+        vm.run(
+            'send(recipient, "approved text")',
+            {"recipient": Labeled("attacker@example.test", Label(Integrity.UNTRUSTED))},
+        )
     assert not sent
 
 
 def test_a3_confidential_outbound_exfiltration():
     sent = []
-    vm = Interpreter({'send': Tool(lambda body: sent.append(body))},
-                     lambda name, args, pc: args['0'].label.may_read('attacker'))
-    with pytest.raises(RuntimeFault, match='tool_denied'):
-        vm.run('send(secret)', {'secret': Labeled('ACCOUNT-CANARY', Label(readers={'owner'}))})
+    vm = Interpreter(
+        {"send": Tool(lambda body: sent.append(body))},
+        lambda name, args, pc: args["0"].label.may_read("attacker"),
+    )
+    with pytest.raises(RuntimeFault, match="tool_denied"):
+        vm.run("send(secret)", {"secret": Labeled("ACCOUNT-CANARY", Label(readers={"owner"}))})
     assert not sent

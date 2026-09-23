@@ -13,8 +13,16 @@ class SchemaError(ValueError):
 
 
 def normalize(
-    schema: dict[str, Any], root: dict[str, Any] | None = None, seen: frozenset[str] = frozenset()
+    schema: dict[str, Any], root: dict[str, Any] | None = None, seen: frozenset[str] = frozenset(),
+    *, _budget: list[int] | None = None, _depth: int = 0
 ) -> dict[str, Any]:
+    if not isinstance(schema, dict) or _depth > 24:
+        raise SchemaError('Invalid or excessively expanded schema')
+    budget = [5000, 250000] if _budget is None else _budget
+    budget[0] -= 1
+    budget[1] -= sum(len(k) + len(str(v)) for k, v in schema.items() if not isinstance(v, (dict, list)))
+    if min(budget) < 0:
+        raise SchemaError('Schema expansion budget exceeded')
     root = schema if root is None else root
     if "$ref" in schema:
         ref = schema["$ref"]
@@ -26,16 +34,16 @@ def normalize(
             target = root["$defs"][ref[8:]]
         except (KeyError, TypeError) as exc:
             raise SchemaError("Missing schema definition") from exc
-        return normalize(target, root, seen | {ref})
+        return normalize(target, root, seen | {ref}, _budget=budget, _depth=_depth + 1)
     result = dict(schema)
     if "properties" in result:
         result["properties"] = {
-            k: normalize(v, root, seen) for k, v in result["properties"].items()
+            k: normalize(v, root, seen, _budget=budget, _depth=_depth + 1) for k, v in result["properties"].items()
         }
     if "items" in result:
-        result["items"] = normalize(result["items"], root, seen)
+        result["items"] = normalize(result["items"], root, seen, _budget=budget, _depth=_depth + 1)
     if "anyOf" in result:
-        result["anyOf"] = [normalize(v, root, seen) for v in result["anyOf"]]
+        result["anyOf"] = [normalize(v, root, seen, _budget=budget, _depth=_depth + 1) for v in result["anyOf"]]
     return result
 
 
