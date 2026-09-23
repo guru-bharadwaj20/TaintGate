@@ -38,7 +38,8 @@ def create_app(token: str | None = None) -> FastAPI:
             yield
         finally:
             application.audit.close()
-            application.gateway.guard.pins.close()
+            if application.gateway.guard is not None:
+                application.gateway.guard.pins.close()
 
     api = FastAPI(title="TaintGate dry-run", docs_url=None, redoc_url=None, lifespan=lifespan)
     session_token = token or secrets.token_urlsafe(32)
@@ -63,6 +64,8 @@ def create_app(token: str | None = None) -> FastAPI:
             except (ValueError, TypeError):
                 raise HTTPException(400, "Plan rejected during preflight") from None
             output = asdict(result)
+            if len(api.state.runs) >= 100:
+                del api.state.runs[next(iter(api.state.runs))]
             api.state.runs[result.run_id] = output
             return output
 
@@ -74,10 +77,11 @@ def create_app(token: str | None = None) -> FastAPI:
 
     @api.post("/approvals", dependencies=[Depends(authenticated)])
     async def approve(request: ApprovalRequest) -> dict[str, Any]:
-        try:
-            api.state.application.approve(request.scope, request.reason)
-        except ValueError:
-            raise HTTPException(409, "Unknown, expired or non-approvable scope") from None
+        async with lock:
+            try:
+                api.state.application.approve(request.scope, request.reason)
+            except ValueError:
+                raise HTTPException(409, "Unknown, expired or non-approvable scope") from None
         return {"approved": True, "scope": request.scope}
 
     return api

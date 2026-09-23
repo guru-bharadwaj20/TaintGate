@@ -7,6 +7,8 @@ from mcp import ClientSession
 from mcp.client.stdio import StdioServerParameters, stdio_client
 from mcp.client.streamable_http import streamablehttp_client
 
+from . import PROTOCOL_REVISION
+
 
 class Upstream:
     @classmethod
@@ -27,7 +29,9 @@ class Upstream:
             self.session = await self.stack.enter_async_context(
                 ClientSession(streams[0], streams[1])
             )
-            await self.session.initialize()
+            initialized = await self.session.initialize()
+            if initialized.protocolVersion != PROTOCOL_REVISION:
+                raise ValueError("Upstream negotiated an unsupported protocol revision")
             return self
         except BaseException:
             await self.stack.aclose()
