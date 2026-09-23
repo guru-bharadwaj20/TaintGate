@@ -7,7 +7,9 @@ from . import Atom, Term
 class Relations:
     def __init__(self, facts: Iterable[Atom] = ()) -> None:
         self.data: dict[str, set[tuple[Term, ...]]] = defaultdict(set)
-        self.indexes: dict[tuple[str, int], dict[Term, set[tuple[Term, ...]]]] = defaultdict(lambda: defaultdict(set))
+        self.indexes: dict[tuple[str, int], dict[Term, set[tuple[Term, ...]]]] = defaultdict(
+            lambda: defaultdict(set)
+        )
         for fact in facts:
             self.add(fact)
 
@@ -20,11 +22,16 @@ class Relations:
                 self.indexes[(fact.predicate, position)][value].add(fact.args)
         return added
 
-    def rows(self, predicate: str, pattern: tuple[Term | None, ...] | None = None) -> set[tuple[Term, ...]]:
+    def rows(
+        self, predicate: str, pattern: tuple[Term | None, ...] | None = None
+    ) -> set[tuple[Term, ...]]:
         if pattern is None:
             return self.data[predicate]
-        candidates = [self.indexes[(predicate, i)].get(v, set())
-                      for i, v in enumerate(pattern) if v is not None]
+        candidates = [
+            self.indexes[(predicate, i)].get(v, set())
+            for i, v in enumerate(pattern)
+            if v is not None
+        ]
         return min(candidates, key=len) if candidates else self.data[predicate]
 
     def facts(self) -> frozenset[Atom]:

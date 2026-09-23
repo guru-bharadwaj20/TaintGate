@@ -1,4 +1,4 @@
-﻿from hypothesis import given, settings
+from hypothesis import given, settings
 from hypothesis import strategies as st
 
 from taintgate.policy import PolicyError
