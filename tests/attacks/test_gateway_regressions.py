@@ -1,7 +1,8 @@
-from taintgate.gateway.scanner import scan_description
-from taintgate.gateway.metadata import Contract, MetadataGuard, PinStore
-from taintgate.gateway.core import Gateway
 import pytest
+
+from taintgate.gateway.core import Gateway
+from taintgate.gateway.metadata import Contract, MetadataGuard, PinStore
+from taintgate.gateway.scanner import scan_description
 
 
 def test_a4_poisoning_never_enters_contract():

@@ -1,4 +1,3 @@
-import asyncio
 from taintgate.gateway.core import Gateway
 from taintgate.gateway.metadata import Contract
 
