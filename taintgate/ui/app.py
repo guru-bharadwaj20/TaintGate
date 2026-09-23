@@ -49,7 +49,9 @@ def create_app(token: str | None = None) -> FastAPI:
 
     def authenticated(authorization: str | None = Header(default=None)) -> None:
         expected = "Bearer " + session_token
-        if authorization is None or not secrets.compare_digest(authorization, expected):
+        if authorization is None or not secrets.compare_digest(
+            authorization.encode(), expected.encode()
+        ):
             raise HTTPException(401, "A local session token is required")
 
     @api.get("/", response_class=HTMLResponse)
