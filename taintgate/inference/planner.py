@@ -62,5 +62,8 @@ class Planner:
             try:
                 return validate_plan(source, self.tools)
             except PlanError:
-                feedback = '\nThe previous plan failed deterministic validation. Return a valid plan.\n'
+                feedback = '\n' + parse_error_summary() + '\n'
         raise ValueError('Planner exhausted bounded attempts')
+
+def parse_error_summary() -> str:
+    return 'Plan rejected: use only the approved restricted syntax.'
