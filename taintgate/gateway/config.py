@@ -25,6 +25,11 @@ class ServerConfig:
         if not isinstance(value.get("name"), str) or not value["name"]:
             raise ValueError("Missing server name")
         readers = value.get("readers")
+        if readers is not None and (
+            not isinstance(readers, list)
+            or any(not isinstance(reader, str) or not reader for reader in readers)
+        ):
+            raise ValueError("readers must be a list of nonempty principal names")
         return cls(
             value["name"],
             value.get("trusted", False),
