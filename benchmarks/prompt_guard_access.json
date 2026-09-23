@@ -1,0 +1,7 @@
+{
+  "model": "meta-llama/Llama-Prompt-Guard-2-22M",
+  "access_status": 401,
+  "verified_date": "2026-10-02",
+  "actual_cpu_inference": false,
+  "reason": "Publisher gated repository requires user account access and license acceptance"
+}

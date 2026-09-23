@@ -475,7 +475,7 @@ Suggested window: Weeks 13-14.
 
 | Status | ID | Subtask / completion deliverable |
 | :---: | --- | --- |
-| ❌ | P18.01 | Pin AgentDojo revision and verify task and attack-case counts |
+| ✅ | P18.01 | Pin AgentDojo revision and verify task and attack-case counts |
 | ✅ | P18.02 | Implement the benchmark tool and label adapter |
 | ✅ | P18.03 | Choose and publish a fixed development subset |
 | ✅ | P18.04 | Implement the plain-agent baseline |
