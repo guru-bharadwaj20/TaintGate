@@ -488,7 +488,7 @@ Suggested window: Weeks 13-14.
 | ✅ | P18.11 | Implement versioned response-cache manifests |
 | ✅ | P18.12 | Track clean-task utility |
 | ❌ | P18.13 | Track utility under attack |
-| ❌ | P18.14 | Track attack success with threat-model coverage annotations |
+| ✅ | P18.14 | Track attack success with threat-model coverage annotations |
 | ❌ | P18.15 | Track approvals per run and per task |
 | ❌ | P18.16 | Measure median and tail deterministic tool-call overhead |
 | ❌ | P18.17 | Record CPU, memory, versions, seeds and wall-clock cost |
