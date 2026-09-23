@@ -87,9 +87,17 @@ class Interpreter:
             }
             for name, value in self.env.items():
                 identity = provenance_id("input:" + name, value.sources)
-                self.trace.append({"operation": identity, "parents": sorted(value.sources),
-                                   "label": value.label, "integrity": value.label.integrity.name,
-                                   "readers": None if value.label.readers is None else sorted(value.label.readers)})
+                self.trace.append(
+                    {
+                        "operation": identity,
+                        "parents": sorted(value.sources),
+                        "label": value.label,
+                        "integrity": value.label.integrity.name,
+                        "readers": None
+                        if value.label.readers is None
+                        else sorted(value.label.readers),
+                    }
+                )
                 self.env[name] = Labeled(value.value, value.label, value.sources | {identity})
             self.block(parse_plan(source, self.tools).body)
             return dict(self.env)
@@ -156,9 +164,15 @@ class Interpreter:
         for operand in operands:
             label, sources = label.join(operand.label), sources | operand.sources
         identity = provenance_id("operation", sources)
-        self.trace.append({"operation": identity, "parents": sorted(sources), "label": label,
-                           "integrity": label.integrity.name,
-                           "readers": None if label.readers is None else sorted(label.readers)})
+        self.trace.append(
+            {
+                "operation": identity,
+                "parents": sorted(sources),
+                "label": label,
+                "integrity": label.integrity.name,
+                "readers": None if label.readers is None else sorted(label.readers),
+            }
+        )
         return Labeled(value, label, sources | {identity})
 
     def raw(self, value: Any) -> Any:
