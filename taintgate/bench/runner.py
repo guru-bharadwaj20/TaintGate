@@ -60,11 +60,20 @@ def run(
         if full
         else subset["tasks"]
     )
+    import hashlib
+
+    implementation = {
+        str(path.relative_to(Path(__file__).parents[1])): hashlib.sha256(
+            path.read_bytes()
+        ).hexdigest()
+        for path in Path(__file__).parents[1].rglob("*.py")
+    }
     manifest = {
         **config.manifest(models["sha256"]),
         "subset": subset,
         "configurations": list(configurations),
         "full": full,
+        "implementation": implementation,
     }
     if output.exists():
         document: dict[str, Any] = json.loads(output.read_text(encoding="utf-8-sig"))
