@@ -24,3 +24,8 @@ def test_reference_expansion_is_bounded():
         previous=name
     with pytest.raises(SchemaError, match='expanded|expansion'):
         compile_schema({'type':'object','properties':{'root':{'$ref':f'#/$defs/{previous}'}},'$defs':defs,'additionalProperties':False})
+
+@pytest.mark.parametrize('types', [[], ['bogus'], [None], ['boolean']*8])
+def test_malformed_type_unions(types):
+    with pytest.raises(SchemaError):
+        compile_schema({'type':types})

@@ -2,8 +2,11 @@
 from collections.abc import Callable
 from pathlib import Path
 from typing import Any
-from .baselines import PlainPipeline
+
 from taintgate.inference.backend import Backend
+
+from .baselines import PlainPipeline
+
 
 class PromptGuardCPU:
     def __init__(self, local_weights: Path) -> None:

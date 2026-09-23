@@ -1,8 +1,10 @@
 ﻿"""AgentDojo tool adapter; benchmark environments remain local simulations."""
 from collections.abc import Mapping
 from typing import Any
+
 from taintgate.interp import Tool
 from taintgate.labels import Integrity, Label, Labeled
+
 
 class ToolAdapter:
     def __init__(self, runtime: Any, environment: Any) -> None:

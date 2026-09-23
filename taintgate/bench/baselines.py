@@ -1,9 +1,12 @@
 ﻿"""CPU baseline loops; these intentionally give model access to retrieved text."""
 import json
 from typing import Any
+
 from taintgate.inference.backend import Backend, Decode
 from taintgate.quarantine.grammar import compile_schema
+
 from .adapter import ToolAdapter
+
 
 class PlainPipeline:
     name = 'plain'
@@ -17,7 +20,7 @@ class PlainPipeline:
 
     def query(self, query: str, runtime: Any, env: Any, messages: Any = None, extra_args: Any = None) -> tuple[Any,...]:
         adapter = ToolAdapter(runtime,env)
-        signatures = {n:f.parameters.model_json_schema() for n,f in runtime.functions.items()}
+        signatures = {n: {key: str(field.annotation) for key, field in f.parameters.model_fields.items()} for n, f in runtime.functions.items()}
         schema = {'type':'object','properties':{'tool':{'enum':[*signatures,'finish']},'args':{'type':'string','maxLength':4096},'answer':{'type':'string','maxLength':4096}},'required':['tool','args','answer'],'additionalProperties':False}
         grammar = compile_schema(schema)
         transcript = 'User request: '+query+'\nTools: '+json.dumps(signatures)+'\n'

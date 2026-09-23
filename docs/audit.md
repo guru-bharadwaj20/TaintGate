@@ -35,3 +35,8 @@ An inclusion proof may authenticate an individual preserved entry, but does not
 establish that missing newer events never existed. Retain checkpoint count and
 head together with the root. Rotate storage only at a documented checkpoint
 boundary, preserving old anchors and logs; never silently reset the chain.
+
+When authenticating an entry index and tree size, pass the independently anchored
+count as `verify_proof(payload, proof, root, expected_count=count)`. A duplicate-last
+Merkle root alone does not distinguish certain odd-size trees from trees with a
+duplicated final leaf. Root-only proofs authenticate membership, not tree size.

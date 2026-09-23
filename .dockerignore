@@ -1,0 +1,14 @@
+.git
+.venv
+artifacts
+models
+*.gguf
+*.sqlite*
+.env*
+.pytest_cache
+.hypothesis
+.mypy_cache
+.ruff_cache
+dist
+build
+docs/assets
