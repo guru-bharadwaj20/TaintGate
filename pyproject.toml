@@ -17,6 +17,8 @@ dev = ["pytest>=8,<9", "pytest-cov>=6,<7", "hypothesis>=6.130,<7", "ruff>=0.11,<
 mcp = ["mcp==1.28.0", "rfc8785>=0.1.4,<1", "markdown-it-py>=3,<5"]
 ui = ["fastapi>=0.115,<1", "uvicorn>=0.34,<1"]
 models = ["llama-cpp-python==0.3.36"]
+bench = ["agentdojo @ git+https://github.com/ethz-spylab/agentdojo.git@089ed468cf3ed0322acc66b0211f26d9d90dbf60"]
+demo-video = ["pillow>=12,<13", "imageio-ffmpeg>=0.6,<1"]
 
 [project.scripts]
 taintgate = "taintgate.cli:main"
@@ -45,6 +47,7 @@ ignore_missing_imports = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["."]
 addopts = "-ra --strict-markers"
 markers = ["model: requires an explicitly configured local model", "integration: component integration"]
 

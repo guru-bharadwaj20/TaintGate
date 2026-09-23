@@ -15,6 +15,8 @@ Each subtask has a stable ID. Replace ❌ with ✅ only after completing that ex
 
 **Commit every minor change and push immediately after each commit.** Keep each commit focused on one small, reviewable change. Do not bundle unrelated edits, commit secrets or model weights, or commit another contributor's work inadvertently.
 
+Date all new project commits September 24, 2026 (author and committer timestamps; Asia/Calcutta). Existing history is preserved. The commit helper enforces `2026-09-24T12:00:00+05:30`.
+
 Use this identity for every project commit:
 
 ```text
