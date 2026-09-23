@@ -179,7 +179,7 @@ def compile_schema(schema: dict[str, Any]) -> str:
     compiler.handlers["number"] = lambda s: (
         r'"-"? ("0" | [1-9] [0-9]{0,18}) ("." [0-9]{1,18})? ([eE] [+-]? [0-9]{1,3})?'
     )
-    compiler.handlers["boolean"] = lambda s: '"true" | "false"'
+    compiler.handlers["boolean"] = lambda s: '("true" | "false")'
     return compiler.compile(schema)
 
 
