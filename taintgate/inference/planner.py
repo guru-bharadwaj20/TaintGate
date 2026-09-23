@@ -61,9 +61,15 @@ class Planner:
             source = self.backend.generate(base + feedback, grammar=plan_grammar(self.tools))
             try:
                 return validate_plan(source, self.tools)
-            except PlanError:
+            except PlanError as exc:
+                if str(exc) == "Unregistered call":
+                    feedback = "\n" + unknown_tool_summary() + "\n"
+                    continue
                 feedback = '\n' + parse_error_summary() + '\n'
         raise ValueError('Planner exhausted bounded attempts')
 
 def parse_error_summary() -> str:
     return 'Plan rejected: use only the approved restricted syntax.'
+
+def unknown_tool_summary() -> str:
+    return 'Plan rejected: a call is outside the locally approved signatures.'
