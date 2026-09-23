@@ -76,10 +76,16 @@ class Application:
         gateway.authorize = self._gateway_authorize
 
     def decision(self, call: Invocation) -> Any:
-        recipient = call.arguments.get("to") or call.arguments.get("recipient")
-        destination = plain(recipient) if recipient is not None else None
-        if destination is not None and not isinstance(destination, str):
-            destination = "<invalid-destination>"
+        recipients = [
+            plain(call.arguments[key])
+            for key in ("to", "recipient", "destination", "url")
+            if key in call.arguments
+        ]
+        if any(not isinstance(value, str) or not value for value in recipients):
+            return Decision("deny", ("invalid outbound destination",))
+        if len(set(recipients)) > 1:
+            return Decision("deny", ("conflicting outbound destinations",))
+        destination = recipients[0] if recipients else None
         principal = destination or self.gateway.contracts[call.tool].server
         if not call.pc.may_read(principal) or not check_outbound(
             call.arguments, principal, self.canaries
@@ -191,6 +197,17 @@ class Application:
                     "action": decision.action,
                     "reasons": decision.reasons,
                     "scope": scope if decision.action == "ask" else None,
+                    "arguments": {
+                        key: {
+                            "preview": json.dumps(plain(value), ensure_ascii=True)[:256]
+                            if public_tree(value) and check_outbound(value, "public", self.canaries)
+                            else "[confidential value]",
+                            "integrity": value.label.integrity.name,
+                        }
+                        for key, value in args.items()
+                    }
+                    if decision.action == "ask"
+                    else {},
                 }
             )
             return bool(decision.action == "allow")
