@@ -502,7 +502,7 @@ Suggested window: Weeks 15-16.
 
 | Status | ID | Subtask / completion deliverable |
 | :---: | --- | --- |
-| ❌ | P19.01 | Expand README with setup and architecture after implementation |
+| ✅ | P19.01 | Expand README with setup and architecture after implementation |
 | ❌ | P19.02 | Publish threat model and policy semantics |
 | ✅ | P19.03 | Publish TaintScript language reference |
 | ✅ | P19.04 | Publish label, endorsement and declassification reference |
