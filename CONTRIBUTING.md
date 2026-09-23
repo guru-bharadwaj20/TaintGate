@@ -481,7 +481,7 @@ Suggested window: Weeks 13-14.
 | ✅ | P18.04 | Implement the plain-agent baseline |
 | ✅ | P18.05 | Implement spotlighting and sandwich prompt baselines |
 | ❌ | P18.06 | Verify a supported Prompt Guard 2 CPU inference path |
-| ❌ | P18.07 | Implement the detector baseline with fixed thresholds |
+| ✅ | P18.07 | Implement the detector baseline with fixed thresholds |
 | ✅ | P18.08 | Implement permissive Taintgate benchmark configuration |
 | ✅ | P18.09 | Implement strict Taintgate benchmark configuration |
 | ✅ | P18.10 | Keep models, task subsets and budgets comparable |
@@ -509,7 +509,7 @@ Suggested window: Weeks 15-16.
 | ✅ | P19.05 | Document the static checker and soundness test limits |
 | ✅ | P19.06 | Document tool onboarding and approval pin management |
 | ✅ | P19.07 | Document audit checkpoint storage and recovery |
-| ❌ | P19.08 | Document CPU models, memory and expected runtime |
+| ✅ | P19.08 | Document CPU models, memory and expected runtime |
 | ❌ | P19.09 | Publish benchmark configurations and result tables |
 | ❌ | P19.10 | Explain differences and extensions over prior work |
 | ❌ | P19.11 | Prepare the three-minute attack-and-defense demo |
