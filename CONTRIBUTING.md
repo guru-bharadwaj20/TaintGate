@@ -251,7 +251,7 @@ Suggested window: Weeks 6-8.
 | ✅ | P08.10 | Handle supported email, date and datetime formats |
 | ✅ | P08.11 | Bound schema depth and grammar size |
 | ✅ | P08.12 | Reject unsupported or recursive schema features safely |
-| ❌ | P08.13 | Test grammar acceptance and rejection with the pinned backend |
+| ✅ | P08.13 | Test grammar acceptance and rejection with the pinned backend |
 | ✅ | P08.14 | Run the quarantined model without tool access |
 | ✅ | P08.15 | Validate decoded JSON again with Pydantic |
 | ✅ | P08.16 | Apply semantic validation that grammars cannot enforce |
@@ -462,7 +462,7 @@ Suggested window: Weeks 11-14.
 | ✅ | P17.11 | Test A5 metadata rug-pull regressions |
 | ✅ | P17.12 | Test A6 namespace shadowing regressions |
 | ✅ | P17.13 | Test A7 secret leakage regressions |
-| ❌ | P17.14 | Fuzz the AST parser and policy parser |
+| ✅ | P17.14 | Fuzz the AST parser and policy parser |
 | ✅ | P17.15 | Fuzz JSON-RPC decoding and gateway state transitions |
 | ❌ | P17.16 | Fuzz schema compilation and label propagation |
 | ✅ | P17.17 | Set deterministic seeds and retain fuzz crash artifacts |
