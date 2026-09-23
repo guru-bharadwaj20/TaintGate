@@ -105,13 +105,20 @@ class AuditLog:
 
     def verify(self) -> bool:
         previous = "0" * 64
-        for expected, (seq, payload, prev, digest) in enumerate(self.rows(), 1):
-            if seq != expected or prev != previous:
-                return False
-            if hashlib.sha256(bytes.fromhex(previous) + payload).hexdigest() != digest:
-                return False
-            previous = digest
-        return True
+        try:
+            for expected, (seq, payload, prev, digest) in enumerate(self.rows(), 1):
+                if type(seq) is not int or type(payload) is not bytes:
+                    return False
+                if type(prev) is not str or type(digest) is not str:
+                    return False
+                if seq != expected or prev != previous:
+                    return False
+                if hashlib.sha256(bytes.fromhex(previous) + payload).hexdigest() != digest:
+                    return False
+                previous = digest
+            return True
+        except (sqlite3.DatabaseError, TypeError, ValueError):
+            return False
 
 
 def leaf_hash(payload: bytes) -> bytes:
@@ -164,10 +171,15 @@ def inclusion_proof(log: AuditLog, index: int) -> dict[str, Any]:
     return {"index": index, "count": len(rows), "siblings": siblings, "root": levels[-1][0].hex()}
 
 
-def verify_proof(payload: bytes, proof: dict[str, Any], expected_root: str) -> bool:
+def verify_proof(payload: bytes, proof: dict[str, Any], expected_root: str,
+                 expected_count: int | None = None) -> bool:
     try:
         index, count, siblings = proof["index"], proof["count"], proof["siblings"]
         if type(index) is not int or type(count) is not int or index < 0 or index >= count:
+            return False
+        if expected_count is not None and count != expected_count:
+            return False
+        if type(siblings) is not list or any(type(s) is not str for s in siblings):
             return False
         if len(siblings) != (count - 1).bit_length():
             return False

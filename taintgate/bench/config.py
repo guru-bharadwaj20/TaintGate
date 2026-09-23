@@ -1,7 +1,9 @@
 ﻿"""Fixed run budgets and cache manifests for reproducible comparisons."""
 from dataclasses import asdict, dataclass
 from typing import Any
+
 from taintgate.inference.backend import Decode
+
 
 @dataclass(frozen=True)
 class RunConfig:

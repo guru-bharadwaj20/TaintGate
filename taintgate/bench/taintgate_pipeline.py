@@ -37,7 +37,7 @@ class TaintgatePipeline:
             destination = None
             normalized = dict(args)
             for key,value in args.items():
-                if key in ('recipient','recipient_email','recipient_iban','to','url','iban','destination'):
+                if key in ('recipient','recipient_email','recipient_iban','recipients','participants','channel','channel_id','to','url','iban','destination'):
                     destination = str(value.value)
                     normalized['recipient'] = value
             destructive = tuple(n for n in runtime.functions if any(word in n for word in ('delete','transfer','cancel','send','book','reserve','pay')))

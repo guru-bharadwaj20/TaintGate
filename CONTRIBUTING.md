@@ -513,8 +513,8 @@ Suggested window: Weeks 15-16.
 | ✅ | P19.09 | Publish benchmark configurations and result tables |
 | ✅ | P19.10 | Explain differences and extensions over prior work |
 | ✅ | P19.11 | Prepare the three-minute attack-and-defense demo |
-| ❌ | P19.12 | Demonstrate tool-change quarantine and audit tampering |
-| ❌ | P19.13 | Record a demo video using synthetic data |
+| ✅ | P19.12 | Demonstrate tool-change quarantine and audit tampering |
+| ✅ | P19.13 | Record a demo video using synthetic data |
 | ✅ | P19.14 | Write resume bullets using measured numbers only |
 | ✅ | P19.15 | Prepare answers to design and security interview questions |
 | ❌ | P19.16 | Build and validate the Python distribution |
