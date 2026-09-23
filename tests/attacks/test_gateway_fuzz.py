@@ -1,7 +1,9 @@
-from hypothesis import given, settings, strategies as st
+from hypothesis import given, settings
+from hypothesis import strategies as st
 from pydantic import ValidationError
+
 from taintgate.gateway.core import validate_rpc
-from taintgate.gateway.metadata import PinStore, MetadataGuard
+from taintgate.gateway.metadata import MetadataGuard, PinStore
 
 
 @settings(max_examples=100, derandomize=True, deadline=None)
