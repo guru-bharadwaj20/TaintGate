@@ -1,9 +1,11 @@
-
 from itertools import product
 
 from taintgate.labels import Integrity, Label
 
-LABELS = [Label(i, r) for i, r in product(Integrity, [None, frozenset(), frozenset({'a'}), frozenset({'a', 'b'})])]
+LABELS = [
+    Label(i, r)
+    for i, r in product(Integrity, [None, frozenset(), frozenset({"a"}), frozenset({"a", "b"})])
+]
 
 
 def test_commutative():
@@ -25,7 +27,7 @@ def test_lattice_bounds():
 
 
 def test_reader_edges():
-    assert Label().may_read('anyone')
-    assert not Label(readers=frozenset()).may_read('anyone')
-    assert Label(readers={'a'}).join(Label(readers={'b'})).readers == frozenset()
-    assert Label().join(Label(readers={'a'})).readers == frozenset({'a'})
+    assert Label().may_read("anyone")
+    assert not Label(readers=frozenset()).may_read("anyone")
+    assert Label(readers={"a"}).join(Label(readers={"b"})).readers == frozenset()
+    assert Label().join(Label(readers={"a"})).readers == frozenset({"a"})
