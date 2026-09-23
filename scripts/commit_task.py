@@ -19,7 +19,7 @@ def main() -> None:
     root = Path(__file__).resolve().parents[1]
     os.chdir(root)
     lock = root / ".task-commit-lock"
-    deadline = time.monotonic() + 180
+    deadline = time.monotonic() + 600
     while True:
         try:
             lock.mkdir()
