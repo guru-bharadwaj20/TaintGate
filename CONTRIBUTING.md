@@ -483,7 +483,7 @@ Suggested window: Weeks 13-14.
 | ❌ | P18.06 | Verify a supported Prompt Guard 2 CPU inference path |
 | ❌ | P18.07 | Implement the detector baseline with fixed thresholds |
 | ✅ | P18.08 | Implement permissive Taintgate benchmark configuration |
-| ❌ | P18.09 | Implement strict Taintgate benchmark configuration |
+| ✅ | P18.09 | Implement strict Taintgate benchmark configuration |
 | ❌ | P18.10 | Keep models, task subsets and budgets comparable |
 | ❌ | P18.11 | Implement versioned response-cache manifests |
 | ❌ | P18.12 | Track clean-task utility |
@@ -503,7 +503,7 @@ Suggested window: Weeks 15-16.
 | Status | ID | Subtask / completion deliverable |
 | :---: | --- | --- |
 | ✅ | P19.01 | Expand README with setup and architecture after implementation |
-| ❌ | P19.02 | Publish threat model and policy semantics |
+| ✅ | P19.02 | Publish threat model and policy semantics |
 | ✅ | P19.03 | Publish TaintScript language reference |
 | ✅ | P19.04 | Publish label, endorsement and declassification reference |
 | ✅ | P19.05 | Document the static checker and soundness test limits |

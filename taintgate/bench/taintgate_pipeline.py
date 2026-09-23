@@ -61,3 +61,7 @@ class TaintgatePipeline:
         trace: list[dict[str,Any]] = [{'role':'assistant','content':None,'tool_calls':adapter.calls}] if adapter.calls else []
         trace.append({'role':'assistant','content':[{'type':'text','content':output}],'tool_calls':None})
         return query,runtime,env,trace,extra_args or {}
+
+class StrictTaintgatePipeline(TaintgatePipeline):
+    def __init__(self, backend: Backend, max_calls: int = 4) -> None:
+        super().__init__(backend,strict=True,max_calls=max_calls)
