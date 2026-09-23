@@ -15,6 +15,7 @@ def main() -> None:
     parser.add_argument("task")
     parser.add_argument("message")
     parser.add_argument("files", nargs="+")
+    parser.add_argument("--pending", action="store_true", help="Commit partial work without marking completion")
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
     os.chdir(root)
@@ -46,7 +47,7 @@ def main() -> None:
         completed = f"| \u2705 | {args.task} |"
         if text.count(pending) != 1 and text.count(completed) != 1:
             raise SystemExit("Task missing or ambiguous")
-        roadmap.write_text(text.replace(pending, completed), encoding="utf-8", newline="\n")
+        roadmap.write_text(text if args.pending else text.replace(pending, completed), encoding="utf-8", newline="\n")
         subprocess.run(["git", "add", "--", *args.files, "CONTRIBUTING.md"], check=True)
         subprocess.run(["git", "diff", "--cached", "--check"], check=True)
         subprocess.run(

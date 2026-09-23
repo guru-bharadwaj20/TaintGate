@@ -26,3 +26,8 @@ a remote server's implementation to its metadata**. A malicious peer may change
 behaviour after recheck or lie about its schema. Strong execution guarantees need
 a trusted, versioned server implementation or an isolated capability-limited host.
 Cancellation also cannot roll back effects already performed by a peer.
+
+Result provenance binds the server, tool and canonical payload SHA-256. Identical
+cached results retain their identity; different tools or payloads cannot collapse
+to one server-only origin. The hash inherits the result's confidentiality label.
+Do not publish private provenance IDs: hashes of low-entropy values can be guessed.
