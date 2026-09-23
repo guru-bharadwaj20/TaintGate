@@ -135,8 +135,8 @@ Suggested window: Weeks 1-2; 9-10.
 | ✅ | P03.11 | Implement bounded planner retries |
 | ✅ | P03.12 | Generate trusted parse-error summaries without input excerpts |
 | ✅ | P03.13 | Generate trusted unknown-tool summaries without tool output |
-| ❌ | P03.14 | Test that tool results never enter planner context |
-| ❌ | P03.15 | Define cache keys including model, prompt and decoding settings |
+| ✅ | P03.14 | Test that tool results never enter planner context |
+| ✅ | P03.15 | Define cache keys including model, prompt and decoding settings |
 | ❌ | P03.16 | Implement isolated response caching without crossing trust boundaries |
 
 ## P04 - Integrity, confidentiality and provenance
@@ -453,7 +453,7 @@ Suggested window: Weeks 11-14.
 | ✅ | P17.02 | Define action equivalence with labels, sinks and approval exceptions |
 | ✅ | P17.03 | Test strict-mode noninterference for protected side effects |
 | ✅ | P17.04 | Test permissive-mode limitations with explicit counterexamples |
-| ❌ | P17.05 | Shrink failing generated examples into regression fixtures |
+| ✅ | P17.05 | Shrink failing generated examples into regression fixtures |
 | ❌ | P17.06 | Check static analysis against concrete execution |
 | ❌ | P17.07 | Test A1 unauthorized action regressions |
 | ❌ | P17.08 | Test A2 argument hijacking regressions |
