@@ -133,7 +133,7 @@ Suggested window: Weeks 1-2; 9-10.
 | ✅ | P03.09 | Expose only locally approved tool signatures to the planner |
 | ✅ | P03.10 | Constrain planner output to the plan language |
 | ✅ | P03.11 | Implement bounded planner retries |
-| ❌ | P03.12 | Generate trusted parse-error summaries without input excerpts |
+| ✅ | P03.12 | Generate trusted parse-error summaries without input excerpts |
 | ❌ | P03.13 | Generate trusted unknown-tool summaries without tool output |
 | ❌ | P03.14 | Test that tool results never enter planner context |
 | ❌ | P03.15 | Define cache keys including model, prompt and decoding settings |
@@ -461,7 +461,7 @@ Suggested window: Weeks 11-14.
 | ✅ | P17.10 | Test A4 tool poisoning regressions |
 | ✅ | P17.11 | Test A5 metadata rug-pull regressions |
 | ✅ | P17.12 | Test A6 namespace shadowing regressions |
-| ❌ | P17.13 | Test A7 secret leakage regressions |
+| ✅ | P17.13 | Test A7 secret leakage regressions |
 | ❌ | P17.14 | Fuzz the AST parser and policy parser |
 | ❌ | P17.15 | Fuzz JSON-RPC decoding and gateway state transitions |
 | ❌ | P17.16 | Fuzz schema compilation and label propagation |
