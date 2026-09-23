@@ -4,10 +4,10 @@ from __future__ import annotations
 
 import argparse
 import os
-from pathlib import Path
 import re
 import subprocess
 import time
+from pathlib import Path
 
 
 def main() -> None:
@@ -15,7 +15,9 @@ def main() -> None:
     parser.add_argument("task")
     parser.add_argument("message")
     parser.add_argument("files", nargs="+")
-    parser.add_argument("--pending", action="store_true", help="Commit partial work without marking completion")
+    parser.add_argument(
+        "--pending", action="store_true", help="Commit partial work without marking completion"
+    )
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
     os.chdir(root)
@@ -47,15 +49,34 @@ def main() -> None:
         completed = f"| \u2705 | {args.task} |"
         if text.count(pending) != 1 and text.count(completed) != 1:
             raise SystemExit("Task missing or ambiguous")
-        roadmap.write_text(text if args.pending else text.replace(pending, completed), encoding="utf-8", newline="\n")
+        roadmap.write_text(
+            text if args.pending else text.replace(pending, completed),
+            encoding="utf-8",
+            newline="\n",
+        )
         subprocess.run(["git", "add", "--", *args.files, "CONTRIBUTING.md"], check=True)
         subprocess.run(["git", "diff", "--cached", "--check"], check=True)
         subprocess.run(
-            ["git", "-c", "user.name=guru-bharadwaj20", "-c", "user.email=gururb20@gmail.com",
-             "-c", "core.hooksPath=NUL", "commit", "-m", f"{args.message} ({args.task})"],
+            [
+                "git",
+                "-c",
+                "user.name=guru-bharadwaj20",
+                "-c",
+                "user.email=gururb20@gmail.com",
+                "-c",
+                "core.hooksPath=NUL",
+                "commit",
+                "-m",
+                f"{args.message} ({args.task})",
+            ],
             check=True,
-            env={**os.environ, "GIT_AUTHOR_NAME": "guru-bharadwaj20", "GIT_AUTHOR_EMAIL": "gururb20@gmail.com",
-                 "GIT_COMMITTER_NAME": "guru-bharadwaj20", "GIT_COMMITTER_EMAIL": "gururb20@gmail.com"},
+            env={
+                **os.environ,
+                "GIT_AUTHOR_NAME": "guru-bharadwaj20",
+                "GIT_AUTHOR_EMAIL": "gururb20@gmail.com",
+                "GIT_COMMITTER_NAME": "guru-bharadwaj20",
+                "GIT_COMMITTER_EMAIL": "gururb20@gmail.com",
+            },
         )
         committed = True
         subprocess.run(["git", "push", "origin", "main"], check=True)
@@ -64,7 +85,9 @@ def main() -> None:
             roadmap.write_bytes(original)
             subprocess.run(["git", "reset", "--", *args.files, "CONTRIBUTING.md"], check=False)
         else:
-            print("Commit created but push failed. Retry git push origin main before another commit.")
+            print(
+                "Commit created but push failed. Retry git push origin main before another commit."
+            )
         raise
     finally:
         lock.rmdir()

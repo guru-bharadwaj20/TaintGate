@@ -1,6 +1,6 @@
 # Contributing to TaintGate
 
-This file is the implementation roadmap and contribution tracker. The supplied project idea is design input; a row is complete only when its deliverable exists and has been checked. The repository is currently in the documentation stage.
+This file is the implementation roadmap and contribution tracker. The supplied project idea is design input; a row is complete only when its deliverable exists and has been checked. Core components, integration demos, and test infrastructure are implemented. Remaining red rows identify work still awaiting execution or verification.
 
 ## Status and completion rules
 
@@ -537,7 +537,7 @@ Suggested window: After core release.
 
 ## Prior work and source material
 
-TaintGate plans to implement and extend the information-flow designs in CaMeL and FIDES. The policy engine, static checker, MCP integration, audit proofs and test harness are planned engineering deliverables, not completed features.
+TaintGate implements and extend the information-flow designs in CaMeL and FIDES. The policy engine, static checker, MCP integration, audit proofs and test harness are planned engineering deliverables, not completed features.
 
 - [CaMeL reading copy](https://css.csail.mit.edu/6.858/2026/readings/camel.pdf)
 - [FIDES - Microsoft Research](https://www.microsoft.com/en-us/research/publication/securing-ai-agents-with-information-flow-control/)

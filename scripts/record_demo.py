@@ -5,9 +5,9 @@ from __future__ import annotations
 import argparse
 import asyncio
 import json
-from pathlib import Path
 import subprocess
 import textwrap
+from pathlib import Path
 from typing import Any
 
 from taintgate.audit.log import AuditLog, Event, checkpoint, verify_checkpoint
@@ -38,20 +38,65 @@ async def evidence() -> dict[str, Any]:
 
 
 def render_video(results: dict[str, Any], target: Path) -> None:
-    from PIL import Image, ImageDraw, ImageFont
     import imageio_ffmpeg
+    from PIL import Image, ImageDraw, ImageFont
 
     scenes = [
-        ("TaintGate", "Rendered demonstration from recorded synthetic CLI output.\nNo real email, files or payments.\nSecurity comes from deterministic labels and policies."),
-        ("Trust boundaries", "Trusted request -> restricted planner program\nStatic checker -> labelled interpreter\nEvery tool call -> policy -> MCP metadata checks\nUntrusted extraction output stays untrusted."),
-        ("Trusted action", f"Trusted send: {results['trusted_status']}\nExactly one synthetic send was recorded:\n{json.dumps(results['recorded_sends'], indent=2)}"),
-        ("Poisoned email", f"Attacker requests invoice forwarding to evil@example.net.\nRuntime status: {results['attack_status']}\nThe attacker-selected send is denied.\nRecorded sends remain limited to the trusted fixture."),
-        ("Changed tool metadata", f"A server changed its description after approval.\nStatus: {results['tool_change']['status']}\nPinned metadata quarantines the tool.\n" + "\n".join(results['tool_change']['diffs'])),
-        ("Tamper evidence", f"Audit verified before mutation: {results['audit_valid']}\nEdited event detected: {results['edit_detected']}\nTail deletion detected with trusted anchor: {results['anchored_truncation_detected']}\nAn unanchored chain cannot detect a rewritten history.\nThese fixtures are not AgentDojo measurements."),
+        (
+            "TaintGate",
+            "Rendered demonstration from recorded synthetic CLI output.\nNo real email, files or payments.\nSecurity comes from deterministic labels and policies.",
+        ),
+        (
+            "Trust boundaries",
+            "Trusted request -> restricted planner program\nStatic checker -> labelled interpreter\nEvery tool call -> policy -> MCP metadata checks\nUntrusted extraction output stays untrusted.",
+        ),
+        (
+            "Trusted action",
+            f"Trusted send: {results['trusted_status']}\nExactly one synthetic send was recorded:\n{json.dumps(results['recorded_sends'], indent=2)}",
+        ),
+        (
+            "Poisoned email",
+            f"Attacker requests invoice forwarding to evil@example.net.\nRuntime status: {results['attack_status']}\nThe attacker-selected send is denied.\nRecorded sends remain limited to the trusted fixture.",
+        ),
+        (
+            "Changed tool metadata",
+            f"A server changed its description after approval.\nStatus: {results['tool_change']['status']}\nPinned metadata quarantines the tool.\n"
+            + "\n".join(results["tool_change"]["diffs"]),
+        ),
+        (
+            "Tamper evidence",
+            f"Audit verified before mutation: {results['audit_valid']}\nEdited event detected: {results['edit_detected']}\nTail deletion detected with trusted anchor: {results['anchored_truncation_detected']}\nAn unanchored chain cannot detect a rewritten history.\nThese fixtures are not AgentDojo measurements.",
+        ),
     ]
     target.parent.mkdir(parents=True, exist_ok=True)
     binary = imageio_ffmpeg.get_ffmpeg_exe()
-    process = subprocess.Popen([binary, "-y", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", "960x540", "-r", "1", "-i", "-", "-an", "-c:v", "libx264", "-pix_fmt", "yuv420p", "-movflags", "+faststart", str(target)], stdin=subprocess.PIPE, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+    process = subprocess.Popen(
+        [
+            binary,
+            "-y",
+            "-f",
+            "rawvideo",
+            "-pix_fmt",
+            "rgb24",
+            "-s",
+            "960x540",
+            "-r",
+            "1",
+            "-i",
+            "-",
+            "-an",
+            "-c:v",
+            "libx264",
+            "-pix_fmt",
+            "yuv420p",
+            "-movflags",
+            "+faststart",
+            str(target),
+        ],
+        stdin=subprocess.PIPE,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.PIPE,
+    )
     font = ImageFont.load_default(size=19)
     title = ImageFont.load_default(size=30)
     assert process.stdin is not None
