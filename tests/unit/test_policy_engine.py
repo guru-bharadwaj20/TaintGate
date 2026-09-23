@@ -56,3 +56,10 @@ def test_real_enum_nested_labels_and_pc():
     assert Atom('untrusted_control', ('x',)) in facts
     with pytest.raises(PolicyError):
         call_facts('x', 'send', {'to': 'raw'})
+
+
+def test_control_confidentiality_reader_check():
+    from taintgate.labels import Label, Labeled
+    from taintgate.policy.decisions import call_facts
+    facts = call_facts('x', 'send', {'to': Labeled('bob')}, destination='bob', pc=Label(readers=frozenset({'alice'})))
+    assert Atom('reader_denied', ('x',)) in facts

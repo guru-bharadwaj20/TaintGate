@@ -13,7 +13,7 @@ Each subtask has a stable ID. Replace ❌ with ✅ only after completing that ex
 
 ## Required commit workflow
 
-**Commit every minor change.** Keep each commit focused on one small, reviewable change. Do not bundle unrelated edits, commit secrets or model weights, or commit another contributor's work inadvertently.
+**Commit every minor change and push immediately after each commit.** Keep each commit focused on one small, reviewable change. Do not bundle unrelated edits, commit secrets or model weights, or commit another contributor's work inadvertently.
 
 Use this identity for every project commit:
 
@@ -457,7 +457,7 @@ Suggested window: Weeks 11-14.
 | ✅ | P17.06 | Check static analysis against concrete execution |
 | ✅ | P17.07 | Test A1 unauthorized action regressions |
 | ✅ | P17.08 | Test A2 argument hijacking regressions |
-| ❌ | P17.09 | Test A3 outbound exfiltration regressions |
+| ✅ | P17.09 | Test A3 outbound exfiltration regressions |
 | ✅ | P17.10 | Test A4 tool poisoning regressions |
 | ✅ | P17.11 | Test A5 metadata rug-pull regressions |
 | ✅ | P17.12 | Test A6 namespace shadowing regressions |
@@ -465,7 +465,7 @@ Suggested window: Weeks 11-14.
 | ❌ | P17.14 | Fuzz the AST parser and policy parser |
 | ✅ | P17.15 | Fuzz JSON-RPC decoding and gateway state transitions |
 | ❌ | P17.16 | Fuzz schema compilation and label propagation |
-| ❌ | P17.17 | Set deterministic seeds and retain fuzz crash artifacts |
+| ✅ | P17.17 | Set deterministic seeds and retain fuzz crash artifacts |
 | ❌ | P17.18 | Measure core coverage and address meaningful gaps toward 85 percent |
 | ❌ | P17.19 | Run the full required CI checks without model downloads |
 

@@ -32,3 +32,12 @@ def test_a2_recipient_hijack():
         vm.run('send(recipient, "approved text")',
                {'recipient': Labeled('attacker@example.test', Label(Integrity.UNTRUSTED))})
     assert not sent
+
+
+def test_a3_confidential_outbound_exfiltration():
+    sent = []
+    vm = Interpreter({'send': Tool(lambda body: sent.append(body))},
+                     lambda name, args, pc: args['0'].label.may_read('attacker'))
+    with pytest.raises(RuntimeFault, match='tool_denied'):
+        vm.run('send(secret)', {'secret': Labeled('ACCOUNT-CANARY', Label(readers={'owner'}))})
+    assert not sent

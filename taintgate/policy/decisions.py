@@ -43,6 +43,8 @@ def call_facts(call_id: str, tool: str, args: Mapping[str, Any], destination: st
     if pc is not None:
         if not isinstance(pc, Label):
             raise PolicyError('Invalid control-flow label')
+        if destination is not None and not pc.may_read(destination):
+            facts.append(Atom('reader_denied', (call_id,)))
         if pc.integrity == Integrity.UNTRUSTED:
             facts.append(Atom('untrusted_control', (call_id,)))
     return tuple(facts)

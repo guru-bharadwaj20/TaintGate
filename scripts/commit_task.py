@@ -30,6 +30,7 @@ def main() -> None:
             time.sleep(0.2)
     roadmap = root / "CONTRIBUTING.md"
     original = roadmap.read_bytes()
+    committed = False
     try:
         if not re.fullmatch(r"P\d{2}\.\d{2}", args.task):
             raise SystemExit("Invalid task ID")
@@ -55,9 +56,14 @@ def main() -> None:
             env={**os.environ, "GIT_AUTHOR_NAME": "guru-bharadwaj20", "GIT_AUTHOR_EMAIL": "gururb20@gmail.com",
                  "GIT_COMMITTER_NAME": "guru-bharadwaj20", "GIT_COMMITTER_EMAIL": "gururb20@gmail.com"},
         )
+        committed = True
+        subprocess.run(["git", "push", "origin", "main"], check=True)
     except BaseException:
-        roadmap.write_bytes(original)
-        subprocess.run(["git", "reset", "--", *args.files, "CONTRIBUTING.md"], check=False)
+        if not committed:
+            roadmap.write_bytes(original)
+            subprocess.run(["git", "reset", "--", *args.files, "CONTRIBUTING.md"], check=False)
+        else:
+            print("Commit created but push failed. Retry git push origin main before another commit.")
         raise
     finally:
         lock.rmdir()
