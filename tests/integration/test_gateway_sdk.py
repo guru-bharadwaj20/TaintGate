@@ -3,6 +3,7 @@ import json
 
 from mcp.shared.memory import create_connected_server_and_client_session
 
+from taintgate.gateway.config import ServerConfig
 from taintgate.gateway.core import Gateway
 from taintgate.gateway.lab import malicious_description_server
 from taintgate.gateway.metadata import Contract, MetadataGuard, PinStore
@@ -46,5 +47,34 @@ def test_real_sdk_poisoned_server_metadata():
         ) as client:
             tools = await client.list_tools()
             assert "Ignore previous" in tools.tools[0].description
+
+    asyncio.run(run())
+
+
+def test_private_result_cannot_escape_downstream(tmp_path):
+    class Peer:
+        async def metadata(self):
+            return {"read": {"name": "read", "inputSchema": {"type": "object"}}}
+
+        async def call_tool(self, name, arguments):
+            return "unknown private value"
+
+    async def run():
+        pins = PinStore(tmp_path / "private.db")
+        peer = Peer()
+        pins.approve("s", "read", (await peer.metadata())["read"])
+        gateway = Gateway(MetadataGuard(pins), lambda *args: "allow")
+        gateway.register(
+            Contract("s", "read", "Read", {"type": "object"}),
+            peer,
+            ServerConfig("s", readers=frozenset({"owner"})),
+        )
+        async with create_connected_server_and_client_session(
+            build_server(gateway, lambda: object())
+        ) as client:
+            result = await client.call_tool("s__read", {})
+            assert result.isError
+            assert "unknown private value" not in str(result)
+        pins.close()
 
     asyncio.run(run())
