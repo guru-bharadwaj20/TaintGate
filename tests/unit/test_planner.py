@@ -32,3 +32,14 @@ def test_retry_exhaustion():
 def test_real_plan_grammar_compiles():
     llama_cpp = pytest.importorskip('llama_cpp')
     llama_cpp.LlamaGrammar.from_string(plan_grammar((ApprovedSignature('read', ('path',)),)), verbose=False)
+
+
+def test_cache_domains_and_settings(tmp_path):
+    from taintgate.inference.cache import CachedBackend, cache_key
+    backend = Stub(['read("x")', '{"value":"x"}'])
+    planner = CachedBackend(backend,tmp_path,'planner')
+    extractor = CachedBackend(backend,tmp_path,'extractor')
+    assert planner.generate('same') == planner.generate('same') == 'read("x")'
+    assert extractor.generate('same') == '{"value":"x"}'
+    assert len(backend.prompts) == 2
+    assert cache_key('m','p',Decode(),None,'planner') != cache_key('m','p',Decode(seed=1),None,'planner')

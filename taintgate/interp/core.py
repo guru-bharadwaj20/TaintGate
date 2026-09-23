@@ -85,6 +85,12 @@ class Interpreter:
             self.env = {
                 k: v if isinstance(v, Labeled) else Labeled(v) for k, v in (inputs or {}).items()
             }
+            for name, value in self.env.items():
+                identity = provenance_id("input:" + name, value.sources)
+                self.trace.append({"operation": identity, "parents": sorted(value.sources),
+                                   "label": value.label, "integrity": value.label.integrity.name,
+                                   "readers": None if value.label.readers is None else sorted(value.label.readers)})
+                self.env[name] = Labeled(value.value, value.label, value.sources | {identity})
             self.block(parse_plan(source, self.tools).body)
             return dict(self.env)
         except RuntimeFault:
@@ -291,13 +297,17 @@ class Interpreter:
 
             text, schema = args["0"], args["1"]
             result = self.extractor(self.raw(text), self.raw(schema))
+            extra = result if isinstance(result, Labeled) else Labeled(result)
+            result = self.raw(extra)
             validate(result, self.raw(schema))
-            value = self.combine(result, text, schema)
+            value = self.combine(result, text, schema, extra)
             return Labeled(value.value, value.label.join(Label(Integrity.UNTRUSTED)), value.sources)
         args = {k: self.flatten_label(v) for k, v in args.items()}
         if self.authorize(name, args, self.effective_pc()) is not True:
             raise RuntimeFault(self.effective_pc(), "tool_denied")
         tool = self.tools[name]
+        if self.strict:
+            self.control = self.control.join(tool.result_label)
         result = tool.function(
             *(self.raw(args[str(i)]) for i in range(len(node.args))),
             **{str(k.arg): self.raw(args[str(k.arg)]) for k in node.keywords},

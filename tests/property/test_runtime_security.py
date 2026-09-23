@@ -60,3 +60,18 @@ def test_permissive_counterexample():
     plan = 'x = 0\nif untrusted:\n x = 1\nsend(x)'
     assert execute(plan, False, strict=False) == [0]
     assert execute(plan, True, strict=False) == []
+
+
+@given(PLANS, st.booleans())
+@settings(max_examples=50, derandomize=True)
+def test_static_predicts_concrete_protected_taint(plan, payload):
+    from taintgate.static import AbstractValue, Analyzer
+    result = Analyzer({"send": Label()}).analyze(
+        plan, {"untrusted": AbstractValue(Label(Integrity.UNTRUSTED))})
+    seen = []
+    vm = Interpreter({"send": Tool(lambda x: None)},
+                     lambda name, args, pc: seen.append(pc) or True)
+    vm.run(plan, {"untrusted": Labeled(payload, Label(Integrity.UNTRUSTED))})
+    if seen:
+        assert result.calls
+        assert all(call.potentially_unsafe for call in result.calls)
