@@ -137,7 +137,7 @@ Suggested window: Weeks 1-2; 9-10.
 | ✅ | P03.13 | Generate trusted unknown-tool summaries without tool output |
 | ✅ | P03.14 | Test that tool results never enter planner context |
 | ✅ | P03.15 | Define cache keys including model, prompt and decoding settings |
-| ❌ | P03.16 | Implement isolated response caching without crossing trust boundaries |
+| ✅ | P03.16 | Implement isolated response caching without crossing trust boundaries |
 
 ## P04 - Integrity, confidentiality and provenance
 
@@ -454,8 +454,8 @@ Suggested window: Weeks 11-14.
 | ✅ | P17.03 | Test strict-mode noninterference for protected side effects |
 | ✅ | P17.04 | Test permissive-mode limitations with explicit counterexamples |
 | ✅ | P17.05 | Shrink failing generated examples into regression fixtures |
-| ❌ | P17.06 | Check static analysis against concrete execution |
-| ❌ | P17.07 | Test A1 unauthorized action regressions |
+| ✅ | P17.06 | Check static analysis against concrete execution |
+| ✅ | P17.07 | Test A1 unauthorized action regressions |
 | ❌ | P17.08 | Test A2 argument hijacking regressions |
 | ❌ | P17.09 | Test A3 outbound exfiltration regressions |
 | ✅ | P17.10 | Test A4 tool poisoning regressions |
@@ -463,7 +463,7 @@ Suggested window: Weeks 11-14.
 | ✅ | P17.12 | Test A6 namespace shadowing regressions |
 | ✅ | P17.13 | Test A7 secret leakage regressions |
 | ❌ | P17.14 | Fuzz the AST parser and policy parser |
-| ❌ | P17.15 | Fuzz JSON-RPC decoding and gateway state transitions |
+| ✅ | P17.15 | Fuzz JSON-RPC decoding and gateway state transitions |
 | ❌ | P17.16 | Fuzz schema compilation and label propagation |
 | ❌ | P17.17 | Set deterministic seeds and retain fuzz crash artifacts |
 | ❌ | P17.18 | Measure core coverage and address meaningful gaps toward 85 percent |

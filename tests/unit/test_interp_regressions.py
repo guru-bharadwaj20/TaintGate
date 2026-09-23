@@ -13,3 +13,12 @@ def test_nested_secret_sink(expression):
     with pytest.raises(RuntimeFault, match='tool_denied'):
         vm.run('send(' + expression + ')', {'secret': Labeled('PRIVATE', Label(readers={'owner'}))})
     assert not sent
+
+
+def test_a1_poisoned_condition_cannot_authorize_action():
+    calls = []
+    vm = Interpreter({'delete': Tool(lambda: calls.append('deleted'))},
+                     lambda name, args, pc: pc.integrity == Integrity.TRUSTED)
+    with pytest.raises(RuntimeFault, match='tool_denied'):
+        vm.run('if poisoned:\n delete()', {'poisoned': Labeled(True, Label(Integrity.UNTRUSTED))})
+    assert calls == []
