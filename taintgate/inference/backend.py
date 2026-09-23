@@ -24,7 +24,7 @@ class LlamaCppBackend:
         self._model: Any = Llama(model_path=str(path), n_gpu_layers=0, n_ctx=n_ctx, n_threads=n_threads, verbose=False)
 
     def generate(self, prompt: str, settings: Decode = Decode(), grammar: str | None = None) -> str:
-        from llama_cpp import LlamaGrammar
+        from llama_cpp.llama_grammar import LlamaGrammar
         compiled = LlamaGrammar.from_string(grammar, verbose=False) if grammar else None
         result = self._model(prompt, max_tokens=settings.max_tokens, temperature=settings.temperature,
                              seed=settings.seed, grammar=compiled, echo=False)

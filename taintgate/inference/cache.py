@@ -1,9 +1,8 @@
-from pathlib import Path
-
 """Response cache identity includes trust domain and every decoding input."""
 import hashlib
 import json
 from dataclasses import asdict
+from pathlib import Path
 
 from .backend import Backend, Decode
 

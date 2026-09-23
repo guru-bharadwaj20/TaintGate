@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import math
 from typing import Any
 
 from jsonschema import Draft202012Validator, FormatChecker
@@ -13,8 +14,28 @@ FORMATS = frozenset({"email", "date", "date-time"})
 
 
 def validate_data(value: Any, schema: dict[str, Any]) -> Any:
+    validate_finite(value)
     Draft202012Validator(schema, format_checker=FormatChecker()).validate(value)
     return value
+
+
+def validate_finite(value: Any, depth: int = 0) -> None:
+    if depth > 32:
+        raise SchemaError("Extraction nesting exceeds bounds")
+    if isinstance(value, float) and not math.isfinite(value):
+        raise SchemaError("Nonfinite extraction value")
+    if isinstance(value, str):
+        try:
+            value.encode("utf-8")
+        except UnicodeEncodeError:
+            raise SchemaError("Invalid Unicode scalar") from None
+    elif isinstance(value, dict):
+        for key, item in value.items():
+            validate_finite(key, depth + 1)
+            validate_finite(item, depth + 1)
+    elif isinstance(value, list):
+        for item in value:
+            validate_finite(item, depth + 1)
 
 
 def parse_validated(raw: str, schema: dict[str, Any]) -> Any:
