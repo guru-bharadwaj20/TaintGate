@@ -429,7 +429,7 @@ Suggested window: Weeks 11-12.
 | :---: | --- | --- |
 | ✅ | P16.01 | Integrate planner, checker, interpreter, policy and gateway |
 | ✅ | P16.02 | Build a safe dry-run mode with mocked tools |
-| ❌ | P16.03 | Implement FastAPI run and approval endpoints |
+| ✅ | P16.03 | Implement FastAPI run and approval endpoints |
 | ✅ | P16.04 | Build a minimal run timeline |
 | ✅ | P16.05 | Render provenance as a data-flow graph |
 | ✅ | P16.06 | Show human-readable policy derivation explanations |
@@ -456,7 +456,7 @@ Suggested window: Weeks 11-14.
 | ✅ | P17.05 | Shrink failing generated examples into regression fixtures |
 | ✅ | P17.06 | Check static analysis against concrete execution |
 | ✅ | P17.07 | Test A1 unauthorized action regressions |
-| ❌ | P17.08 | Test A2 argument hijacking regressions |
+| ✅ | P17.08 | Test A2 argument hijacking regressions |
 | ❌ | P17.09 | Test A3 outbound exfiltration regressions |
 | ✅ | P17.10 | Test A4 tool poisoning regressions |
 | ✅ | P17.11 | Test A5 metadata rug-pull regressions |

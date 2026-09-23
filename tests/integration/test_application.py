@@ -20,3 +20,29 @@ def test_gateway_context_cannot_be_forged_or_arguments_swapped():
     assert app._gateway_authorize(call, "email__send", {"to": "evil@example.net"}) == "deny"
     app.audit.close()
     app.gateway.guard.pins.close()
+
+
+def test_exact_ask_scope_does_not_override_deny():
+    from taintgate.policy.engine import Engine
+    app,server=make_demo()
+    app.policy += '\nask(C) :- call(C, "email__send").'
+    app.engine=Engine(app.policy)
+    source='email__send(to="manager@example.org", body="Explicit message")'
+    first=asyncio.run(app.run(source))
+    assert first.decisions[0]["action"] == "ask"
+    assert not server.sent
+    app.approve(first.decisions[0]["scope"], "Local explicit approval")
+    second=asyncio.run(app.run(source))
+    assert second.status == "completed"
+    assert len(server.sent)==1
+    changed=asyncio.run(app.run(source.replace("Explicit message","Different message")))
+    assert changed.decisions[0]["action"] == "ask"
+    assert len(server.sent)==1
+    app.audit.close()
+    app.gateway.guard.pins.close()
+
+
+def test_public_container_cannot_hide_confidential_children():
+    from taintgate.application import public_tree
+    value=Labeled({"secret":Labeled("private",Label(readers=frozenset({"alice"})))})
+    assert not public_tree(value)

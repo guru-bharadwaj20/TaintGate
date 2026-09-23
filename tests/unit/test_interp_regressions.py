@@ -22,3 +22,13 @@ def test_a1_poisoned_condition_cannot_authorize_action():
     with pytest.raises(RuntimeFault, match='tool_denied'):
         vm.run('if poisoned:\n delete()', {'poisoned': Labeled(True, Label(Integrity.UNTRUSTED))})
     assert calls == []
+
+
+def test_a2_recipient_hijack():
+    sent = []
+    vm = Interpreter({'send': Tool(lambda recipient, body: sent.append(recipient))},
+                     lambda name, args, pc: args['0'].label.integrity == Integrity.TRUSTED)
+    with pytest.raises(RuntimeFault, match='tool_denied'):
+        vm.run('send(recipient, "approved text")',
+               {'recipient': Labeled('attacker@example.test', Label(Integrity.UNTRUSTED))})
+    assert not sent
