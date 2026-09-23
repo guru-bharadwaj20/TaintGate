@@ -56,6 +56,13 @@ class Provenance:
     operation: str
     parents: frozenset[str] = frozenset()
 
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "parents", frozenset(self.parents))
+        if not isinstance(self.operation, str) or not self.operation:
+            raise ValueError("Provenance operation must be nonempty")
+        if any(not isinstance(parent, str) or not parent for parent in self.parents):
+            raise ValueError("Provenance parent identifiers must be nonempty strings")
+
     @property
     def id(self) -> str:
         return provenance_id(self.operation, self.parents)
