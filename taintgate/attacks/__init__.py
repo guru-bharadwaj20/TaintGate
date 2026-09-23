@@ -1,1 +1,1 @@
-"""TaintGate attacks components."""
+"""Isolated synthetic attack generation and evaluation."""

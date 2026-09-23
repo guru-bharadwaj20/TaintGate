@@ -532,7 +532,7 @@ Suggested window: After core release.
 | ✅ | P20.02 | Suggest policies from approved traces with manual review |
 | ❌ | P20.03 | Benchmark a Rust policy engine before replacing Python |
 | ✅ | P20.04 | Design browser DOM-origin labels and an adapter |
-| ❌ | P20.05 | Generate local red-team variants in an isolated lab |
+| ✅ | P20.05 | Generate local red-team variants in an isolated lab |
 | ❌ | P20.06 | Turn successful red-team variants into regression tests |
 
 ## Prior work and source material
