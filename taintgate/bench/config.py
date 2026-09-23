@@ -14,3 +14,7 @@ class RunConfig:
 
     def manifest(self, model_hash: str) -> dict[str,Any]:
         return {'format':1,'model_sha256':model_hash,'run':asdict(self)}
+
+def verify_manifest(expected: dict[str, Any], existing: dict[str, Any]) -> None:
+    if expected != existing:
+        raise ValueError('Benchmark cache manifest differs from configured run')
