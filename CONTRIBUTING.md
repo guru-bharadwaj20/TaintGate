@@ -488,8 +488,8 @@ Suggested window: Weeks 13-14.
 | ✅ | P18.11 | Implement versioned response-cache manifests |
 | ✅ | P18.12 | Track clean-task utility |
 | ❌ | P18.13 | Track utility under attack |
-| ❌ | P18.14 | Track attack success with threat-model coverage annotations |
-| ❌ | P18.15 | Track approvals per run and per task |
+| ✅ | P18.14 | Track attack success with threat-model coverage annotations |
+| ✅ | P18.15 | Track approvals per run and per task |
 | ❌ | P18.16 | Measure median and tail deterministic tool-call overhead |
 | ❌ | P18.17 | Record CPU, memory, versions, seeds and wall-clock cost |
 | ❌ | P18.18 | Support resumable overnight benchmark runs |
@@ -512,7 +512,7 @@ Suggested window: Weeks 15-16.
 | ✅ | P19.08 | Document CPU models, memory and expected runtime |
 | ❌ | P19.09 | Publish benchmark configurations and result tables |
 | ✅ | P19.10 | Explain differences and extensions over prior work |
-| ❌ | P19.11 | Prepare the three-minute attack-and-defense demo |
+| ✅ | P19.11 | Prepare the three-minute attack-and-defense demo |
 | ❌ | P19.12 | Demonstrate tool-change quarantine and audit tampering |
 | ❌ | P19.13 | Record a demo video using synthetic data |
 | ❌ | P19.14 | Write resume bullets using measured numbers only |
