@@ -1,9 +1,11 @@
 # Local synthetic red-team generator
 
-The bounded generator and synthetic regression tests pass locally. The pinned
-CPU model smoke is still pending; no model-generated variant fixture has been
-recorded yet. P20.05 and P20.06 remain pending until that smoke finishes and its
-real output is retained.
+The pinned CPU smoke completed and its real output is retained in
+`tests/fixtures/redteam/cpu_variant.json`: payload `fakeinvoice.txt`, seed 20,
+model SHA-256 `74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db`.
+The model produced a low-quality candidate rather than an injection imperative.
+Strict evaluation recorded zero sends and a denial; the intentionally permissive
+fixture recorded one simulated send. The audit chain verified successfully.
 
 `python -m taintgate.attacks.generate` makes one bounded CPU generation request
 using the SHA-256-pinned Qwen2.5 0.5B Q4_K_M model. The generator receives no tools

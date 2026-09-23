@@ -1,4 +1,4 @@
-﻿from . import PolicyError, Program, Rule
+from . import PolicyError, Program, Rule
 
 Graph = dict[str, list[tuple[str, bool]]]
 
@@ -13,6 +13,7 @@ def dependency_graph(program: Program) -> Graph:
             graph.setdefault(atom.predicate, [])
             edges.append((atom.predicate, atom.negated))
     return graph
+
 
 def components(graph: Graph) -> list[frozenset[str]]:
     """Iterative Kosaraju avoids Python stack limits on adversarial chains."""
@@ -48,12 +49,14 @@ def components(graph: Graph) -> list[frozenset[str]]:
         result.append(frozenset(group))
     return result
 
+
 def reject_negative_cycles(graph: Graph) -> None:
     membership = {node: i for i, group in enumerate(components(graph)) for node in group}
     for node, edges in graph.items():
         for dep, negative in edges:
             if negative and membership[node] == membership[dep]:
-                raise PolicyError(f'Negative dependency cycle: {node} -> {dep}')
+                raise PolicyError(f"Negative dependency cycle: {node} -> {dep}")
+
 
 def stratify(program: Program) -> list[tuple[Rule, ...]]:
     graph = dependency_graph(program)
@@ -67,5 +70,7 @@ def stratify(program: Program) -> list[tuple[Rule, ...]]:
             if required > levels[node]:
                 levels[node] = required
                 changed = True
-    return [tuple(r for r in program.rules if levels[r.head.predicate] == i)
-            for i in range(max(levels.values(), default=0) + 1)]
+    return [
+        tuple(r for r in program.rules if levels[r.head.predicate] == i)
+        for i in range(max(levels.values(), default=0) + 1)
+    ]
