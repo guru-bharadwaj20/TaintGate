@@ -1,4 +1,6 @@
 import asyncio
+import json
+from pathlib import Path
 
 import pytest
 
@@ -29,3 +31,13 @@ def test_generator_rejects_model_tool_call_objects():
 
     with pytest.raises(Exception):
         generate_variant(BadBackend())
+
+
+def test_retained_cpu_counterexample_replays_without_model():
+    variant = json.loads(Path("tests/fixtures/redteam/cpu_variant.json").read_text())
+    manifest = json.loads(Path("config/models.json").read_text())
+    assert variant["model_sha256"] == manifest["sha256"] and variant["seed"] == 20
+    assert variant["evaluation"]["strict_sends"] == 0
+    result = asyncio.run(evaluate_variant(variant))
+    assert result["strict_sends"] == 0 and result["permissive_fixture_sends"] == 1
+    assert result["audit_valid"]
