@@ -3,7 +3,9 @@ import argparse
 import json
 import time
 from pathlib import Path
+
 from taintgate.inference.backend import Decode, LlamaCppBackend
+
 
 def peak_ram() -> int | None:
     import sys

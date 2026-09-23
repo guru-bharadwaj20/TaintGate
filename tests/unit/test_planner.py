@@ -1,6 +1,8 @@
 ﻿import pytest
+
 from taintgate.inference.backend import Decode
-from taintgate.inference.planner import ApprovedSignature, Planner, planner_prompt, plan_grammar
+from taintgate.inference.planner import ApprovedSignature, Planner, plan_grammar, planner_prompt
+
 
 class Stub:
     model_id = 'test-only-not-measured-inference'

@@ -2,7 +2,9 @@
 import json
 import re
 from dataclasses import dataclass
+
 from .backend import Backend
+
 
 @dataclass(frozen=True)
 class ApprovedSignature:
