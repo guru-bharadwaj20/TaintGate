@@ -510,7 +510,7 @@ Suggested window: Weeks 15-16.
 | ✅ | P19.06 | Document tool onboarding and approval pin management |
 | ✅ | P19.07 | Document audit checkpoint storage and recovery |
 | ✅ | P19.08 | Document CPU models, memory and expected runtime |
-| ❌ | P19.09 | Publish benchmark configurations and result tables |
+| ✅ | P19.09 | Publish benchmark configurations and result tables |
 | ✅ | P19.10 | Explain differences and extensions over prior work |
 | ✅ | P19.11 | Prepare the three-minute attack-and-defense demo |
 | ❌ | P19.12 | Demonstrate tool-change quarantine and audit tampering |
