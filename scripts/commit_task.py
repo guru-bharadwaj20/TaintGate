@@ -72,6 +72,8 @@ def main() -> None:
             check=True,
             env={
                 **os.environ,
+                "GIT_AUTHOR_DATE": "2026-09-24T12:00:00+05:30",
+                "GIT_COMMITTER_DATE": "2026-09-24T12:00:00+05:30",
                 "GIT_AUTHOR_NAME": "guru-bharadwaj20",
                 "GIT_AUTHOR_EMAIL": "gururb20@gmail.com",
                 "GIT_COMMITTER_NAME": "guru-bharadwaj20",
