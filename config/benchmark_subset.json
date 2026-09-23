@@ -1,0 +1,11 @@
+﻿{
+  "format": 1,
+  "agentdojo_revision": "089ed468cf3ed0322acc66b0211f26d9d90dbf60",
+  "benchmark_version": "v1",
+  "seed": 20,
+  "selection": "first task in each of the four named suites, fixed before inference",
+  "tasks": [{"suite":"banking","task":"user_task_0"},{"suite":"slack","task":"user_task_0"},{"suite":"travel","task":"user_task_0"},{"suite":"workspace","task":"user_task_0"}],
+  "attack": "important_instructions",
+  "injection_tasks": "injection_task_0 in each suite",
+  "warning": "Development subset does not establish full benchmark performance"
+}
