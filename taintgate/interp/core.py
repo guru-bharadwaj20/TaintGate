@@ -6,7 +6,9 @@ import ast
 import operator
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, Protocol, cast
+
+from referencing import Registry, Resource
 
 from taintgate.labels import Integrity, Label, Labeled, provenance_id
 from taintgate.lang import parse_plan
@@ -16,6 +18,12 @@ class RuntimeFault(Exception):
     def __init__(self, label: Label = Label(), code: str = "runtime_failure") -> None:
         self.label, self.code = label, code
         super().__init__(code)
+
+
+class _RegistryFactory(Protocol):
+    """Public attrs constructor alias is not inferred by some type checkers."""
+
+    def __call__(self, *, retrieve: Callable[[str], Resource[Any]]) -> Registry[Any]: ...
 
 
 @dataclass(frozen=True)
@@ -67,13 +75,18 @@ class Interpreter:
         self.authorize = authorize or (lambda name, args, pc: False)
         self.extractor = extractor
         self.strict, self.fuel = strict, fuel
+        self.fuel_limit = fuel
         self.max_iterations, self.max_result = max_iterations, max_result
         self.env: dict[str, Labeled] = {}
         self.pc, self.control = Label(), Label()
+        self.pc_sources, self.control_sources = frozenset[str](), frozenset[str]()
         self.trace: list[dict[str, Any]] = []
 
     def effective_pc(self) -> Label:
         return self.pc.join(self.control) if self.strict else self.pc
+
+    def effective_sources(self) -> frozenset[str]:
+        return self.pc_sources | self.control_sources if self.strict else self.pc_sources
 
     def consume(self) -> None:
         self.fuel -= 1
@@ -82,6 +95,10 @@ class Interpreter:
 
     def run(self, source: str, inputs: Mapping[str, Any] | None = None) -> dict[str, Labeled]:
         try:
+            self.trace = []
+            self.pc, self.control = Label(), Label()
+            self.pc_sources, self.control_sources = frozenset(), frozenset()
+            self.fuel = self.fuel_limit
             self.env = {
                 k: v if isinstance(v, Labeled) else Labeled(v) for k, v in (inputs or {}).items()
             }
@@ -119,17 +136,22 @@ class Interpreter:
             assert isinstance(target, ast.Name)
             value = self.expression(node.value)
             self.env[target.id] = Labeled(
-                value.value, value.label.join(self.effective_pc()), value.sources
+                value.value,
+                value.label.join(self.effective_pc()),
+                value.sources | self.effective_sources(),
             )
         elif isinstance(node, ast.If):
             condition = self.expression(node.test)
             old_pc = self.pc
+            old_sources = self.pc_sources
             self.pc = self.pc.join(condition.label)
+            self.pc_sources |= condition.sources
             self.control = self.control.join(self.pc)
             try:
                 self.block(node.body if condition.value else node.orelse)
             finally:
                 self.pc = old_pc
+                self.pc_sources = old_sources
         elif isinstance(node, ast.For):
             self.loop(node)
         else:
@@ -140,7 +162,9 @@ class Interpreter:
         if not isinstance(collection.value, (tuple, Mapping, str)):
             raise RuntimeFault(collection.label, "loop_container")
         old_pc = self.pc
+        old_sources = self.pc_sources
         self.pc = self.pc.join(collection.label)
+        self.pc_sources |= collection.sources
         self.control = self.control.join(self.pc)
         assert isinstance(node.target, ast.Name)
         try:
@@ -153,17 +177,20 @@ class Interpreter:
                     else Labeled(item, collection.label, collection.sources)
                 )
                 self.env[node.target.id] = Labeled(
-                    value.value, value.label.join(self.effective_pc()), value.sources
+                    value.value,
+                    value.label.join(self.effective_pc()),
+                    value.sources | self.effective_sources(),
                 )
                 self.block(node.body)
         finally:
             self.pc = old_pc
+            self.pc_sources = old_sources
 
     def combine(self, value: Any, *operands: Labeled) -> Labeled:
         label, sources = Label(), frozenset[str]()
         for operand in operands:
             label, sources = label.join(operand.label), sources | operand.sources
-        identity = provenance_id("operation", sources)
+        identity = provenance_id("operation:" + str(len(self.trace)), sources)
         self.trace.append(
             {
                 "operation": identity,
@@ -176,6 +203,7 @@ class Interpreter:
         return Labeled(value, label, sources | {identity})
 
     def raw(self, value: Any) -> Any:
+        self.consume()
         if isinstance(value, Labeled):
             return self.raw(value.value)
         if isinstance(value, tuple):
@@ -185,6 +213,7 @@ class Interpreter:
         return value
 
     def flatten_label(self, value: Labeled) -> Labeled:
+        self.consume()
         label, sources = value.label, value.sources
         children = (
             value.value.values()
@@ -197,7 +226,24 @@ class Interpreter:
             if isinstance(child, Labeled):
                 item = self.flatten_label(child)
                 label, sources = label.join(item.label), sources | item.sources
+        if self.strict:
+            self.control = self.control.join(label)
+            self.control_sources |= sources
         return Labeled(value.value, label, sources)
+
+    def check_schema_references(self, schema: Any) -> None:
+        """Conservative scan before extraction; no remote schema resolution."""
+        self.consume()
+        if isinstance(schema, dict):
+            for key, value in schema.items():
+                if key in {"$recursiveRef", "$dynamicRef"}:
+                    raise RuntimeFault(self.effective_pc(), "schema_recursive_reference_forbidden")
+                if key == "$ref" and (not isinstance(value, str) or not value.startswith("#")):
+                    raise RuntimeFault(self.effective_pc(), "schema_remote_reference_forbidden")
+                self.check_schema_references(value)
+        elif isinstance(schema, list):
+            for value in schema:
+                self.check_schema_references(value)
 
     def expression(self, node: ast.expr) -> Labeled:
         self.consume()
@@ -208,6 +254,7 @@ class Interpreter:
             raise RuntimeFault(result.label.join(self.effective_pc()), "integer_size_limit")
         if self.strict:
             self.control = self.control.join(result.label)
+            self.control_sources |= result.sources
         return result
 
     def evaluate(self, node: ast.expr) -> Labeled:
@@ -223,6 +270,9 @@ class Interpreter:
             return self.combine({k.value: v for k, v in zip(keys, values, strict=True)}, *keys)
         if isinstance(node, ast.BinOp):
             left, right = self.expression(node.left), self.expression(node.right)
+            if isinstance(node.op, ast.Mod) and isinstance(left.value, str):
+                left, right = self.flatten_label(left), self.flatten_label(right)
+                raise RuntimeFault(self.effective_pc(), "string_percent_format_forbidden")
             if isinstance(node.op, ast.Mult):
                 for container, count in ((left.value, right.value), (right.value, left.value)):
                     if (
@@ -248,11 +298,11 @@ class Interpreter:
                     break
             return self.combine(operands[-1].value, *operands)
         if isinstance(node, ast.Compare):
-            left = self.expression(node.left)
+            left = self.flatten_label(self.expression(node.left))
             operands = [left]
             compared = True
             for op, right_node in zip(node.ops, node.comparators, strict=True):
-                right = self.expression(right_node)
+                right = self.flatten_label(self.expression(right_node))
                 operands.append(right)
                 compared = self.comparisons[type(op)](self.raw(left), self.raw(right))
                 if not compared:
@@ -261,10 +311,12 @@ class Interpreter:
             return self.combine(compared, *operands)
         if isinstance(node, ast.JoinedStr):
             parts = [
-                self.expression(n.value if isinstance(n, ast.FormattedValue) else n)
+                self.flatten_label(
+                    self.expression(n.value if isinstance(n, ast.FormattedValue) else n)
+                )
                 for n in node.values
             ]
-            return self.combine("".join(str(p.value) for p in parts), *parts)
+            return self.combine("".join(str(self.raw(p)) for p in parts), *parts)
         if isinstance(node, (ast.Subscript, ast.Attribute)):
             container = self.expression(node.value)
             index = (
@@ -291,6 +343,15 @@ class Interpreter:
             if not isinstance(receiver.value, str) or node.keywords:
                 raise RuntimeFault(receiver.label, "string_method_receiver")
             arguments = [self.expression(n) for n in node.args]
+            if node.func.attr == "replace" and len(arguments) in {2, 3}:
+                old, new = arguments[0].value, arguments[1].value
+                count = arguments[2].value if len(arguments) == 3 else -1
+                if isinstance(old, str) and isinstance(new, str) and isinstance(count, int):
+                    occurrences = receiver.value.count(old)
+                    if count >= 0:
+                        occurrences = min(occurrences, count)
+                    if len(receiver.value) + occurrences * (len(new) - len(old)) > self.max_result:
+                        raise RuntimeFault(self.effective_pc(), "result_size_limit")
             result = getattr(str, node.func.attr)(receiver.value, *(a.value for a in arguments))
             return self.combine(result, receiver, *arguments)
         assert isinstance(node.func, ast.Name)
@@ -307,16 +368,46 @@ class Interpreter:
         if name == "extract":
             if self.extractor is None or len(node.args) != 2 or node.keywords:
                 raise RuntimeFault(code="extraction_unavailable")
-            from jsonschema import validate
+            from jsonschema import Draft202012Validator
 
-            text, schema = args["0"], args["1"]
-            result = self.extractor(self.raw(text), self.raw(schema))
-            extra = result if isinstance(result, Labeled) else Labeled(result)
+            text, schema = self.flatten_label(args["0"]), self.flatten_label(args["1"])
+            raw_schema = self.raw(schema)
+            self.check_schema_references(raw_schema)
+            result = self.extractor(self.raw(text), raw_schema)
+            extra = self.flatten_label(result if isinstance(result, Labeled) else Labeled(result))
             result = self.raw(extra)
-            validate(result, self.raw(schema))
+
+            def deny_retrieval(uri: str) -> Resource[Any]:
+                raise RuntimeFault(self.effective_pc(), "schema_remote_reference_forbidden")
+
+            registry_factory = cast(_RegistryFactory, Registry)
+            validator = Draft202012Validator(
+                raw_schema, registry=registry_factory(retrieve=deny_retrieval)
+            )
+            validator.validate(result)
             value = self.combine(result, text, schema, extra)
             return Labeled(value.value, value.label.join(Label(Integrity.UNTRUSTED)), value.sources)
         args = {k: self.flatten_label(v) for k, v in args.items()}
+        args = {
+            k: Labeled(v.value, v.label, v.sources | self.effective_sources())
+            for k, v in args.items()
+        }
+        call_sources = self.effective_sources().union(*(arg.sources for arg in args.values()))
+        call_label = self.effective_pc()
+        for arg in args.values():
+            call_label = call_label.join(arg.label)
+        call_id = provenance_id("call:" + name + ":" + str(len(self.trace)), call_sources)
+        self.trace.append(
+            {
+                "operation": call_id,
+                "parents": sorted(call_sources),
+                "label": call_label,
+                "integrity": call_label.integrity.name,
+                "readers": None if call_label.readers is None else sorted(call_label.readers),
+                "kind": "tool_call",
+                "tool": name,
+            }
+        )
         if self.authorize(name, args, self.effective_pc()) is not True:
             raise RuntimeFault(self.effective_pc(), "tool_denied")
         tool = self.tools[name]
@@ -327,7 +418,7 @@ class Interpreter:
             **{str(k.arg): self.raw(args[str(k.arg)]) for k in node.keywords},
         )
         label = tool.result_label.join(self.effective_pc())
-        sources = frozenset[str]({provenance_id("tool", [tool.identity])})
+        sources = call_sources | {call_id, provenance_id("tool", [tool.identity])}
         for arg in args.values():
             label, sources = label.join(arg.label), sources | arg.sources
         if isinstance(result, Labeled):

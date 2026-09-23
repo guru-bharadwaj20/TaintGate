@@ -20,34 +20,44 @@ def test_assignment():
     assert env["y"].label == secret.label
 
 
-@pytest.mark.parametrize(
-    "expression",
-    [
-        "1+2*3",
-        "8//3",
-        "not False",
-        "3 < 4 < 5",
-        "False or 4",
-        '"A".lower()',
-        'f"x{3}"',
-        "[1,2][0]",
-        "len([1,2])",
-    ],
-)
-def test_python_oracle(expression):
+PURE_EXPRESSIONS = [
+    "1+2*3",
+    "8//3",
+    "not False",
+    "3 < 4 < 5",
+    "False or 4",
+    '"A".lower()',
+    'f"x{3}"',
+    "[1,2][0]",
+    "len([1,2])",
+]
+
+
+@pytest.fixture(scope="module")
+def python_oracle():
     import json
     import subprocess
     import sys
 
     result = subprocess.run(
-        [sys.executable, "-I", "-c", "import json; print(json.dumps(" + expression + "))"],
+        [
+            sys.executable,
+            "-I",
+            "-c",
+            "import json; print(json.dumps([" + ",".join(PURE_EXPRESSIONS) + "]))",
+        ],
         capture_output=True,
         text=True,
         check=True,
-        timeout=5,
+        timeout=30,
     )
+    return dict(zip(PURE_EXPRESSIONS, json.loads(result.stdout), strict=True))
+
+
+@pytest.mark.parametrize("expression", PURE_EXPRESSIONS)
+def test_python_oracle(expression, python_oracle):
     actual = Interpreter().run("x = " + expression)["x"].value
-    assert actual == json.loads(result.stdout)
+    assert actual == python_oracle[expression]
 
 
 def test_untaken_branch_assignment():
