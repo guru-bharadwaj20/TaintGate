@@ -13,7 +13,7 @@ from mcp.types import JSONRPCMessage
 from taintgate.labels import Labeled
 
 from .config import ServerConfig
-from .metadata import Contract, MetadataGuard
+from .metadata import Contract, MetadataGuard, metadata_hash
 
 
 class Peer(Protocol):
@@ -65,22 +65,25 @@ class Gateway:
         try:
             async with asyncio.timeout(self.timeout):
                 result = await self.servers[server].call_tool(tool, arguments)
-                return GatewayResponse("allow", self._label(server, result))
+                return GatewayResponse("allow", self._label(server, tool, result))
         except TimeoutError:
             return GatewayResponse(
-                "error", self._label(server, {"error": "timeout"}), reason="Upstream timed out"
+                "error",
+                self._label(server, tool, {"error": "timeout"}),
+                reason="Upstream timed out",
             )
         except Exception:
             return GatewayResponse(
                 "error",
-                self._label(server, {"error": "unavailable"}),
+                self._label(server, tool, {"error": "unavailable"}),
                 reason="Upstream unavailable",
             )
 
-    def _label(self, server: Any, result: Any) -> Any:
+    def _label(self, server: str, tool: str, result: Any) -> Labeled:
         if hasattr(result, "model_dump"):
             result = result.model_dump(by_alias=True, exclude_none=True)
-        return Labeled(result, self.config[server].result_label, frozenset({"mcp:" + server}))
+        source = f"mcp:{server}:{tool}:" + metadata_hash({"result": result})
+        return Labeled(result, self.config[server].result_label, frozenset({source}))
 
     async def call_with_id(
         self, request_id: Any, name: Any, arguments: Any, *, context: Any
