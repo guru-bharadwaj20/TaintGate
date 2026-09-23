@@ -25,3 +25,13 @@ taintgate audit checkpoint audit.sqlite > trusted-checkpoint.json
 taintgate audit verify audit.sqlite --anchor trusted-checkpoint.json
 taintgate audit prove audit.sqlite --index 0
 ```
+
+## Operational recovery checklist
+
+Stop new execution while inspecting corruption. Make an offline copy of the
+SQLite database and preserve its independently held checkpoint. Run the verify
+CLI against that checkpoint before and after restoring a known-good backup.
+An inclusion proof may authenticate an individual preserved entry, but does not
+establish that missing newer events never existed. Retain checkpoint count and
+head together with the root. Rotate storage only at a documented checkpoint
+boundary, preserving old anchors and logs; never silently reset the chain.

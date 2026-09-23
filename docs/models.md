@@ -20,3 +20,18 @@ returned `Ready.` in 4.184349 seconds and peaked at 550,400,000 bytes working se
 Concurrent project workers affect these single-run timings; no task utility or
 attack resistance follows from this smoke test. The downloaded GGUF hash matched
 the publisher's pinned LFS SHA-256.
+
+## Reproduce inference
+
+Install `.[models]` using the pinned CPU wheel or build with the backend's CPU
+options. The native backend currently tested is 0.3.36. The committed
+`config/models.json` specifies the publisher artifact, quantisation, hash,
+threads and context. Keep weights under ignored local storage and verify the
+hash before loading. Planner and extractor caches use separate trust domains;
+cache identity includes model hash, prompt, grammar and all decoding settings.
+
+The initial 0.5B model was selected for this machine's available RAM. Larger
+3B/7B models may improve utility but need separate memory and benchmark checks.
+No claimed 5–20 token/sec throughput or benchmark utility is inferred from the
+single smoke measurement. Use short schema-constrained extraction and resumable
+cached evaluation jobs to limit repeated CPU work.
