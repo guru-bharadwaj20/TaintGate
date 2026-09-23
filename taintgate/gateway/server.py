@@ -12,6 +12,8 @@ from mcp.server.streamable_http_manager import StreamableHTTPSessionManager
 from starlette.applications import Starlette
 from starlette.routing import Mount
 
+from taintgate.dlp.outbound import check_outbound
+
 
 def plain(value: Any) -> Any:
     if isinstance(value, Mapping):
@@ -21,7 +23,9 @@ def plain(value: Any) -> Any:
     return value
 
 
-def build_server(gateway: Any, context_provider: Any) -> Any:
+def build_server(
+    gateway: Any, context_provider: Any, response_principal: str = "mcp-client"
+) -> Any:
     server = Server("taintgate")
 
     @server.list_tools()  # type: ignore[no-untyped-call, untyped-decorator]
@@ -31,6 +35,15 @@ def build_server(gateway: Any, context_provider: Any) -> Any:
     @server.call_tool(validate_input=False)  # type: ignore[untyped-decorator]
     async def call(name: Any, arguments: Any) -> Any:
         response = await gateway.call(name, arguments or {}, context=context_provider())
+        if response.result is not None and not check_outbound(response.result, response_principal):
+            return types.CallToolResult(
+                content=[
+                    types.TextContent(
+                        type="text", text='{"status":"deny","reason":"Result recipient prohibited"}'
+                    )
+                ],
+                isError=True,
+            )
         payload = response.as_dict()
         return types.CallToolResult(
             content=[types.TextContent(type="text", text=json.dumps(plain(payload)))],
