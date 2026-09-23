@@ -11,6 +11,7 @@ from .urls import decoded_components
 
 
 def check_outbound(value: Any, principal: str, canaries: Iterable[str] = ()) -> bool:
+    canaries = tuple(canaries)
     if isinstance(value, Labeled):
         if not value.label.may_read(principal):
             return False
