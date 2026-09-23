@@ -134,7 +134,7 @@ Suggested window: Weeks 1-2; 9-10.
 | ✅ | P03.10 | Constrain planner output to the plan language |
 | ✅ | P03.11 | Implement bounded planner retries |
 | ✅ | P03.12 | Generate trusted parse-error summaries without input excerpts |
-| ❌ | P03.13 | Generate trusted unknown-tool summaries without tool output |
+| ✅ | P03.13 | Generate trusted unknown-tool summaries without tool output |
 | ❌ | P03.14 | Test that tool results never enter planner context |
 | ❌ | P03.15 | Define cache keys including model, prompt and decoding settings |
 | ❌ | P03.16 | Implement isolated response caching without crossing trust boundaries |
@@ -516,7 +516,7 @@ Suggested window: Weeks 15-16.
 | ❌ | P19.12 | Demonstrate tool-change quarantine and audit tampering |
 | ❌ | P19.13 | Record a demo video using synthetic data |
 | ❌ | P19.14 | Write resume bullets using measured numbers only |
-| ❌ | P19.15 | Prepare answers to design and security interview questions |
+| ✅ | P19.15 | Prepare answers to design and security interview questions |
 | ❌ | P19.16 | Build and validate the Python distribution |
 | ❌ | P19.17 | Build and test a CPU-only Docker image |
 | ❌ | P19.18 | Check dependency and model redistribution licenses |
