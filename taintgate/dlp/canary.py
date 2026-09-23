@@ -9,6 +9,7 @@ from .urls import decoded_components
 
 
 def canary_found(value: Any, canaries: Iterable[str]) -> bool:
+    canaries = tuple(canaries)
     if isinstance(value, Mapping):
         return any(
             (canary_found(k, canaries) or canary_found(v, canaries) for k, v in value.items())

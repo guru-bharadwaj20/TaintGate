@@ -106,6 +106,9 @@ class Gateway:
     def register(
         self, contract: Contract, upstream: Peer, config: ServerConfig | None = None
     ) -> None:
+        if config is not None and config.name != contract.server:
+            raise ValueError("Configuration identity differs from approved server")
+        Draft202012Validator.check_schema(contract.input_schema)
         if contract.name != f"{contract.server}__{contract.tool}":
             raise ValueError("Tool is outside its approved namespace")
         if contract.name in self.contracts:
