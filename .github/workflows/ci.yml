@@ -19,3 +19,25 @@ jobs:
       - run: python -m mypy
       - run: python -m pytest --cov=taintgate --cov-report=term-missing
       - run: python -m build
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build --tag taintgate:ci .
+      - name: Verify CPU-only container security demo
+        run: |
+          docker run --rm --network none taintgate:ci > docker-results.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          result = json.loads(Path('docker-results.json').read_text())
+          assert result['trusted_status'] == 'completed', result
+          assert result['attack_status'] == 'tool_denied', result
+          assert result['audit_valid'] is True, result
+          assert len(result['recorded_sends']) == 1, result
+          PY
+      - name: Retain measured container output
+        uses: actions/upload-artifact@v4
+        with:
+          name: docker-results
+          path: docker-results.json

@@ -469,7 +469,7 @@ Suggested window: Weeks 11-14.
 | ✅ | P17.16 | Fuzz schema compilation and label propagation |
 | ✅ | P17.17 | Set deterministic seeds and retain fuzz crash artifacts |
 | ✅ | P17.18 | Measure core coverage and address meaningful gaps toward 85 percent |
-| ❌ | P17.19 | Run the full required CI checks without model downloads |
+| ✅ | P17.19 | Run the full required CI checks without model downloads |
 
 ## P18 - AgentDojo evaluation and reproducibility
 
@@ -519,8 +519,8 @@ Suggested window: Weeks 15-16.
 | ✅ | P19.13 | Record a demo video using synthetic data |
 | ✅ | P19.14 | Write resume bullets using measured numbers only |
 | ✅ | P19.15 | Prepare answers to design and security interview questions |
-| ❌ | P19.16 | Build and validate the Python distribution |
-| ❌ | P19.17 | Build and test a CPU-only Docker image |
+| ✅ | P19.16 | Build and validate the Python distribution |
+| ✅ | P19.17 | Build and test a CPU-only Docker image |
 | ✅ | P19.18 | Check dependency and model redistribution licenses |
 | ❌ | P19.19 | Tag a release after required checks pass |
 

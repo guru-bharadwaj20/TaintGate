@@ -1,0 +1,14 @@
+{
+  "version": "0.1.0",
+  "build_command": "python -m build --no-isolation --outdir artifacts/dist-final",
+  "wheel": "taintgate-0.1.0-py3-none-any.whl",
+  "sdist": "taintgate-0.1.0.tar.gz",
+  "build": "passed",
+  "isolated_wheel_smoke": "passed",
+  "checks": [
+    "import from installed wheel target",
+    "synthetic trusted send completed once",
+    "packaged UI index.html present"
+  ],
+  "environment": "Python 3.13.1 Windows; offline build with installed build dependencies"
+}

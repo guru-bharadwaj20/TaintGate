@@ -33,3 +33,24 @@ may require the documented official CPU wheel source. Prompt Guard weights
 require publisher-approved access; never commit credentials or model files.
 `python -m build --no-isolation --outdir artifacts/dist-final` uses already
 installed build tools when network isolation prevents fetching dependencies.
+
+## Recorded validation
+
+The required CI commands (Ruff lint, source/test formatting, strict mypy,
+pytest with coverage, and wheel/sdist build) passed locally on Python 3.13.1.
+See `benchmarks/verification_results.json` and
+`benchmarks/distribution_results.json`. These checks required no model downloads;
+four optional real-model tests were skipped in this run. This local evidence
+does not establish that the remote Python 3.12/3.13 CI matrix passed.
+
+## CPU-only Docker validation
+
+The image built and its offline security demo passed on GitHub Actions
+`ubuntu-latest` at revision `3d26d81b6da092a70286412122e9149125fa7d34`.
+The same run passed Python 3.12 and 3.13 checks. Raw container output is
+retained in `benchmarks/docker_results.json` and the workflow artifact.
+Local Windows Docker Desktop remains unable to start; it was not used for
+this verification.
+
+Reproduce with `docker build -t taintgate:local .` followed by
+`docker run --rm --network none taintgate:local`.
