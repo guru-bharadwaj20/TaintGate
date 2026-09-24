@@ -35,3 +35,8 @@ The initial 0.5B model was selected for this machine's available RAM. Larger
 No claimed 5–20 token/sec throughput or benchmark utility is inferred from the
 single smoke measurement. Use short schema-constrained extraction and resumable
 cached evaluation jobs to limit repeated CPU work.
+
+The recorded short smoke predates explicit batch caps. Current new model
+instances use `n_threads_batch=2`, `n_batch=32` and `n_ubatch=32`; the earlier
+smoke timings do not measure the effect of these settings. Long AgentDojo tasks
+must be measured separately under the recorded host load.
