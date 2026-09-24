@@ -112,9 +112,17 @@ class Compiler:
                 raise SchemaError("Invalid union")
             return "(" + " | ".join(self.node(v) for v in choices) + ")"
         if isinstance(schema.get("type"), list):
-            kinds = schema['type']
-            if not kinds or len(kinds) > 7 or any(kind not in {'null','object','array','string','integer','number','boolean'} for kind in kinds):
-                raise SchemaError('Invalid union type list')
+            kinds = schema["type"]
+            if (
+                not kinds
+                or len(kinds) > 7
+                or any(
+                    kind
+                    not in {"null", "object", "array", "string", "integer", "number", "boolean"}
+                    for kind in kinds
+                )
+            ):
+                raise SchemaError("Invalid union type list")
             return (
                 "("
                 + " | ".join(self.node({**schema, "type": kind}) for kind in schema["type"])
