@@ -14,6 +14,7 @@ from taintgate.inference.cache import CachedBackend
 
 from .baselines import PlainPipeline, SandwichPipeline, SpotlightPipeline
 from .config import RunConfig, verify_manifest
+from .detector import DetectorPipeline, PromptGuardCPU, local_detector_manifest
 from .metrics import (
     approvals,
     attack_success,
@@ -31,6 +32,9 @@ PIPELINES = {
     "taintgate_permissive": TaintgatePipeline,
     "taintgate_strict": StrictTaintgatePipeline,
 }
+
+DEFAULT_CONFIGURATIONS = tuple(PIPELINES)
+AVAILABLE_CONFIGURATIONS = (*DEFAULT_CONFIGURATIONS, "prompt_guard_2")
 
 
 def save_atomic(path: Path, value: dict[str, Any]) -> None:
@@ -50,7 +54,16 @@ def run(
     subset_path: Path,
     configurations: tuple[str, ...] = tuple(PIPELINES),
     full: bool = False,
+    prompt_guard_weights: Path | None = None,
+    prompt_guard_threshold: float = 0.5,
 ) -> dict[str, Any]:
+    if any(name not in AVAILABLE_CONFIGURATIONS for name in configurations):
+        raise ValueError("Unknown benchmark configuration")
+    detector_manifest = None
+    if "prompt_guard_2" in configurations:
+        if prompt_guard_weights is None:
+            raise ValueError("prompt_guard_2 requires --prompt-guard-weights")
+        detector_manifest = local_detector_manifest(prompt_guard_weights, prompt_guard_threshold)
     subset = json.loads(subset_path.read_text(encoding="utf-8-sig"))
     models = json.loads(Path("config/models.json").read_text(encoding="utf-8-sig"))
     config = RunConfig()
@@ -74,6 +87,7 @@ def run(
         "configurations": list(configurations),
         "full": full,
         "implementation": implementation,
+        "prompt_guard": detector_manifest,
     }
     if output.exists():
         document: dict[str, Any] = json.loads(output.read_text(encoding="utf-8-sig"))
@@ -81,6 +95,11 @@ def run(
     else:
         document = {"manifest": manifest, "environment": environment_metadata(), "records": []}
     done = {r["id"] for r in document["records"]}
+    scorer = (
+        PromptGuardCPU(prompt_guard_weights)
+        if detector_manifest is not None and prompt_guard_weights is not None
+        else None
+    )
     backend = LlamaCppBackend(model_path, models["sha256"])
     for configuration in configurations:
         domain = "planner" if configuration.startswith("taintgate") else "baseline"
@@ -100,7 +119,14 @@ def run(
                     max_requests=config.max_calls,
                     max_tokens=config.max_calls * config.decoding.max_tokens,
                 )
-                pipeline = PIPELINES[configuration](budgeted, max_calls=config.max_calls)
+                if configuration == "prompt_guard_2":
+                    if scorer is None:
+                        raise ValueError("Detector scorer unavailable")
+                    pipeline = DetectorPipeline(
+                        budgeted, scorer, prompt_guard_threshold, config.max_calls
+                    )
+                else:
+                    pipeline = PIPELINES[configuration](budgeted, max_calls=config.max_calls)
                 injection = suite.get_injection_task_by_id(injection_id) if injection_id else None
                 # Use upstream exact attack template, substituting actual model identity
                 # without its provider-name lookup (which excludes local Qwen).
@@ -164,8 +190,13 @@ def main() -> None:
     parser.add_argument("--output", type=Path, default=Path("artifacts/bench/results.json"))
     parser.add_argument("--subset", type=Path, default=Path("config/benchmark_subset.json"))
     parser.add_argument(
-        "--configurations", nargs="+", choices=tuple(PIPELINES), default=tuple(PIPELINES)
+        "--configurations",
+        nargs="+",
+        choices=AVAILABLE_CONFIGURATIONS,
+        default=DEFAULT_CONFIGURATIONS,
     )
+    parser.add_argument("--prompt-guard-weights", type=Path)
+    parser.add_argument("--prompt-guard-threshold", type=float, default=0.5)
     parser.add_argument("--full", action="store_true")
     parser.add_argument("--upstream-source", type=Path)
     args = parser.parse_args()
@@ -173,7 +204,15 @@ def main() -> None:
         from .source_loader import load_source
 
         load_source(args.upstream_source)
-    run(args.model, args.output, args.subset, tuple(args.configurations), args.full)
+    run(
+        args.model,
+        args.output,
+        args.subset,
+        tuple(args.configurations),
+        args.full,
+        args.prompt_guard_weights,
+        args.prompt_guard_threshold,
+    )
 
 
 if __name__ == "__main__":

@@ -7,12 +7,12 @@ All pipelines use the same CPU model and call budget. Taintgate approvals are
 recorded and denied in unattended runs. Models and caches remain separate trust
 domains; mock tests are never reported as real task performance.
 
-Prompt Guard 2 actual CPU inference is pending: the publisher's configuration URL
-returned HTTP 401 on 2026-10-02 without credentials. The repository requires an
-account with publisher access and acceptance of the Llama license. The local-only
-adapter can load user-provided authorized weights; no detector results are
-reported while those weights are absent. Access evidence is stored in
-`benchmarks/prompt_guard_access.json`.
+Prompt Guard 2 publisher access has been approved and its weights downloaded
+locally at revision `11614a155199674a0a95e6602d6ab0417b790ed0`. The initial
+unauthenticated HTTP 401 is retained in `benchmarks/prompt_guard_access.json`
+as historical evidence. Actual CPU inference is recorded separately when run;
+approved access alone is not an evaluation result. Weights and credentials
+remain outside Git.
 
 Sources: https://github.com/ethz-spylab/agentdojo and
 https://huggingface.co/meta-llama/Llama-Prompt-Guard-2-22M
@@ -38,5 +38,14 @@ atomically after each run, including host metadata, approvals, elapsed wall time
 and measured deterministic call overhead. Restarting with a different model,
 subset, budget or implementation source hash is rejected. All configurations share
 four inference requests and 1,024 requested output tokens per run. Unattended
-approval requests stop the action. Prompt Guard weights remain unavailable, so
-full detector comparisons are pending and no missing results are estimated.
+approval requests stop the action. Full detector comparisons are pending until their actual grading records are
+complete; no missing results are estimated.
+
+
+Prompt Guard 2 is an optional explicit configuration. Obtain gated weights yourself
+through the publisher's account and license process, then run with
+`--configurations prompt_guard_2 --prompt-guard-weights artifacts/models/prompt-guard-2-22m
+--prompt-guard-threshold 0.5`. The runner never downloads detector weights or uses
+credentials. Its resume manifest pins SHA-256 hashes of every local detector file,
+the CPU device and decision threshold; changes invalidate resume. This option's
+implementation and fixture tests do not constitute measured Prompt Guard results.

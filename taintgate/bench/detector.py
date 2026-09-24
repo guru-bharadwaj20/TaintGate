@@ -1,5 +1,7 @@
 """Optional Prompt Guard 2 CPU scorer; gated weights are never downloaded implicitly."""
 
+import hashlib
+import math
 from collections.abc import Callable
 from pathlib import Path
 from typing import Any
@@ -58,3 +60,32 @@ class DetectorPipeline(PlainPipeline):
         if not math.isfinite(score) or not 0 <= score <= 1 or score >= self.threshold:
             raise ValueError("Detector rejected untrusted tool result")
         return text
+
+
+def local_detector_manifest(local_weights: Path, threshold: float) -> dict[str, Any]:
+    """Bind a local-only detector to every file and its fixed decision threshold."""
+    if not math.isfinite(threshold) or not 0 <= threshold <= 1:
+        raise ValueError("Invalid fixed detector threshold")
+    if not local_weights.is_dir():
+        raise ValueError("Prompt Guard requires an existing local weights directory")
+    files: dict[str, str] = {}
+    for path in sorted(local_weights.rglob("*")):
+        if path.is_symlink():
+            raise ValueError("Detector weights must not contain symlinks")
+        if path.is_file():
+            digest = hashlib.sha256()
+            with path.open("rb") as stream:
+                for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+                    digest.update(chunk)
+            files[path.relative_to(local_weights).as_posix()] = digest.hexdigest()
+    if "config.json" not in files or not any(
+        name.endswith((".safetensors", ".bin")) for name in files
+    ):
+        raise ValueError("Local detector configuration and weights are required")
+    return {
+        "model": "Prompt Guard 2",
+        "device": "cpu",
+        "threshold": threshold,
+        "local_files_only": True,
+        "files_sha256": files,
+    }

@@ -38,3 +38,41 @@ def test_detector_fixed_threshold():
     for score in (0.5, 1.0, float("nan")):
         with pytest.raises(ValueError):
             DetectorPipeline(TestBackend(), lambda text: score).decorate_result("hello")
+
+
+def test_local_detector_manifest_binds_files_and_threshold(tmp_path):
+    from taintgate.bench.detector import local_detector_manifest
+
+    (tmp_path / "config.json").write_text("{}")
+    (tmp_path / "model.safetensors").write_bytes(b"test fixture, not model weights")
+    original = local_detector_manifest(tmp_path, 0.5)
+    assert original["local_files_only"] is True
+    assert original["device"] == "cpu"
+    assert original != local_detector_manifest(tmp_path, 0.6)
+    (tmp_path / "model.safetensors").write_bytes(b"changed fixture")
+    with pytest.raises(ValueError, match="manifest differs"):
+        verify_manifest(original, local_detector_manifest(tmp_path, 0.5))
+    with pytest.raises(ValueError):
+        local_detector_manifest(tmp_path, float("nan"))
+
+
+def test_detector_runner_requires_local_weights_before_model_loading(tmp_path):
+    from taintgate.bench.runner import AVAILABLE_CONFIGURATIONS, DEFAULT_CONFIGURATIONS, run
+
+    assert "prompt_guard_2" in AVAILABLE_CONFIGURATIONS
+    assert "prompt_guard_2" not in DEFAULT_CONFIGURATIONS
+    with pytest.raises(ValueError, match="requires --prompt-guard-weights"):
+        run(
+            tmp_path / "missing.gguf",
+            tmp_path / "results.json",
+            tmp_path / "subset.json",
+            configurations=("prompt_guard_2",),
+        )
+    with pytest.raises(ValueError, match="configuration and weights"):
+        run(
+            tmp_path / "missing.gguf",
+            tmp_path / "results.json",
+            tmp_path / "subset.json",
+            configurations=("prompt_guard_2",),
+            prompt_guard_weights=tmp_path,
+        )
