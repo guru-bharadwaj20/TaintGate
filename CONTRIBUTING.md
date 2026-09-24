@@ -498,7 +498,7 @@ P18.19 evidence: `benchmarks/agentdojo_full_results.json` retains all 4,356 unmo
 | ✅ | P18.17 | Record CPU, memory, versions, seeds and wall-clock cost |
 | ✅ | P18.18 | Support resumable overnight benchmark runs |
 | ✅ | P18.19 | Run complete comparisons and preserve raw outcomes |
-| ❌ | P18.20 | Publish measured results without filling gaps with estimates |
+| ✅ | P18.20 | Publish measured results without filling gaps with estimates |
 
 ## P19 - Documentation, demonstration and release
 

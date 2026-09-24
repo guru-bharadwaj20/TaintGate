@@ -38,8 +38,8 @@ atomically after each run, including host metadata, approvals, elapsed wall time
 and measured deterministic call overhead. Restarting with a different model,
 subset, budget or implementation source hash is rejected. All configurations share
 four inference requests and 1,024 requested output tokens per run. Unattended
-approval requests stop the action. Full detector comparisons are pending until their actual grading records are
-complete; no missing results are estimated.
+approval requests stop the action. The complete six-configuration comparison and its
+limitations are in `docs/results.md`; no missing results are estimated.
 
 
 Prompt Guard 2 is an optional explicit configuration. Obtain gated weights yourself

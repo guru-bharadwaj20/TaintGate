@@ -48,9 +48,12 @@ python -m ruff check .
 
 See [the threat model](docs/threat-model.md), [CPU model setup and measurements](docs/models.md),
 [policy reference](docs/policy.md), [security tests](docs/security-testing.md) and
-[audit anchoring requirements](docs/audit.md). A real quantised model CPU smoke
-is recorded; full comparative benchmark results must be measured before claims
-about attack success or task utility. Permissive mode omits strict control-flow
+[audit anchoring requirements](docs/audit.md). The [complete AgentDojo v1 comparison](docs/results.md)
+(4,356 graded CPU runs, six configurations) measured identical results for every
+configuration: 4/97 clean utility, 36/629 utility under attack, 0/629 attack
+success. These are the four tasks an inactive agent also passes, so the 0.5B
+planner sets a utility floor and the comparison shows no difference between
+defenses; it is not evidence that any defense reduces attack success. Permissive mode omits strict control-flow
 protection. Remote metadata pinning cannot prove a malicious server's behavior.
 
 The core design implements and extends [CaMeL](https://css.csail.mit.edu/6.858/2026/readings/camel.pdf)

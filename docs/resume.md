@@ -12,6 +12,9 @@
 - Implemented hash-chained SQLite audit events and Merkle inclusion proofs;
   regressions detect edits and suffix deletion against a trusted checkpoint.
 
-After the complete matched AgentDojo comparison, add measured clean utility,
-under-attack utility, ASR and approval rate with exact task/case counts. Do not
-claim reduced ASR or a general proof from the current synthetic fixtures.
+- Ran a complete AgentDojo v1 comparison on CPU (4,356 graded runs across six
+  configurations, zero errors) with resumable, hash-pinned checkpoints across two hosts.
+
+The comparison measured 4/97 clean utility and 0/629 attack success for every
+configuration, including the undefended agent. Do not claim reduced attack success:
+the 0.5B planner's utility floor leaves the defenses indistinguishable.
