@@ -443,7 +443,7 @@ Suggested window: Weeks 11-12.
 | ✅ | P16.12 | Build a poisoned-email and invoice-exfiltration server |
 | ✅ | P16.13 | Provide isolated fixtures without real accounts or transactions |
 | ✅ | P16.14 | Record each covered attack blocked in strict mode |
-| ❌ | P16.15 | Demonstrate success and failure paths with cached CPU responses |
+| ✅ | P16.15 | Demonstrate success and failure paths with cached CPU responses |
 
 ## P17 - Security properties, regression testing and fuzzing
 
