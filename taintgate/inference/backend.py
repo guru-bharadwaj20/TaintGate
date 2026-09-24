@@ -33,13 +33,22 @@ class Backend(Protocol):
 
 class LlamaCppBackend:
     def __init__(self, path: Path, sha256: str, n_ctx: int = 2048, n_threads: int = 2) -> None:
-        if hashlib.file_digest(path.open("rb"), "sha256").hexdigest() != sha256:
+        with path.open("rb") as model_file:
+            digest = hashlib.file_digest(model_file, "sha256").hexdigest()
+        if digest != sha256:
             raise ValueError("Model hash mismatch")
         from llama_cpp import Llama
 
         self.model_id = sha256
         self._model: Any = Llama(
-            model_path=str(path), n_gpu_layers=0, n_ctx=n_ctx, n_threads=n_threads, verbose=False
+            model_path=str(path),
+            n_gpu_layers=0,
+            n_ctx=n_ctx,
+            n_threads=n_threads,
+            n_threads_batch=n_threads,
+            n_batch=32,
+            n_ubatch=32,
+            verbose=False,
         )
 
     def generate(self, prompt: str, settings: Decode = Decode(), grammar: str | None = None) -> str:
