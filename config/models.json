@@ -8,6 +8,18 @@
   "size_bytes": 491400032,
   "quantization": "Q4_K_M",
   "license": "Apache-2.0",
-  "settings": {"n_gpu_layers": 0, "n_ctx": 2048, "n_threads": 2, "seed": 20, "temperature": 0.0},
-  "roles": ["planner", "extractor"]
+  "settings": {
+    "n_gpu_layers": 0,
+    "n_ctx": 2048,
+    "n_threads": 2,
+    "seed": 20,
+    "temperature": 0.0,
+    "n_threads_batch": 2,
+    "n_batch": 32,
+    "n_ubatch": 32
+  },
+  "roles": [
+    "planner",
+    "extractor"
+  ]
 }
