@@ -1,0 +1,26 @@
+{
+  "python": "3.13.1",
+  "tests_passed": 248,
+  "model_tests_skipped": 4,
+  "warnings": 2,
+  "whole_package_percent": 83.36915636754433,
+  "security_core_modules": [
+    "labels/",
+    "lang/",
+    "interp/",
+    "static/",
+    "policy/",
+    "quarantine/",
+    "gateway/",
+    "dlp/",
+    "audit/"
+  ],
+  "security_core_covered_lines_and_branches": 2370,
+  "security_core_total_lines_and_branches": 2604,
+  "security_core_percent": 91.01382488479263,
+  "scope": "Local frozen-source checks; Python 3.12 CI remote run not claimed",
+  "ruff_check": "passed",
+  "ruff_format_check": "passed, 110 files",
+  "strict_mypy": "passed, 59 files",
+  "wheel_and_sdist": "built, final wheel isolated smoke passed"
+}
