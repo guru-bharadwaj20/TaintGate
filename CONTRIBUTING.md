@@ -475,6 +475,8 @@ Suggested window: Weeks 11-14.
 
 Suggested window: Weeks 13-14.
 
+P18.19 evidence: `benchmarks/agentdojo_full_results.json` retains all 4,356 unmodified grader records (six configurations x 97 clean + 629 attacked cases), checkpoint manifests, both host descriptions and per-host wall clock. `benchmarks/agentdojo_response_cache.json` retains the model responses. `benchmarks/agentdojo_full.py` regenerates both from `artifacts/bench` and the `migration-checkpoint-2026-10-02` archive and rejects any coverage gap or duplicate. The comparison was resumed on a second Windows host after 1,183 comparison runs plus the separate 726-run Prompt Guard evaluation; records measured before migration are listed per configuration.
+
 | Status | ID | Subtask / completion deliverable |
 | :---: | --- | --- |
 | ✅ | P18.01 | Pin AgentDojo revision and verify task and attack-case counts |
@@ -495,7 +497,7 @@ Suggested window: Weeks 13-14.
 | ✅ | P18.16 | Measure median and tail deterministic tool-call overhead |
 | ✅ | P18.17 | Record CPU, memory, versions, seeds and wall-clock cost |
 | ✅ | P18.18 | Support resumable overnight benchmark runs |
-| ❌ | P18.19 | Run complete comparisons and preserve raw outcomes |
+| ✅ | P18.19 | Run complete comparisons and preserve raw outcomes |
 | ❌ | P18.20 | Publish measured results without filling gaps with estimates |
 
 ## P19 - Documentation, demonstration and release
