@@ -49,3 +49,12 @@ through the publisher's account and license process, then run with
 credentials. Its resume manifest pins SHA-256 hashes of every local detector file,
 the CPU device and decision threshold; changes invalidate resume. This option's
 implementation and fixture tests do not constitute measured Prompt Guard results.
+
+## Measured Prompt Guard CPU smoke
+
+`benchmarks/prompt_guard_cpu_results.json` records four real local CPU scores
+using approved publisher weights and a fixed 0.5 threshold. Both benign
+fixtures were allowed. One injected fixture was rejected (score 0.998827);
+the other was allowed (score 0.494065). These fixtures verify the CPU inference
+path and illustrate a detector miss; they are not an accuracy estimate or
+AgentDojo results. The threshold was not changed after observing the scores.

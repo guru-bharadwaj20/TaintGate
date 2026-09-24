@@ -482,7 +482,7 @@ Suggested window: Weeks 13-14.
 | ✅ | P18.03 | Choose and publish a fixed development subset |
 | ✅ | P18.04 | Implement the plain-agent baseline |
 | ✅ | P18.05 | Implement spotlighting and sandwich prompt baselines |
-| ❌ | P18.06 | Verify a supported Prompt Guard 2 CPU inference path |
+| ✅ | P18.06 | Verify a supported Prompt Guard 2 CPU inference path |
 | ✅ | P18.07 | Implement the detector baseline with fixed thresholds |
 | ✅ | P18.08 | Implement permissive Taintgate benchmark configuration |
 | ✅ | P18.09 | Implement strict Taintgate benchmark configuration |
