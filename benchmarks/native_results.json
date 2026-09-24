@@ -1,0 +1,9 @@
+{
+  "size": 100,
+  "facts": 4950,
+  "repeat": 5,
+  "python_reference_elapsed_ns": 12742200,
+  "python_policy_elapsed_ns": 1079725200,
+  "native_elapsed_ns": 4552400,
+  "scope": "positive reachability rule only"
+}

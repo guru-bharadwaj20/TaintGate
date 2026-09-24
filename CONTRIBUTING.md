@@ -468,7 +468,7 @@ Suggested window: Weeks 11-14.
 | ✅ | P17.15 | Fuzz JSON-RPC decoding and gateway state transitions |
 | ✅ | P17.16 | Fuzz schema compilation and label propagation |
 | ✅ | P17.17 | Set deterministic seeds and retain fuzz crash artifacts |
-| ❌ | P17.18 | Measure core coverage and address meaningful gaps toward 85 percent |
+| ✅ | P17.18 | Measure core coverage and address meaningful gaps toward 85 percent |
 | ❌ | P17.19 | Run the full required CI checks without model downloads |
 
 ## P18 - AgentDojo evaluation and reproducibility
@@ -532,7 +532,7 @@ Suggested window: After core release.
 | :---: | --- | --- |
 | ✅ | P20.01 | Prototype policy syntax highlighting and diagnostics |
 | ✅ | P20.02 | Suggest policies from approved traces with manual review |
-| ❌ | P20.03 | Benchmark a Rust policy engine before replacing Python |
+| ✅ | P20.03 | Benchmark a Rust policy engine before replacing Python |
 | ✅ | P20.04 | Design browser DOM-origin labels and an adapter |
 | ✅ | P20.05 | Generate local red-team variants in an isolated lab |
 | ✅ | P20.06 | Turn successful red-team variants into regression tests |
