@@ -33,3 +33,12 @@ may require the documented official CPU wheel source. Prompt Guard weights
 require publisher-approved access; never commit credentials or model files.
 `python -m build --no-isolation --outdir artifacts/dist-final` uses already
 installed build tools when network isolation prevents fetching dependencies.
+
+## Recorded validation
+
+The required CI commands (Ruff lint, source/test formatting, strict mypy,
+pytest with coverage, and wheel/sdist build) passed locally on Python 3.13.1.
+See `benchmarks/verification_results.json` and
+`benchmarks/distribution_results.json`. These checks required no model downloads;
+four optional real-model tests were skipped in this run. This local evidence
+does not establish that the remote Python 3.12/3.13 CI matrix passed.
