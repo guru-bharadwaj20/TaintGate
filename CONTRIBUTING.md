@@ -520,7 +520,7 @@ Suggested window: Weeks 15-16.
 | ✅ | P19.14 | Write resume bullets using measured numbers only |
 | ✅ | P19.15 | Prepare answers to design and security interview questions |
 | ✅ | P19.16 | Build and validate the Python distribution |
-| ❌ | P19.17 | Build and test a CPU-only Docker image |
+| ✅ | P19.17 | Build and test a CPU-only Docker image |
 | ✅ | P19.18 | Check dependency and model redistribution licenses |
 | ❌ | P19.19 | Tag a release after required checks pass |
 
