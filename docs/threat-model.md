@@ -83,4 +83,4 @@ The split planner and extraction design follows CaMeL; integrity and confidentia
 
 ## Interfaces and ownership
 
-Runtime lane owns labels, provenance, parser, interpreter and static analysis. Policy lane owns Datalog parsing and evaluation. Gateway lane owns MCP and outbound filters. Integration lane owns quarantine, models, audit, packaging and application wiring. Values use immutable Label/Labeled records; authorize(name, labelled_arguments, pc) checks runtime calls; gateway callbacks receive trusted execution context. All lanes serialize one-task commits through scripts/commit_task.py.
+Runtime lane owns labels, provenance, parser, interpreter and static analysis. Policy lane owns Datalog parsing and evaluation. Gateway lane owns MCP and outbound filters. Integration lane owns quarantine, models, audit, packaging and application wiring. Values use immutable Label/Labeled records; authorize(name, labelled_arguments, pc) checks runtime calls; gateway callbacks receive trusted execution context.
