@@ -1,5 +1,13 @@
 # TaintGate
 
+<p align="center">
+  <a href="TaintGate%20Demo.mp4">
+    <img src="docs/assets/TaintGate%20Demo%20thumbnail.png" alt="Watch the TaintGate demo video" width="720">
+  </a>
+  <br>
+  <sub>▶ <b><a href="TaintGate%20Demo.mp4">Watch the TaintGate demo</a></b> (74 s): architecture, phases, commits, CI and the live dry-run UI</sub>
+</p>
+
 **An information-flow firewall for LLM agents — labels follow every value, and deterministic policy decides every tool call.**
 
 [![CI](https://img.shields.io/badge/CI-checks_·_docker-2ea44f?logo=githubactions&logoColor=white)](.github/workflows/ci.yml)
@@ -35,6 +43,7 @@ and control-flow labels in deterministic code before it runs.
 | [Design decisions](#design-decisions) | The tradeoffs, and why |
 | [Repository layout](#repository-layout) | Where things live |
 | [Documentation](#documentation) | Which file answers which question |
+| [Team](#team) | Who built it |
 
 ---
 
@@ -267,6 +276,14 @@ write during the run are all recorded, not tuned away.
 | *How is the benchmark run, and what did it measure?* | [docs/benchmark.md](docs/benchmark.md), [docs/results.md](docs/results.md) |
 | *What are the extensions and the demo?* | [docs/extensions.md](docs/extensions.md), [docs/demo.md](docs/demo.md) |
 | *Which licenses apply to models and dependencies?* | [docs/licenses.md](docs/licenses.md) |
+
+---
+
+## Team
+
+| Member | Focus |
+|---|---|
+| **Guru R Bharadwaj** | Design, the TaintScript language, labels and policy engine, the MCP gateway, benchmarks and docs |
 
 ---
 
